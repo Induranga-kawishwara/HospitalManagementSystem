@@ -1,5 +1,10 @@
-import express from "express";
-import { test } from "../controllers/users.js";
+const express = require("express");
+const { test, testadd } = require("../controllers/users.js");
+
 const router = express.Router();
+
 router.get("/test", test);
-export default router;
+
+router.post("/", testadd);
+
+module.exports = router;
