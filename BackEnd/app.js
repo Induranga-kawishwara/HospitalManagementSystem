@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const userRouters = require("./routes/users.js");
+const staffRouter = require("./routes/staffMembers.js");
+const patientRouter = require("./routes/patients.js");
 const mongoose = require("mongoose");
 require("dotenv").config();
 
@@ -14,7 +15,8 @@ app.get("/", (req, res) => {
   res.send("Hello from Homepage");
 });
 
-app.use("/users", userRouters);
+app.use("/users", staffRouter);
+app.use("/patient", patientRouter);
 
 app.listen(PORT, () =>
   console.log(`Server running on port : http://localhost:${PORT}`)
