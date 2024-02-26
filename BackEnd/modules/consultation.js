@@ -21,6 +21,10 @@ const ConsultationSchema = new Schema({
     type: String,
     required: true,
   },
+  contactNum: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = ConsultationSchema;

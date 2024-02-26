@@ -7,7 +7,7 @@ const createConsultation = mongoose.model(
   ConsultationSchema
 );
 
-const getConsultation = async (req, res) => {
+const getConsultations = async (req, res) => {
   try {
     const consultations = await createConsultation.find();
     res.status(200).json(consultations);
@@ -20,37 +20,37 @@ const getConsultation = async (req, res) => {
 const newConsultation = async (req, res) => {
   try {
     const consultation = new createConsultation({
-      userId: uuidv4(),
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      gender: req.body.gender,
-      email: req.body.email,
-      phoneNum: req.body.phoneNum,
-      addressOne: req.body.addressOne,
-      addressTwo: req.body.addressTwo,
+      consultationId: uuidv4(),
+      patientId: req.body.patientId,
+      doctorId: req.body.doctorId,
+      consultationDate: req.body.consultationDate,
+      consultationTime: req.body.consultationTime,
+      contactNum: req.body.contactNum,
     });
     await consultation.save();
-    res.status(201).send("User saved successfully!");
+    res.status(201).send("consultation saved successfully!");
   } catch (error) {
-    console.error("Error adding user:", error);
-    res.status(500).send("Error adding user");
+    console.error("Error adding consultation:", error);
+    res.status(500).send("Error adding consultation");
   }
 };
 
 const deleteConsultation = async (req, res) => {
-  const userID = req.params.id;
-  console.log(userID);
+  const consultationID = req.params.id;
+  console.log(consultationID);
   try {
-    const deleteUser = await createConsultation.findOneAndDelete(userID);
+    const deleteUser = await createConsultation.findOneAndDelete(
+      consultationID
+    );
 
     if (!deleteUser) {
-      return res.status(404).send("User not found");
+      return res.status(404).send("consultation not found");
     }
-    res.status(200).send("User deleted successfully");
+    res.status(200).send("consultation deleted successfully");
   } catch (error) {
-    console.error("Error deleting user:", error);
-    res.status(500).send("Error deleting user");
+    console.error("Error deleting consultation:", error);
+    res.status(500).send("Error deleting consultation");
   }
 };
 
-module.exports = { getPatient, addPatient, deletePatient };
+module.exports = { getConsultations, newConsultation, deleteConsultation };
