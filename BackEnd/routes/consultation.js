@@ -1,56 +1,15 @@
-const mongoose = require("mongoose");
-const ConsultationSchema = require("../modules/consultation");
-const { v4: uuidv4 } = require("uuid");
+const express = require("express");
+const {
+  getConsultations,
+  newConsultation,
+  deleteConsultation,
+} = require("../controllers/consultations");
 
-const createConsultation = mongoose.model(
-  "createConsultation",
-  ConsultationSchema
-);
+const router = express.Router();
 
-const getConsultations = async (req, res) => {
-  try {
-    const consultations = await createConsultation.find();
-    res.status(200).json(consultations);
-  } catch (error) {
-    console.error("Error getting users:", error);
-    res.status(500).send("Error getting users");
-  }
-};
+router.get("/", getConsultations);
 
-const newConsultation = async (req, res) => {
-  try {
-    const consultation = new createConsultation({
-      consultationId: uuidv4(),
-      patientId: req.body.patientId,
-      doctorId: req.body.doctorId,
-      consultationDate: req.body.consultationDate,
-      consultationTime: req.body.consultationTime,
-      contactNum: req.body.contactNum,
-    });
-    await consultation.save();
-    res.status(201).send("consultation saved successfully!");
-  } catch (error) {
-    console.error("Error adding consultation:", error);
-    res.status(500).send("Error adding consultation");
-  }
-};
+router.post("/", newConsultation);
+router.delete("/:id", deleteConsultation);
 
-const deleteConsultation = async (req, res) => {
-  const consultationID = req.params.id;
-  console.log(consultationID);
-  try {
-    const deleteUser = await createConsultation.findOneAndDelete(
-      consultationID
-    );
-
-    if (!deleteUser) {
-      return res.status(404).send("consultation not found");
-    }
-    res.status(200).send("consultation deleted successfully");
-  } catch (error) {
-    console.error("Error deleting consultation:", error);
-    res.status(500).send("Error deleting consultation");
-  }
-};
-
-module.exports = { getConsultations, newConsultation, deleteConsultation };
+module.exports = router;
