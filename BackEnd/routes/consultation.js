@@ -7,19 +7,19 @@ const createConsultation = mongoose.model(
   ConsultationSchema
 );
 
-const getPatient = async (req, res) => {
+const getConsultation = async (req, res) => {
   try {
-    const users = await createConsultation.find();
-    res.status(200).json(users);
+    const consultations = await createConsultation.find();
+    res.status(200).json(consultations);
   } catch (error) {
     console.error("Error getting users:", error);
     res.status(500).send("Error getting users");
   }
 };
 
-const addPatient = async (req, res) => {
+const newConsultation = async (req, res) => {
   try {
-    const newUser = new createConsultation({
+    const consultation = new createConsultation({
       userId: uuidv4(),
       firstName: req.body.firstName,
       lastName: req.body.lastName,
@@ -29,7 +29,7 @@ const addPatient = async (req, res) => {
       addressOne: req.body.addressOne,
       addressTwo: req.body.addressTwo,
     });
-    await newUser.save();
+    await consultation.save();
     res.status(201).send("User saved successfully!");
   } catch (error) {
     console.error("Error adding user:", error);
@@ -37,7 +37,7 @@ const addPatient = async (req, res) => {
   }
 };
 
-const deletePatient = async (req, res) => {
+const deleteConsultation = async (req, res) => {
   const userID = req.params.id;
   console.log(userID);
   try {
