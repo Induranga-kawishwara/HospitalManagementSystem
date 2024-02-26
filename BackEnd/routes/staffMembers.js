@@ -8,7 +8,6 @@ const {
 const router = express.Router();
 
 router.get("/", getStaff);
-
 router.post("/", addUser);
 router.delete("/:id", deleteUser);
 

@@ -8,7 +8,6 @@ const {
 const router = express.Router();
 
 router.get("/", getPatient);
-
 router.post("/", addPatient);
 router.delete("/:id", deletePatient);
 
