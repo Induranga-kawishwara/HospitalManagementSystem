@@ -1,10 +1,7 @@
-const { Schema, model } = require("mongoose");
+const { Schema } = require("mongoose");
+const jwt = require("jsonwebtoken");
 
 const PatientSchema = new Schema({
-  userId: {
-    type: String,
-    required: true,
-  },
   firstName: {
     type: String,
     required: true,
@@ -14,10 +11,6 @@ const PatientSchema = new Schema({
     required: true,
   },
   gender: {
-    type: String,
-    required: true,
-  },
-  email: {
     type: String,
     required: true,
   },
@@ -33,6 +26,21 @@ const PatientSchema = new Schema({
     type: String,
     required: true,
   },
+  email: {
+    type: String,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
 });
+
+PatientSchema.methods.generateAuthToken = function () {
+  const token = jwt.sign({ _id: this._id }, process.env.JWTPRIVATEKEY, {
+    expiresIn: "7d",
+  });
+  return token;
+};
 
 module.exports = PatientSchema;

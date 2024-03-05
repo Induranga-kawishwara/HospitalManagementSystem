@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 const PatientSchema = require("../modules/patient");
-const { v4: uuidv4 } = require("uuid");
+const validation = require("../validations/validation");
+const bcrypt = require("bcrypt");
+require("dotenv").config();
+
+// const { v4: uuidv4 } = require("uuid");
 
 const createPatient = mongoose.model("createPatients", PatientSchema);
 
@@ -16,17 +20,20 @@ const getPatient = async (req, res) => {
 
 const addPatient = async (req, res) => {
   try {
-    const newUser = new createPatient({
-      userId: uuidv4(),
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      gender: req.body.gender,
-      email: req.body.email,
-      phoneNum: req.body.phoneNum,
-      addressOne: req.body.addressOne,
-      addressTwo: req.body.addressTwo,
-    });
-    await newUser.save();
+    const { error } = validation.patientValidation();
+    if (error) {
+      return res.status(400).send({ message: error.details[0].message });
+    }
+    const user = await createPatient.findOne({ email: req.body.email });
+    if (user)
+      return res
+        .status(409)
+        .send({ message: "User with given email already Exist!" });
+
+    const salt = await bcrypt.genSalt(Number(process.env.SALT));
+    const hashPassword = await bcrypt.hash(req.body.password, salt);
+    await new createPatient({ ...req.body, password: hashPassword }).save();
+
     res.status(201).send("User saved successfully!");
   } catch (error) {
     console.error("Error adding user:", error);
@@ -38,7 +45,7 @@ const deletePatient = async (req, res) => {
   const userID = req.params.id;
   console.log(userID);
   try {
-    const deleteUser = await createPatient.findOneAndDelete(userID);
+    const deleteUser = await createPatient.findById(userID);
 
     if (!deleteUser) {
       return res.status(404).send("User not found");

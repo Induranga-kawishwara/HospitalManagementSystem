@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const userSchema = require("../modules/createStaffMember");
-const { v4: uuidv4 } = require("uuid");
+// const { v4: uuidv4 } = require("uuid");
 
 const createStaffMember = mongoose.model("createStaffMember", userSchema);
 
@@ -16,16 +16,17 @@ const getStaff = async (req, res) => {
 
 const addUser = async (req, res) => {
   try {
-    const newUser = new createStaffMember({
-      userId: uuidv4(),
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      email: req.body.email,
-      phoneNum: req.body.phoneNum,
-      addressOne: req.body.addressOne,
-      addressTwo: req.body.addressTwo,
-    });
-    await newUser.save();
+    // const newUser = new createStaffMember(req.body);
+    // const newUser = new createStaffMember({
+    //   // userId: uuidv4(),
+    //   firstName: req.body.firstName,
+    //   lastName: req.body.lastName,
+    //   email: req.body.email,
+    //   phoneNum: req.body.phoneNum,
+    //   addressOne: req.body.addressOne,
+    //   addressTwo: req.body.addressTwo,
+    // });
+    await new createStaffMember(req.body).save();
     res.status(201).send("User saved successfully!");
   } catch (error) {
     console.error("Error adding user:", error);
@@ -37,7 +38,7 @@ const deleteUser = async (req, res) => {
   const userID = req.params.id;
   console.log(userID);
   try {
-    const deleteUser = await createStaffMember.findOneAndDelete(userID);
+    const deleteUser = await createStaffMember.findById(userID);
 
     if (!deleteUser) {
       return res.status(404).send("User not found");

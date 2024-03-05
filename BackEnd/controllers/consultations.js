@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const ConsultationSchema = require("../modules/consultation");
-const { v4: uuidv4 } = require("uuid");
+// const { v4: uuidv4 } = require("uuid");
 
 const createConsultation = mongoose.model(
   "createConsultation",
@@ -19,15 +19,17 @@ const getConsultations = async (req, res) => {
 
 const newConsultation = async (req, res) => {
   try {
-    const consultation = new createConsultation({
-      consultationId: uuidv4(),
-      patientId: req.body.patientId,
-      doctorId: req.body.doctorId,
-      consultationDate: req.body.consultationDate,
-      consultationTime: req.body.consultationTime,
-      contactNum: req.body.contactNum,
-    });
-    await consultation.save();
+    // const consultation = new createConsultation(req.body);
+
+    // const consultation = new createConsultation({
+    //   // consultationId: uuidv4(),
+    //   patientId: req.body.patientId,
+    //   doctorId: req.body.doctorId,
+    //   consultationDate: req.body.consultationDate,
+    //   consultationTime: req.body.consultationTime,
+    //   contactNum: req.body.contactNum,
+    // });
+    await new createConsultation(req.body).save();
     res.status(201).send("consultation saved successfully!");
   } catch (error) {
     console.error("Error adding consultation:", error);
@@ -39,9 +41,7 @@ const deleteConsultation = async (req, res) => {
   const consultationID = req.params.id;
   console.log(consultationID);
   try {
-    const deleteUser = await createConsultation.findOneAndDelete(
-      consultationID
-    );
+    const deleteUser = await createConsultation.findById(consultationID);
 
     if (!deleteUser) {
       return res.status(404).send("consultation not found");

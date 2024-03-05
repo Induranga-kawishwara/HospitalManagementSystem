@@ -1,10 +1,6 @@
-const { Schema, model } = require("mongoose");
+const { Schema } = require("mongoose");
 
 const ConsultationSchema = new Schema({
-  consultationId: {
-    type: String,
-    required: true,
-  },
   patientId: {
     type: String,
     required: true,
