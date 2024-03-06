@@ -16,4 +16,18 @@ const patientValidation = (data) => {
   return schema.validate(data);
 };
 
-module.exports = { patientValidation };
+const staffValidation = (data) => {
+  const schema = Joi.object({
+    staffID: Joi.string().required().label("StaffID"),
+    firstName: Joi.string().required().label("First Name"),
+    lastName: Joi.string().required().label("Last Name"),
+    gender: Joi.string().required().label("Gender"),
+    phoneNum: JoiPhoneNumber,
+    addressOne: Joi.string().required().label("Address one"),
+    addressTwo: Joi.string().required().label("Address two"),
+    email: Joi.string().email().required().label("Email"),
+  });
+  return schema.validate(data);
+};
+
+module.exports = { patientValidation, staffValidation };
