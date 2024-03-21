@@ -4,8 +4,6 @@ const validation = require("../validations/validation");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
 
-// const { v4: uuidv4 } = require("uuid");
-
 const createPatient = mongoose.model("createPatients", PatientSchema);
 
 const getPatient = async (req, res) => {

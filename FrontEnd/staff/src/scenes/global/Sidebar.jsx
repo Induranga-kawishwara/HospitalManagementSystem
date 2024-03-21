@@ -4,6 +4,7 @@ import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
+import BloodtypeIcon from '@mui/icons-material/Bloodtype';
 import {
   HomeOutlined,
   LocalHospital,
@@ -15,6 +16,7 @@ import {
   HelpOutlineOutlined,
   MenuOutlined,
 } from "@mui/icons-material";
+ 
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -149,6 +151,13 @@ const Sidebar = () => {
               title="Contacts Information"
               to="/contacts"
               icon={<ContactsOutlined />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Blood Bank"
+              to="/blood"
+              icon={<BloodtypeIcon />}
               selected={selected}
               setSelected={setSelected}
             />
