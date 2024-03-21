@@ -11,7 +11,6 @@ const consultationRouter = require("./routes/consultation");
 const app = express();
 const PORT = 5000;
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
@@ -31,7 +30,6 @@ app.use("/patients", patientRouter);
 app.use("/consultations", consultationRouter);
 app.use("/auth", authRouter);
 
-// Error Handling Middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send("Something broke!");
