@@ -1,0 +1,66 @@
+for front end : - react js 
+for backend :- nodeJs
+for Database :- MongoDB
+
+
+Back End : -
+
+app.js :- 
+
+	This Node.js Express application serves as a backend for managing a medical system. It utilizes Express middleware for Cross-Origin Resource Sharing (CORS) and parsing JSON payloads. The routes handle requests for staff members, patients, consultations, and authentication. It connects to a MongoDB database using Mongoose for database interaction. Error handling is implemented with a global middleware to manage errors during the request-response cycle.
+
+
+router file :- 
+
+	The js files in the file sets up routes to handle instructions in an Express application. It defines endpoints for getting instructions 
+(GET /), creating new instructions (POST /) and deleting instructions by ID (DELETE /:id). These paths are mapped to corresponding controller functions exported from ../controllers/consultations.
+
+
+jwt.js :- 
+
+
+	The jwt.js file exports a function called generateAuthToken that creates a JWT (JSON Web Token) using the jsonwebtoken package. It signs the token with a private key from environment variables, includes the user's _id in the payload, and sets an expiration time of 7 days.
+
+auth.Js :- 
+
+	The auth.js file exports a function authuser responsible for user authentication. It validates user input with Joi, checks if the email exists, verifies the password with bcrypt, generates a JWT token with the user's ID, and sends it back upon successful authentication.
+
+
+consultation.js :- 
+
+	The consultation.js file defines functions to handle consultation operations in a MongoDB database. It includes functions to get all consultations, add a new consultation, and delete a consultation by ID. These functions ensure CRUD (Create, Read, Update, Delete) operations for consultation data.
+
+patients.js :- 
+
+	The patients.js file manages patient-related operations in a MongoDB database. It includes functions for fetching all patients, adding new patients, and deleting patients by their ID. These functions handle validation, hashing passwords, database interactions, and error handling.
+
+staffMembers.js :-  
+
+The staffMembers.js file manages staff member-related operations in a MongoDB database. It provides functions for retrieving all staff members, adding new staff members, and deleting staff members by their ID. These functions handle validation, ensuring unique staff IDs and email addresses, hashing passwords, database interactions, and error handling.
+
+FrontEnd :-
+
+App.js :- 
+	
+The App.js file in this React application acts as the central component, coordinating routing, layout, and theming. It incorporates React Router for handling different routes and Material-UI for styling components. This file defines components for the top bar, sidebar, and various scenes/pages like dashboard, staff members, patients, contacts, form, FAQ, calendar, and blood. It also manages state with useState to toggle the sidebar and implements theming using ThemeProvider and ColorModeContext.
+
+staff.jsx :- 
+	
+The StaffMembers.js file contains a React component called StaffMembers, which renders a data grid displaying staff members' information. It imports Material-UI components such as DataGrid, icons, and typography, as well as tokens from the application's theme for styling customization. The component fetches mock data for staff members and defines columns for the data grid. It also utilizes a custom Header component to display the title and subtitle for the staff page. Overall, the file focuses on rendering and styling the staff members' data grid within the application.
+
+Patients.js :- 
+
+The Patients.js file contains a React component called Patients, which renders a data grid displaying information about patients. It imports Material-UI components such as DataGrid, icons, and typography, as well as tokens from the application's theme for styling customization. The component fetches mock data for patients and defines columns for the data grid. It also utilizes a custom Header component to display the title and subtitle for the patients page. Overall, the file focuses on rendering and styling the patients' data grid within the application.
+
+Form.js :-
+
+The Form.js file contains a React component named `Form`, which renders a user creation form using Material-UI components like `TextField` and `Button`. It employs `Formik` for form management and validation using the `yup` library. The component handles form submission and validation errors, allowing users to input details such as first name, last name, email, contact number, and address.
+
+Dashboard.js : - 
+
+Dashboard.js contains a React component that renders a dashboard interface using Material-UI components. It displays statistics for staff members, sales, patients, and blood count, along with new appointments. The component includes a button to download reports and utilizes custom components like `StatBox` and `Header` for organization and visual appeal.
+
+
+Contacts.js :- 
+
+Contacts.js is a React component that renders a list of contacts in a table format using Material-UI's `DataGrid`. It includes features like filtering, sorting, and exporting provided by `GridToolbar`. The component uses theme colors for styling and mock data for demonstration.
