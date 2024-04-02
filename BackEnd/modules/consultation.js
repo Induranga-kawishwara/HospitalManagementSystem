@@ -1,4 +1,6 @@
-const { Schema } = require("mongoose");
+import mongoose from "mongoose";
+
+const { Schema, model } = mongoose;
 
 const ConsultationSchema = new Schema({
   patientId: {
@@ -23,4 +25,4 @@ const ConsultationSchema = new Schema({
   },
 });
 
-module.exports = ConsultationSchema;
+export default model("Consultations", ConsultationSchema);

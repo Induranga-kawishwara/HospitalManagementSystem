@@ -1,12 +1,15 @@
-const express = require("express");
-const cors = require("cors");
-const mongoose = require("mongoose");
-require("dotenv").config();
+import dotenv from "dotenv";
+dotenv.config();
 
-const staffRouter = require("./routes/staffMembers");
-const patientRouter = require("./routes/patients");
-const authRouter = require("./routes/auth");
-const consultationRouter = require("./routes/consultation");
+import express from "express";
+import cors from "cors";
+import mongoose from "mongoose";
+
+// Assuming your routes will be updated to use export default
+import staffRouter from "./routes/staffMembers.js";
+import patientRouter from "./routes/patients.js";
+import authRouter from "./routes/auth.js";
+import consultationRouter from "./routes/consultation.js";
 
 const app = express();
 const PORT = 5000;

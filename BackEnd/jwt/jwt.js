@@ -1,5 +1,6 @@
-const jwt = require("jsonwebtoken");
-require("dotenv").config();
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
 
 function generateAuthToken(user) {
   const token = jwt.sign({ _id: user._id }, process.env.JWTPRIVATEKEY, {
@@ -8,4 +9,4 @@ function generateAuthToken(user) {
   return token;
 }
 
-module.exports = { generateAuthToken };
+export { generateAuthToken };

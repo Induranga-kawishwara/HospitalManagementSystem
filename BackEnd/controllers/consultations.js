@@ -1,25 +1,19 @@
-const mongoose = require("mongoose");
-const ConsultationSchema = require("../modules/consultation");
-
-const createConsultation = mongoose.model(
-  "createConsultation",
-  ConsultationSchema
-);
+import ConsultationModel from "../modules/consultation.js"; // Assuming this file is converted to ESM
 
 const getConsultations = async (req, res) => {
   try {
-    const consultations = await createConsultation.find();
+    const consultations = await ConsultationModel.find();
     res.status(200).json(consultations);
   } catch (error) {
-    console.error("Error getting users:", error);
-    res.status(500).send("Error getting users");
+    console.error("Error getting consultations:", error);
+    res.status(500).send("Error getting consultations");
   }
 };
 
 const newConsultation = async (req, res) => {
   try {
-    await new createConsultation(req.body).save();
-    res.status(201).send("consultation saved successfully!");
+    await new ConsultationModel(req.body).save();
+    res.status(201).send("Consultation saved successfully!");
   } catch (error) {
     console.error("Error adding consultation:", error);
     res.status(500).send("Error adding consultation");
@@ -28,18 +22,20 @@ const newConsultation = async (req, res) => {
 
 const deleteConsultation = async (req, res) => {
   const consultationID = req.params.id;
-  console.log(consultationID);
   try {
-    const deleteUser = await createConsultation.findById(consultationID);
+    const consultationToDelete = await ConsultationModel.findById(
+      consultationID
+    );
 
-    if (!deleteUser) {
-      return res.status(404).send("consultation not found");
+    if (!consultationToDelete) {
+      return res.status(404).send("Consultation not found");
     }
-    res.status(200).send("consultation deleted successfully");
+    await consultationToDelete.remove();
+    res.status(200).send("Consultation deleted successfully");
   } catch (error) {
     console.error("Error deleting consultation:", error);
     res.status(500).send("Error deleting consultation");
   }
 };
 
-module.exports = { getConsultations, newConsultation, deleteConsultation };
+export { getConsultations, newConsultation, deleteConsultation };

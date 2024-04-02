@@ -1,14 +1,11 @@
-const mongoose = require("mongoose");
-const userSchema = require("../modules/createStaffMember");
-const bcrypt = require("bcrypt");
-require("dotenv").config();
-const validation = require("../validations/validation");
-
-const createStaffMember = mongoose.model("createStaffMember", userSchema);
+import StaffMemberModel from "../modules/staffMember.js";
+import dotenv from "dotenv";
+dotenv.config();
+import { staffValidation } from "../validations/validation.js";
 
 const getStaff = async (req, res) => {
   try {
-    const users = await createStaffMember.find();
+    const users = await StaffMemberModel.find();
     res.status(200).json(users);
   } catch (error) {
     console.error("Error getting users:", error);
@@ -18,25 +15,26 @@ const getStaff = async (req, res) => {
 
 const addUser = async (req, res) => {
   try {
-    const { error } = validation.staffValidation();
+    const { error } = staffValidation();
     if (error) {
       return res.status(400).send({ message: error.details[0].message });
     }
 
-    const AddminId = await createStaffMember.findOne({
+    const adminId = await StaffMemberModel.findOne({
       staffID: req.body.staffID,
     });
-    const user = await createStaffMember.findOne({ email: req.body.email });
-    if (AddminId)
+    const user = await StaffMemberModel.findOne({ email: req.body.email });
+    if (adminId)
       return res
         .status(409)
-        .send({ message: "Addmin with given id already Exist!" });
+        .send({ message: "Admin with given id already exist!" });
 
     if (user)
       return res
         .status(409)
-        .send({ message: "User with given email already Exist!" });
-    await new createStaffMember(req.body).save();
+        .send({ message: "User with given email already exist!" });
+
+    await new StaffMemberModel(req.body).save();
     res.status(201).send("User saved successfully!");
   } catch (error) {
     console.error("Error adding user:", error);
@@ -48,7 +46,7 @@ const deleteUser = async (req, res) => {
   const userID = req.params.id;
   console.log(userID);
   try {
-    const deleteUser = await createStaffMember.findById(userID);
+    const deleteUser = await StaffMemberModel.findById(userID);
 
     if (!deleteUser) {
       return res.status(404).send("User not found");
@@ -60,4 +58,4 @@ const deleteUser = async (req, res) => {
   }
 };
 
-module.exports = { getStaff, addUser, deleteUser };
+export { getStaff, addUser, deleteUser };

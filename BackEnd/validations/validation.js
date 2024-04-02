@@ -1,13 +1,16 @@
-const Joi = require("joi");
-const passwordComplexity = require("joi-password-complexity");
-const JoiPhoneNumber = require("joi-phone-number");
+import Joi from "joi";
+import passwordComplexity from "joi-password-complexity";
+import JoiPhoneNumber from "joi-phone-number";
 
 const patientValidation = (data) => {
   const schema = Joi.object({
     firstName: Joi.string().required().label("First Name"),
     lastName: Joi.string().required().label("Last Name"),
     gender: Joi.string().required().label("Gender"),
-    phoneNum: JoiPhoneNumber,
+    phoneNum: JoiPhoneNumber.string()
+      .phoneNumber()
+      .required()
+      .label("Phone Number"),
     addressOne: Joi.string().required().label("Address one"),
     addressTwo: Joi.string().required().label("Address two"),
     email: Joi.string().email().required().label("Email"),
@@ -22,7 +25,10 @@ const staffValidation = (data) => {
     firstName: Joi.string().required().label("First Name"),
     lastName: Joi.string().required().label("Last Name"),
     gender: Joi.string().required().label("Gender"),
-    phoneNum: JoiPhoneNumber,
+    phoneNum: JoiPhoneNumber.string()
+      .phoneNumber()
+      .required()
+      .label("Phone Number"),
     addressOne: Joi.string().required().label("Address one"),
     addressTwo: Joi.string().required().label("Address two"),
     email: Joi.string().email().required().label("Email"),
@@ -30,4 +36,4 @@ const staffValidation = (data) => {
   return schema.validate(data);
 };
 
-module.exports = { patientValidation, staffValidation };
+export { patientValidation, staffValidation };

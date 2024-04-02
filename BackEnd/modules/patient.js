@@ -1,5 +1,7 @@
-const { Schema } = require("mongoose");
-const jwt = require("jsonwebtoken");
+import mongoose from "mongoose";
+import jwt from "jsonwebtoken";
+
+const { Schema, model } = mongoose;
 
 const PatientSchema = new Schema({
   firstName: {
@@ -43,4 +45,5 @@ PatientSchema.methods.generateAuthToken = function () {
   return token;
 };
 
-module.exports = PatientSchema;
+// export default PatientSchema;
+export default model("Patients", PatientSchema);

@@ -1,14 +1,12 @@
-const mongoose = require("mongoose");
-const PatientSchema = require("../modules/patient");
-const validation = require("../validations/validation");
-const bcrypt = require("bcrypt");
-require("dotenv").config();
-
-const createPatient = mongoose.model("createPatients", PatientSchema);
+import PatientModel from "../modules/patient.js";
+import { patientValidation } from "../validations/validation.js";
+import bcrypt from "bcrypt";
+import dotenv from "dotenv";
+dotenv.config();
 
 const getPatient = async (req, res) => {
   try {
-    const users = await createPatient.find();
+    const users = await PatientModel.find();
     res.status(200).json(users);
   } catch (error) {
     console.error("Error getting users:", error);
@@ -18,11 +16,11 @@ const getPatient = async (req, res) => {
 
 const addPatient = async (req, res) => {
   try {
-    const { error } = validation.patientValidation();
+    const { error } = patientValidation();
     if (error) {
       return res.status(400).send({ message: error.details[0].message });
     }
-    const user = await createPatient.findOne({ email: req.body.email });
+    const user = await PatientModel.findOne({ email: req.body.email });
     if (user)
       return res
         .status(409)
@@ -30,7 +28,7 @@ const addPatient = async (req, res) => {
 
     const salt = await bcrypt.genSalt(Number(process.env.SALT));
     const hashPassword = await bcrypt.hash(req.body.password, salt);
-    await new createPatient({ ...req.body, password: hashPassword }).save();
+    await new PatientModel({ ...req.body, password: hashPassword }).save();
 
     res.status(201).send("User saved successfully!");
   } catch (error) {
@@ -43,7 +41,7 @@ const deletePatient = async (req, res) => {
   const userID = req.params.id;
   console.log(userID);
   try {
-    const deleteUser = await createPatient.findById(userID);
+    const deleteUser = await PatientModel.findById(userID);
 
     if (!deleteUser) {
       return res.status(404).send("User not found");
@@ -55,4 +53,4 @@ const deletePatient = async (req, res) => {
   }
 };
 
-module.exports = { getPatient, addPatient, deletePatient };
+export { getPatient, addPatient, deletePatient };

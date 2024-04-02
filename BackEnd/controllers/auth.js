@@ -1,11 +1,8 @@
-const bcrypt = require("bcrypt");
-const Joi = require("joi");
-const jwt = require("../jwt/jwt");
-const mongoose = require("mongoose");
-
-const PatientSchema = require("../modules/patient");
-
-const authPatient = mongoose.model("createPatients", PatientSchema);
+import bcrypt from "bcrypt";
+import Joi from "joi";
+import { generateAuthToken } from "../jwt/jwt.js";
+import mongoose from "mongoose";
+import AuthPatientModel from "../modules/patient.js";
 
 const authuser = async (req, res) => {
   try {
@@ -13,7 +10,7 @@ const authuser = async (req, res) => {
     if (error)
       return res.status(400).send({ message: error.details[0].message });
 
-    const user = await authPatient.findOne({ email: req.body.email });
+    const user = await AuthPatientModel.findOne({ email: req.body.email });
     if (!user)
       return res.status(401).send({ message: "Invalid Email or Password" });
 
@@ -24,7 +21,7 @@ const authuser = async (req, res) => {
     if (!validPassword)
       return res.status(401).send({ message: "Invalid Email or Password" });
 
-    const token = jwt.generateAuthToken(authPatient);
+    const token = generateAuthToken(user); // Changed authPatient to user
     res.status(200).send({ data: token, message: "logged in successfully" });
   } catch (error) {
     console.log(error);
@@ -40,4 +37,4 @@ const validate = (data) => {
   return schema.validate(data);
 };
 
-module.exports = { authuser };
+export { authuser };

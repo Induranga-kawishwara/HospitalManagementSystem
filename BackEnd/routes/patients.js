@@ -1,9 +1,9 @@
-const express = require("express");
-const {
+import express from "express";
+import {
   getPatient,
   addPatient,
   deletePatient,
-} = require("../controllers/patients");
+} from "../controllers/patients.js";
 
 const router = express.Router();
 
@@ -11,4 +11,4 @@ router.get("/", getPatient);
 router.post("/", addPatient);
 router.delete("/:id", deletePatient);
 
-module.exports = router;
+export default router;
