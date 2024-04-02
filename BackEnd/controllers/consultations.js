@@ -1,4 +1,4 @@
-import ConsultationModel from "../modules/consultation.js"; // Assuming this file is converted to ESM
+import ConsultationModel from "../modules/consultation.js";
 
 const getConsultations = async (req, res) => {
   try {
