@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 const { Schema, model } = mongoose;
+
 const StaffSchema = new Schema({
   staffID: {
     type: String,
