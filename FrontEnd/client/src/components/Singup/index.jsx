@@ -67,6 +67,60 @@ const Signup = () => {
               required
               className={styles.input}
             />
+                              <select
+                    id="inputState"
+                    className={styles.input}
+                    onChange={handleChange}
+                  >
+                    <option disabled selected>
+                      Choose...
+                    </option>
+                    <option value="Mr.">Male</option>
+                    <option value="Ms.">Female</option>
+                    <option value="Mrs.">Other</option>
+                  </select>   
+
+
+
+
+
+
+            <input
+            type="text"
+            placeholder="Gender"
+            name="Gender"
+            onChange={handleChange}
+            value={data.lastName}
+            required
+            className={styles.input}
+          />
+              <input
+              type="text"
+              placeholder="Phone Number"
+              name="phonenumber"
+              onChange={handleChange}
+              value={data.lastName}
+              required
+              className={styles.input}
+            />
+                        <input
+              type="text"
+              placeholder="Address"
+              name="lastName"
+              onChange={handleChange}
+              value={data.lastName}
+              required
+              className={styles.input}
+            />
+                        <input
+              type="text"
+              placeholder="City"
+              name="lastName"
+              onChange={handleChange}
+              value={data.lastName}
+              required
+              className={styles.input}
+            />       
             <input
               type="email"
               placeholder="Email"

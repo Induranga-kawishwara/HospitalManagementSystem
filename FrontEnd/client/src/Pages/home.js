@@ -14,7 +14,7 @@ function Hero() {
   };
 
   const handleBookAppointmentClick = () => {
-    navigate("/appointment");
+    navigate("/Login");
   };
 
   useEffect(() => {
@@ -50,6 +50,7 @@ function Hero() {
             refills and medical notes within minutes. On-demand healthcare
             services at your fingertips.
           </p>
+          
           <button
             className="text-appointment-btn"
             type="button"

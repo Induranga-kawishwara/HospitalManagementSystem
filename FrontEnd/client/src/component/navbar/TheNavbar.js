@@ -14,20 +14,16 @@ import Logo from "../../assets/Logo/Logo.png";
 import { Link as RouterLink } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import "./navcs.css";
+import { useNavigate  } from "react-router-dom";
 
 
 const TheNavbar = (props) => {
+  const navigate = useNavigate();
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const handleChatBtnClick = () => {
-    if (!isButtonDisabled) {
-      toast.info("Experiencing high traffic, Please wait a moment.", {
-        position: toast.POSITION.TOP_CENTER,
-        onOpen: () => setIsButtonDisabled(true),
-        onClose: () => setIsButtonDisabled(false),
-      });
-    }
+    navigate("/Login");
   };
 
   //Layout and structure of the navbar to be passed to THENAV component
@@ -124,16 +120,15 @@ const TheNavbar = (props) => {
               </Link>
             </Nav.Link>
 
-
-<button
-        className="navbar-btn"
-        type="button"
-        disabled={isButtonDisabled}
-        // onClick={handleChatBtnClick}
-      >
-        <FontAwesomeIcon icon={faCommentDots} /> Make Appoinment
-      </button>
-
+            
+          <button
+            className="navbar-btn"
+            type="button"
+            // disabled={isButtonDisabled}
+            onClick={handleChatBtnClick}
+          >
+            <FontAwesomeIcon icon={faCommentDots} /> Make Appoinment
+          </button>
 
           </Nav>
         </Navbar.Collapse>
