@@ -12,7 +12,7 @@ const NavCartButton = (props) => {
   }`;
   return (
     <div  className={btnBump}>
-      Buy Now
+      Book Appointment
     </div>
   );
   //ENDS

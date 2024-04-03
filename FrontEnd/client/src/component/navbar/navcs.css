@@ -1,0 +1,18 @@
+.navbar-btn {
+    padding: 14px 20px;
+    color: white;
+    border: 1px solid transparent;
+    border-radius: 28px;
+    outline: transparent;
+    background-color: #1A8EFD;
+    font-size: 18px;
+    font-family: 'Rubik', sans-serif;
+    letter-spacing: .8px;
+    cursor: pointer;
+    transition: all .4s ease;
+}
+.navbar-btn:hover {
+    color: #1A8EFD;
+    background-color: white;
+    border: 1px solid #1A8EFD;
+}

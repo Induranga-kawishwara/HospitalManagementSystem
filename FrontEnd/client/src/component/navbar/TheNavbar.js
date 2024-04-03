@@ -1,4 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCommentDots,
+  faBars,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import NavCartButton from "./NavCartButton";
 import { Navbar, Nav } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -6,8 +12,24 @@ import { Link } from "react-scroll";
 import classes from "./TheNavbar.module.css";
 import Logo from "../../assets/Logo/Logo.png";
 import { Link as RouterLink } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import "./navcs.css";
+
 
 const TheNavbar = (props) => {
+
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
+  const handleChatBtnClick = () => {
+    if (!isButtonDisabled) {
+      toast.info("Experiencing high traffic, Please wait a moment.", {
+        position: toast.POSITION.TOP_CENTER,
+        onOpen: () => setIsButtonDisabled(true),
+        onClose: () => setIsButtonDisabled(false),
+      });
+    }
+  };
+
   //Layout and structure of the navbar to be passed to THENAV component
   return (
     <>
@@ -56,13 +78,13 @@ const TheNavbar = (props) => {
             <Nav.Link className={`${classes.nav__link} me-4`}>
               <Link
                 activeClass={classes.active}
-                to="why"
+                to="services"
                 spy={true}
                 smooth={true}
                 offset={-50}
                 duration={500}
               >
-                Why choose us
+                Services
               </Link>
             </Nav.Link>
 
@@ -75,8 +97,7 @@ const TheNavbar = (props) => {
                 offset={-50}
                 duration={500}
               >
-                About us
-              </Link>
+                About              </Link>
             </Nav.Link>
             <Nav.Link className={`${classes.nav__link} me-4`}>
               <Link
@@ -87,7 +108,7 @@ const TheNavbar = (props) => {
                 offset={-50}
                 duration={500}
               >
-                Products
+                Reviews
               </Link>
             </Nav.Link>            
             <Nav.Link className={`${classes.nav__link} me-4`}>
@@ -99,20 +120,21 @@ const TheNavbar = (props) => {
                 offset={-50}
                 duration={500}
               >
-                Testimonials
+                Doctors
               </Link>
             </Nav.Link>
-            <Nav.Link href="#buttons" className={`${classes.nav__link}`}>
-              <RouterLink
-                to="/cart"
-                spy={true}
-                smooth={true}
-                offset={-50}
-                duration={500}
-              >
-                <NavCartButton onClick={props.onShowCart} />
-              </RouterLink>
-            </Nav.Link>
+
+
+<button
+        className="navbar-btn"
+        type="button"
+        disabled={isButtonDisabled}
+        // onClick={handleChatBtnClick}
+      >
+        <FontAwesomeIcon icon={faCommentDots} /> Make Appoinment
+      </button>
+
+
           </Nav>
         </Navbar.Collapse>
       </Navbar>
