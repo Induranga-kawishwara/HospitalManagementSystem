@@ -73,7 +73,7 @@ const Signup = () => {
                     onChange={handleChange}
                   >
                     <option disabled selected>
-                      Choose...
+                      Gender
                     </option>
                     <option value="Mr.">Male</option>
                     <option value="Ms.">Female</option>
@@ -81,19 +81,6 @@ const Signup = () => {
                   </select>   
 
 
-
-
-
-
-            <input
-            type="text"
-            placeholder="Gender"
-            name="Gender"
-            onChange={handleChange}
-            value={data.lastName}
-            required
-            className={styles.input}
-          />
               <input
               type="text"
               placeholder="Phone Number"
