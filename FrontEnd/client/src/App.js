@@ -4,7 +4,7 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
-import Main from "./components/Main";
+import Home from "./Pages/homepage";
 import Signup from "./components/Singup";
 import Login from "./components/Login";
 import TheNav from "./component/navbar/TheNav";
@@ -16,9 +16,9 @@ function App() {
 			
 		<TheNav/>
 		<Routes>
-			<Route path="/" exact element={<Main />} />
-			{/* <Route path="/signup" exact element={<Signup />} />
-			<Route path="/login" exact element={<Login />} /> */}
+			<Route path="/" exact element={<Home />} />
+			<Route path="/signup" exact element={<Signup />} />
+			<Route path="/login" exact element={<Login />} />
 		</Routes>
 		</Router>
 	);
