@@ -16,15 +16,15 @@ const PatientSchema = new Schema({
     type: String,
     required: true,
   },
-  phoneNum: {
+  phonenumber: {
     type: String,
     required: true,
   },
-  addressOne: {
+  address: {
     type: String,
     required: true,
   },
-  addressTwo: {
+  city: {
     type: String,
     required: true,
   },

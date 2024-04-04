@@ -1,26 +1,16 @@
-import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCommentDots,
-  faBars,
-  faXmark,
-} from "@fortawesome/free-solid-svg-icons";
-import NavCartButton from "./NavCartButton";
+import { faCommentDots } from "@fortawesome/free-solid-svg-icons";
 import { Navbar, Nav } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-scroll";
 import classes from "./TheNavbar.module.css";
 import Logo from "../../assets/Logo/Logo.png";
 import { Link as RouterLink } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
 import "./navcs.css";
-import { useNavigate  } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 
 const TheNavbar = (props) => {
   const navigate = useNavigate();
-
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const handleChatBtnClick = () => {
     navigate("/Login");
@@ -62,7 +52,7 @@ const TheNavbar = (props) => {
             >
               <Link
                 activeClass={classes.active}
-                to="hero"
+                to="/"
                 spy={true}
                 smooth={true}
                 offset={-50}
@@ -93,7 +83,8 @@ const TheNavbar = (props) => {
                 offset={-50}
                 duration={500}
               >
-                About              </Link>
+                About{" "}
+              </Link>
             </Nav.Link>
             <Nav.Link className={`${classes.nav__link} me-4`}>
               <Link
@@ -106,7 +97,7 @@ const TheNavbar = (props) => {
               >
                 Reviews
               </Link>
-            </Nav.Link>            
+            </Nav.Link>
             <Nav.Link className={`${classes.nav__link} me-4`}>
               <Link
                 activeClass={classes.active}
@@ -120,16 +111,14 @@ const TheNavbar = (props) => {
               </Link>
             </Nav.Link>
 
-            
-          <button
-            className="navbar-btn"
-            type="button"
-            // disabled={isButtonDisabled}
-            onClick={handleChatBtnClick}
-          >
-            <FontAwesomeIcon icon={faCommentDots} /> Make Appoinment
-          </button>
-
+            <button
+              className="navbar-btn"
+              type="button"
+              // disabled={isButtonDisabled}
+              onClick={handleChatBtnClick}
+            >
+              <FontAwesomeIcon icon={faCommentDots} /> Make Appoinment
+            </button>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

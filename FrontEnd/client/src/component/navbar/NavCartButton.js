@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import classes from "./NavCartButton.module.css";
 
 const NavCartButton = (props) => {
@@ -10,11 +10,7 @@ const NavCartButton = (props) => {
   const btnBump = `${classes.cart__button} ${
     btnIsHighlighted ? classes.bump : ""
   }`;
-  return (
-    <div  className={btnBump}>
-      Book Appointment
-    </div>
-  );
+  return <div className={btnBump}>Book Appointment</div>;
   //ENDS
 };
 

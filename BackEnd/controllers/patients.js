@@ -30,7 +30,7 @@ const addPatient = async (req, res) => {
     const hashPassword = await bcrypt.hash(req.body.password, salt);
     await new PatientModel({ ...req.body, password: hashPassword }).save();
 
-    res.status(201).send("User saved successfully!");
+    res.status(201).send({ message: "User saved successfully!" });
   } catch (error) {
     console.error("Error adding user:", error);
     res.status(500).send("Error adding user");

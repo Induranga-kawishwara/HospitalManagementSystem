@@ -7,6 +7,10 @@ const Signup = () => {
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
+    gender: "",
+    phonenumber: "",
+    address: "",
+    city: "",
     email: "",
     password: "",
   });
@@ -20,10 +24,10 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = "http://localhost:5000/patients";
-      const { data: res } = await axios.post(url, data);
+      const response = await axios.post("http://localhost:5000/patients", data);
+      alert(response.data.message);
       navigate("/login");
-      console.log(res.message);
+      // console.log(res.message);
     } catch (error) {
       if (
         error.response &&
@@ -67,47 +71,45 @@ const Signup = () => {
               required
               className={styles.input}
             />
-                              <select
-                    id="inputState"
-                    className={styles.input}
-                    onChange={handleChange}
-                  >
-                    <option disabled selected>
-                      Gender
-                    </option>
-                    <option value="Mr.">Male</option>
-                    <option value="Ms.">Female</option>
-                    <option value="Mrs.">Other</option>
-                  </select>   
+            <select
+              id="inputState"
+              name="gender"
+              className={styles.input}
+              onChange={handleChange}
+            >
+              <option selected>Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
 
-
-              <input
+            <input
               type="text"
               placeholder="Phone Number"
               name="phonenumber"
               onChange={handleChange}
-              value={data.lastName}
+              value={data.phonenumber}
               required
               className={styles.input}
             />
-                        <input
+            <input
               type="text"
               placeholder="Address"
-              name="lastName"
+              name="address"
               onChange={handleChange}
-              value={data.lastName}
+              value={data.address}
               required
               className={styles.input}
             />
-                        <input
+            <input
               type="text"
               placeholder="City"
-              name="lastName"
+              name="city"
               onChange={handleChange}
-              value={data.lastName}
+              value={data.city}
               required
               className={styles.input}
-            />       
+            />
             <input
               type="email"
               placeholder="Email"
