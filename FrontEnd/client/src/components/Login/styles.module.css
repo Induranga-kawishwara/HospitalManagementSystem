@@ -89,10 +89,53 @@
   font-weight: bold;
   font-size: 14px;
   cursor: pointer;
+  margin: 10px;
 }
 
 .green_btn {
   background-color: #be5851;
   color: white;
   margin: 10px;
+}
+
+
+@media (max-width: 850px) {
+  .login_form_container {
+    flex-direction: column;
+    width: 90%; /* Adjust width for smaller screens */
+    height: auto; /* Make height dynamic */
+    box-sizing: border-box;
+    padding: 20px;
+  }
+
+  .left,
+  .right {
+    flex: none;
+    width: 100%;
+    border-radius: 0;
+  }
+/* 
+  .left {
+    order: 4;
+  } */
+
+  .input,
+  .error_msg {
+    width: 90%;
+  }
+
+  .form_container h1 {
+    font-size: 20px;
+    margin: 200px;
+  }
+
+  .left h1 {
+    font-size: 30px;
+    margin: 10px;
+    text-align: center;
+  }
+
+  .green_btn{
+    width: 50%;
+  }
 }

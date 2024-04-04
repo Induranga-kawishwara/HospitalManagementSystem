@@ -40,13 +40,18 @@ const Signup = () => {
   };
 
   return (
+    <div
+    className="form-box"
+    style={{
+      marginTop: "100px",
+    }} >
     <div className={styles.signup_container}>
       <div className={styles.signup_form_container}>
         <div className={styles.left}>
-          <h1>Welcome Back</h1>
+          <h1>Do you have alredy Account</h1>
           <Link to="/login">
             <button type="button" className={styles.white_btn}>
-              Sing in
+              Login
             </button>
           </Link>
         </div>
@@ -135,6 +140,7 @@ const Signup = () => {
           </form>
         </div>
       </div>
+    </div>
     </div>
   );
 };
