@@ -5,7 +5,15 @@ import { staffValidation } from "../validations/validation.js";
 
 const getStaff = async (req, res) => {
   try {
-    const users = await StaffMemberModel.find();
+    const { staffType } = req.params;
+
+    let query = {};
+
+    if (staffType) {
+      query.staffType = staffType;
+    }
+
+    const users = await StaffMemberModel.find(query);
     res.status(200).json(users);
   } catch (error) {
     console.error("Error getting users:", error);
