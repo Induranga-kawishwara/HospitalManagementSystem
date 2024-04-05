@@ -98,7 +98,6 @@
   margin: 10px;
 }
 
-
 @media (max-width: 850px) {
   .login_form_container {
     flex-direction: column;
@@ -114,7 +113,7 @@
     width: 100%;
     border-radius: 0;
   }
-/* 
+  /* 
   .left {
     order: 4;
   } */
@@ -135,7 +134,7 @@
     text-align: center;
   }
 
-  .green_btn{
-    width: 50%;
+  .green_btn {
+    width: 60px;
   }
 }

@@ -9,7 +9,7 @@
 
 .signup_form_container {
   width: 900px;
-  height: 650px;
+  height: 750px;
   display: flex;
   border-radius: 10px;
   box-shadow: 0px 3px 3px -2px rgb(0 0 0 / 20%),
@@ -78,7 +78,6 @@
   text-align: center;
 }
 
-
 .green_btn {
   border: none;
   outline: none;
@@ -92,10 +91,10 @@
   color: white;
   margin: 15px;
 }
-.white_btn{
+.white_btn {
   border: none;
   outline: none;
-  padding: 10px ;
+  padding: 10px;
   background-color: white;
   border-radius: 20px;
   width: 120px;
@@ -104,10 +103,6 @@
   cursor: pointer;
   margin: 10px;
 }
-
-
-
-
 
 @media (max-width: 850px) {
   .signup_form_container {
@@ -124,7 +119,7 @@
     width: 100%;
     border-radius: 0;
   }
-/* 
+  /* 
   .left {
     order: 4;
   } */
@@ -145,7 +140,7 @@
     text-align: center;
   }
 
-  .green_btn{
+  .green_btn {
     width: 50%;
   }
 }
