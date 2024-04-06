@@ -7,7 +7,7 @@ const StaffSchema = new Schema(
     staffID: {
       type: String,
       required: true,
-      unique: true, // Ensure staff ID is unique across all entries
+      unique: true,
     },
     firstName: {
       type: String,
@@ -24,7 +24,7 @@ const StaffSchema = new Schema(
     staffType: {
       type: String,
       required: true,
-      enum: ["Doctor", "Nurse", "Cleaner", "Administrative", "Other"], // Define allowable roles
+      enum: ["Doctor", "Nurse", "Cleaner", "Administrative", "Other"],
     },
     phoneNum: {
       type: String,

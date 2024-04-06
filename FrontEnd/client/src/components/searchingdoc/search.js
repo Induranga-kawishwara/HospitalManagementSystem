@@ -4,6 +4,7 @@ import axios from "axios";
 
 export default function Profile() {
   const [doctors, setDoctors] = useState({});
+  const [specializations, setSpecializations] = useState([]);
   const [specialization, setSpecialization] = useState("default");
   const [hospital, setHospital] = useState("default");
 
@@ -11,7 +12,13 @@ export default function Profile() {
     const fetchData = async () => {
       try {
         const result = await axios.get("http://localhost:5000/users/Doctor");
-        setDoctors(result.data);
+        setDoctors(result.data.data);
+        console.log(doctors);
+        console.log(result.data.messages);
+
+        // const fetchedSpecializations = doctors.map((doctor) =>
+        //   console.log(doctor)
+        // );
       } catch (error) {
         console.log(error);
       }
@@ -70,7 +77,11 @@ export default function Profile() {
                 onChange={handleSpecializationChange}
               >
                 <option value="default">Any Specialization</option>
-                <option value="Counselor">Counselor</option>
+                {specializations.map((spec, index) => (
+                  <option key={index} value={spec}>
+                    {spec}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
