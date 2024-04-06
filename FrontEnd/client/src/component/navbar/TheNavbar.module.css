@@ -1,5 +1,5 @@
 .navbar {
-  background-color:#ffffff;
+  background-color: #ffffff;
   padding: 10px 5rem;
 }
 
@@ -35,7 +35,6 @@
   box-shadow: none !important;
 }
 
-
 .navbar .nav__link .active {
   color: var(--primaryitemcolor) !important;
   text-decoration: none;
@@ -46,7 +45,7 @@
 }
 
 .navbar .nav__link:hover {
-  color: #1A8EFD;
+  color: #1a8efd;
 }
 
 @media only screen and (max-width: 1200px) {
@@ -65,15 +64,21 @@
   border: 1px solid transparent;
   border-radius: 28px;
   outline: transparent;
-  background-color: #1A8EFD;
+  background-color: #1a8efd;
   font-size: 18px;
-  font-family: 'Rubik', sans-serif;
-  letter-spacing: .8px;
+  font-family: "Rubik", sans-serif;
+  letter-spacing: 0.8px;
   cursor: pointer;
-  transition: all .4s ease;
+  transition: all 0.4s ease;
 }
 .navbar-btn:hover {
-  color: #1A8EFD;
+  color: #1a8efd;
   background-color: white;
-  border: 1px solid #1A8EFD;
+  border: 1px solid #1a8efd;
+}
+
+.navbar-btn,
+.nav__link a,
+.nav__link a:hover {
+  cursor: pointer;
 }
