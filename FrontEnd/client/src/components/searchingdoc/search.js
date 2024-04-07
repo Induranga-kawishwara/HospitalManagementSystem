@@ -6,13 +6,23 @@ export default function Profile() {
   const [doctors, setDoctors] = useState([]);
   const [doctor, setDoctor] = useState(null);
   const [branch, setBranch] = useState("");
+  const [userdata, setUserdata] = useState({});
+  const [phone, setPhone] = useState("");
+
+  // const [data , setData] = useState({ doctorId: "", patientId: "", consultationDate: "", contactNum: ""})
   const [specializations, setSpecializations] = useState([]);
   const [specialization, setSpecialization] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [date, setdate] = useState();
+  const [date, setdate] = useState("");
 
   useEffect(() => {
+    const data = localStorage.getItem("user");
+    setUserdata(data);
+    // setPhone(data.phonenumber);
+    console.log(data.phonenumber);
+    console.log(userdata.name);
+
     const fetchData = async () => {
       setLoading(true);
       try {
@@ -51,7 +61,6 @@ export default function Profile() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Searching for appointments", { doctor, branch });
   };
 
   if (loading) return <div>Loading...</div>;
@@ -160,6 +169,27 @@ export default function Profile() {
                 disabled={!doctors || !specialization || !doctor || !branch}
                 className="form-control"
                 onChange={handleDateChange}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="paddingspace">
+          <div className="form-group row">
+            <label htmlFor="date" className="col-sm-2 col-form-label">
+              Phone Number
+            </label>
+            <div className="col-sm-10">
+              <input
+                type="text"
+                id="phoneNo"
+                name="PhoneNo"
+                value={phone}
+                placeholder="Phone Number"
+                disabled={
+                  !doctors || !specialization || !doctor || !branch || !date
+                }
+                className="form-control"
+                // onChange={handleDateChange}
               />
             </div>
           </div>

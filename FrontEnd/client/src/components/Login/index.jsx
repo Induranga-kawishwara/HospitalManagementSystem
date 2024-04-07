@@ -14,10 +14,10 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = "http://localhost:5000/auth";
-      const { data: res } = await axios.post(url, data);
-      localStorage.setItem("token", res.data);
-      window.location = "/";
+      const res = await axios.post("http://localhost:5000/auth", data);
+      localStorage.setItem("token", res.data.data);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
+      window.location = "/docsearch";
     } catch (error) {
       if (
         error.response &&
@@ -55,11 +55,11 @@ const Login = () => {
             />
             {error && <div className={styles.error_msg}>{error}</div>}
 
-            <Link to="/docsearch">
-              <button type="submit" className={styles.green_btn}>
-                Login
-              </button>
-            </Link>
+            {/* <Link to="/docsearch"> */}
+            <button type="submit" className={styles.green_btn}>
+              Login
+            </button>
+            {/* </Link> */}
           </form>
         </div>
         <div className={styles.right}>

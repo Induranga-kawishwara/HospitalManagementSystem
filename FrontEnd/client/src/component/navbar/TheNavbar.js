@@ -13,7 +13,7 @@ const TheNavbar = () => {
   const navigate = useNavigate();
 
   const handleChatBtnClick = () => {
-    navigate("/Login");
+    navigate("/docsearch");
   };
 
   return (

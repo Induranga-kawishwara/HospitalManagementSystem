@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Doctor from "../assets/doctor-picture.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarCheck, faAngleUp } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate  } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./home.css";
 
 function Hero() {
@@ -14,7 +14,7 @@ function Hero() {
   };
 
   const handleBookAppointmentClick = () => {
-    navigate("/Login");
+    navigate("/docsearch");
   };
 
   useEffect(() => {
@@ -34,61 +34,62 @@ function Hero() {
 
   return (
     <div
-    className="form-box"
-    style={{
-      marginTop: "100px",
-    }} >
-    <div className="section-container">
-      <div className="hero-section">
-        <div className="text-section">
-          <p className="text-headline">❤️ Health comes first</p>
-          <h2 className="text-title">
-            Find your Doctor and make an Appointments
-          </h2>
-          <p className="text-descritpion">
-            Talk to online doctors and get medical advice, online prescriptions,
-            refills and medical notes within minutes. On-demand healthcare
-            services at your fingertips.
-          </p>
-          
-          <button
-            className="text-appointment-btn"
-            type="button"
-            onClick={handleBookAppointmentClick}
-          >
-            <FontAwesomeIcon icon={faCalendarCheck} /> Book Appointment
-          </button>
-          <div className="text-stats">
-            <div className="text-stats-container">
-              <p>145k+</p>
-              <p>Receive Patients</p>
-            </div>
+      className="form-box"
+      style={{
+        marginTop: "100px",
+      }}
+    >
+      <div className="section-container">
+        <div className="hero-section">
+          <div className="text-section">
+            <p className="text-headline">❤️ Health comes first</p>
+            <h2 className="text-title">
+              Find your Doctor and make an Appointments
+            </h2>
+            <p className="text-descritpion">
+              Talk to online doctors and get medical advice, online
+              prescriptions, refills and medical notes within minutes. On-demand
+              healthcare services at your fingertips.
+            </p>
 
-            <div className="text-stats-container">
-              <p>50+</p>
-              <p>Expert Doctors</p>
-            </div>
+            <button
+              className="text-appointment-btn"
+              type="button"
+              onClick={handleBookAppointmentClick}
+            >
+              <FontAwesomeIcon icon={faCalendarCheck} /> Book Appointment
+            </button>
+            <div className="text-stats">
+              <div className="text-stats-container">
+                <p>145k+</p>
+                <p>Receive Patients</p>
+              </div>
 
-            <div className="text-stats-container">
-              <p>10+</p>
-              <p>Years of Experience</p>
+              <div className="text-stats-container">
+                <p>50+</p>
+                <p>Expert Doctors</p>
+              </div>
+
+              <div className="text-stats-container">
+                <p>10+</p>
+                <p>Years of Experience</p>
+              </div>
             </div>
+          </div>
+
+          <div className="hero-image-section">
+            <img className="hero-image1" src={Doctor} alt="Doctor" />
           </div>
         </div>
 
-        <div className="hero-image-section">
-          <img className="hero-image1" src={Doctor} alt="Doctor" />
+        <div
+          onClick={scrollToTop}
+          className={`scroll-up ${goUp ? "show-scroll" : ""}`}
+        >
+          <FontAwesomeIcon icon={faAngleUp} />
         </div>
       </div>
-
-      <div
-        onClick={scrollToTop}
-        className={`scroll-up ${goUp ? "show-scroll" : ""}`}
-      >
-        <FontAwesomeIcon icon={faAngleUp} />
-      </div>
-      </div>
-      </div>
+    </div>
   );
 }
 
