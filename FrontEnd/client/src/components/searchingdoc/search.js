@@ -10,6 +10,7 @@ export default function Profile() {
   const [specialization, setSpecialization] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [date, setdate] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,6 +33,9 @@ export default function Profile() {
 
   const handleDoctorBranchChange = (event) => {
     setBranch(event.target.value);
+  };
+  const handleDateChange = (event) => {
+    setdate(event.target.value);
   };
 
   const handleDoctorChange = (event) => {
@@ -100,7 +104,7 @@ export default function Profile() {
                 id="inputDoctor"
                 className="form-control"
                 onChange={handleDoctorChange}
-                disabled={!specialization}
+                disabled={!doctors || !specialization}
               >
                 <option value="default">Select a Doctor</option>
                 {doctors
@@ -128,7 +132,7 @@ export default function Profile() {
                 className="form-control"
                 value={branch}
                 onChange={handleDoctorBranchChange}
-                disabled={!doctor}
+                disabled={!doctors || !specialization || !doctor}
               >
                 <option value="default">Which Hospital</option>
                 {doctor &&
@@ -152,7 +156,10 @@ export default function Profile() {
                 type="date"
                 id="date"
                 name="date"
+                value={date}
+                disabled={!doctors || !specialization || !doctor || !branch}
                 className="form-control"
+                onChange={handleDateChange}
               />
             </div>
           </div>
