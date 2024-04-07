@@ -3,7 +3,8 @@ import "./search.css";
 import axios from "axios";
 
 export default function Profile() {
-  const [doctors, setDoctors] = useState({});
+  const [doctors, setDoctors] = useState([]);
+  const [doctor, setDoctor] = useState("default");
   const [specializations, setSpecializations] = useState([]);
   const [specialization, setSpecialization] = useState("default");
   const [hospital, setHospital] = useState("default");
@@ -23,6 +24,10 @@ export default function Profile() {
     };
     fetchData();
   }, []);
+
+  const handleDoctorChange = (event) => {
+    setDoctor(event.target.value);
+  };
 
   const handleSpecializationChange = (event) => {
     setSpecialization(event.target.value);
@@ -75,12 +80,22 @@ export default function Profile() {
               Doctor Name
             </label>
             <div className="col-sm-10">
-              <input
-                type="text"
+              <select
+                id="inputDoctor"
                 className="form-control"
-                id="inputName"
-                placeholder="Doctor Name"
-              />
+                value={doctor}
+                onChange={handleDoctorChange}
+              >
+                <option value="default">Select a Doctor</option>
+                {doctors.map(
+                  (doc, index) =>
+                    doc.roleDetails.specialization === specialization && (
+                      <option key={index} value={doc.staffID}>
+                        {`Dr. ${doc.firstName} ${doc.lastName}`}
+                      </option>
+                    )
+                )}
+              </select>
             </div>
           </div>
         </div>
