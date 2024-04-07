@@ -21,6 +21,10 @@ const ConsultationSchema = new Schema({
         type: String,
         required: true,
       },
+      branchName: {
+        type: String,
+        required: true,
+      },
     },
   ],
 });

@@ -4,7 +4,8 @@ import axios from "axios";
 
 export default function Profile() {
   const [doctors, setDoctors] = useState([]);
-  const [doctor, setDoctor] = useState("default");
+  const [doctor, setDoctor] = useState();
+  const [branch, setBranch] = useState();
   const [specializations, setSpecializations] = useState([]);
   const [specialization, setSpecialization] = useState("default");
   const [hospital, setHospital] = useState("default");
@@ -24,6 +25,10 @@ export default function Profile() {
     };
     fetchData();
   }, []);
+
+  const handleDoctorBranchChange = (event) => {
+    setBranch(event.target.value);
+  };
 
   const handleDoctorChange = (event) => {
     setDoctor(event.target.value);
@@ -83,14 +88,14 @@ export default function Profile() {
               <select
                 id="inputDoctor"
                 className="form-control"
-                value={doctor}
+                // value={doctor}
                 onChange={handleDoctorChange}
               >
                 <option value="default">Select a Doctor</option>
                 {doctors.map(
                   (doc, index) =>
                     doc.roleDetails.specialization === specialization && (
-                      <option key={index} value={doc.staffID}>
+                      <option key={index} value={doc}>
                         {`Dr. ${doc.firstName} ${doc.lastName}`}
                       </option>
                     )
@@ -109,11 +114,15 @@ export default function Profile() {
               <select
                 id="inputHospital"
                 className="form-control"
-                value={hospital}
-                onChange={handleHospitalChange}
+                // value={hospital}
+                onChange={handleDoctorBranchChange}
               >
                 <option value="default">Which Hospital</option>
-                <option value="colombo">Colombo</option>
+                {doctor.hospitalBranch.map((spec, index) => (
+                  <option key={index} value={spec}>
+                    {spec}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
