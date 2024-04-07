@@ -46,21 +46,6 @@ export default function Profile() {
         <br />
         <div className="paddingspace">
           <div className="form-group row">
-            <label htmlFor="inputName" className="col-sm-2 col-form-label">
-              Doctor Name
-            </label>
-            <div className="col-sm-10">
-              <input
-                type="text"
-                className="form-control"
-                id="inputName"
-                placeholder="Doctor Name"
-              />
-            </div>
-          </div>
-        </div>
-        <div className="paddingspace">
-          <div className="form-group row">
             <label
               htmlFor="inputSpecialization"
               className="col-sm-2 col-form-label"
@@ -84,6 +69,22 @@ export default function Profile() {
             </div>
           </div>
         </div>
+        <div className="paddingspace">
+          <div className="form-group row">
+            <label htmlFor="inputName" className="col-sm-2 col-form-label">
+              Doctor Name
+            </label>
+            <div className="col-sm-10">
+              <input
+                type="text"
+                className="form-control"
+                id="inputName"
+                placeholder="Doctor Name"
+              />
+            </div>
+          </div>
+        </div>
+
         <div className="paddingspace">
           <div className="form-group row">
             <label htmlFor="inputHospital" className="col-sm-2 col-form-label">

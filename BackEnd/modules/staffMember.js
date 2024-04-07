@@ -39,6 +39,10 @@ const StaffSchema = new Schema(
       required: true,
       unique: true,
     },
+    hospitalBranch: {
+      type: String,
+      required: true,
+    },
     roleDetails: {
       department: { type: String },
       shift: { type: String },
