@@ -4,11 +4,11 @@ import axios from "axios";
 
 export default function Profile() {
   const [doctors, setDoctors] = useState([]);
-  const [doctor, setDoctor] = useState();
+  const [doctor, setDoctor] = useState(null);
   const [branch, setBranch] = useState();
   const [specializations, setSpecializations] = useState([]);
   const [specialization, setSpecialization] = useState("default");
-  const [hospital, setHospital] = useState("default");
+  // const [hospital, setHospital] = useState("default");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,15 +31,14 @@ export default function Profile() {
   };
 
   const handleDoctorChange = (event) => {
-    setDoctor(event.target.value);
+    const selectedDoc = doctors.find(
+      (doc) => doc.staffID === event.target.value
+    );
+    setDoctor(selectedDoc);
   };
 
   const handleSpecializationChange = (event) => {
     setSpecialization(event.target.value);
-  };
-
-  const handleHospitalChange = (event) => {
-    setHospital(event.target.value);
   };
 
   return (
@@ -88,18 +87,19 @@ export default function Profile() {
               <select
                 id="inputDoctor"
                 className="form-control"
-                // value={doctor}
+                // value={doctor.firstName}
                 onChange={handleDoctorChange}
               >
                 <option value="default">Select a Doctor</option>
-                {doctors.map(
-                  (doc, index) =>
-                    doc.roleDetails.specialization === specialization && (
-                      <option key={index} value={doc}>
-                        {`Dr. ${doc.firstName} ${doc.lastName}`}
-                      </option>
-                    )
-                )}
+                {doctors
+                  .filter(
+                    (doc) => doc.roleDetails.specialization === specialization
+                  )
+                  .map((doc, index) => (
+                    <option key={index} value={doc.staffID}>
+                      {`Dr. ${doc.firstName} ${doc.lastName}`}
+                    </option>
+                  ))}
               </select>
             </div>
           </div>
@@ -111,22 +111,27 @@ export default function Profile() {
               Any Hospital
             </label>
             <div className="col-sm-10">
-              <select
-                id="inputHospital"
-                className="form-control"
-                // value={hospital}
-                onChange={handleDoctorBranchChange}
-              >
-                <option value="default">Which Hospital</option>
-                {doctor.hospitalBranch.map((spec, index) => (
-                  <option key={index} value={spec}>
-                    {spec}
-                  </option>
-                ))}
-              </select>
+              <div className="col-sm-10">
+                <select
+                  id="inputHospital"
+                  className="form-control"
+                  value={branch}
+                  onChange={handleDoctorBranchChange}
+                >
+                  <option value="default">Which Hospital</option>
+                  {doctor &&
+                    doctor.hospitalBranch &&
+                    doctor.hospitalBranch.map((branch, index) => (
+                      <option key={index} value={branch}>
+                        {branch}
+                      </option>
+                    ))}
+                </select>
+              </div>
             </div>
           </div>
         </div>
+
         <div className="paddingspace">
           <div className="form-group row">
             <label htmlFor="birthday" className="col-sm-2 col-form-label">
