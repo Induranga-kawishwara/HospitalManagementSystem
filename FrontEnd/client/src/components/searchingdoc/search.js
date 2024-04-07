@@ -157,10 +157,10 @@ export default function Profile() {
             </div>
           </div>
         </div>
-        <button type="submit" className="buttonpri">
+        <button type="button" className="buttonpri">
           Search
         </button>
-        <button type="button" className="buttonpri2">
+        <button type="submit" className="buttonpri2">
           Booked Appointment
         </button>
       </form>
