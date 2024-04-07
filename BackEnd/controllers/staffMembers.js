@@ -4,7 +4,6 @@ dotenv.config();
 import { staffValidation } from "../validations/validation.js";
 
 const getStaff = async (req, res) => {
-  console.log("awa");
   try {
     const { staffType } = req.params;
 

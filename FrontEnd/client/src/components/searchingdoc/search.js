@@ -12,13 +12,11 @@ export default function Profile() {
     const fetchData = async () => {
       try {
         const result = await axios.get("http://localhost:5000/users/Doctor");
-        setDoctors(result.data.data);
-        console.log(doctors);
-        console.log(result.data.messages);
-
-        // const fetchedSpecializations = doctors.map((doctor) =>
-        //   console.log(doctor)
-        // );
+        setDoctors(result.data);
+        const fetchedSpecializations = result.data.map((doctor) => {
+          return doctor.roleDetails.specialization;
+        });
+        setSpecializations(fetchedSpecializations);
       } catch (error) {
         console.log(error);
       }
