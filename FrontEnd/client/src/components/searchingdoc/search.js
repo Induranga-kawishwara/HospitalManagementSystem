@@ -1,27 +1,31 @@
 import React, { useEffect, useState } from "react";
-import "./search.css";
 import axios from "axios";
+import "./search.css";
 
 export default function Profile() {
   const [doctors, setDoctors] = useState([]);
   const [doctor, setDoctor] = useState(null);
-  const [branch, setBranch] = useState();
+  const [branch, setBranch] = useState("");
   const [specializations, setSpecializations] = useState([]);
-  const [specialization, setSpecialization] = useState("default");
-  // const [hospital, setHospital] = useState("default");
+  const [specialization, setSpecialization] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
         const result = await axios.get("http://localhost:5000/users/Doctor");
         setDoctors(result.data);
-        const fetchedSpecializations = result.data.map((doctor) => {
-          return doctor.roleDetails.specialization;
-        });
-        setSpecializations(fetchedSpecializations);
+        const uniqueSpecializations = [
+          ...new Set(result.data.map((doc) => doc.roleDetails.specialization)),
+        ];
+        setSpecializations(uniqueSpecializations);
       } catch (error) {
-        console.log(error);
+        console.error("Failed to fetch data:", error);
+        setError("Failed to load data. Please try again later.");
       }
+      setLoading(false);
     };
     fetchData();
   }, []);
@@ -41,6 +45,14 @@ export default function Profile() {
     setSpecialization(event.target.value);
   };
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log("Searching for appointments", { doctor, branch });
+  };
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+
   return (
     <div
       style={{
@@ -50,7 +62,7 @@ export default function Profile() {
         marginRight: "40px",
       }}
     >
-      <form>
+      <form onSubmit={handleSubmit}>
         <h1>Search Doctor</h1>
         <br />
         <div className="paddingspace">
@@ -68,7 +80,7 @@ export default function Profile() {
                 value={specialization}
                 onChange={handleSpecializationChange}
               >
-                <option value="default">Any Specialization</option>
+                <option value="">Any Specialization</option>
                 {specializations.map((spec, index) => (
                   <option key={index} value={spec}>
                     {spec}
@@ -80,15 +92,15 @@ export default function Profile() {
         </div>
         <div className="paddingspace">
           <div className="form-group row">
-            <label htmlFor="inputName" className="col-sm-2 col-form-label">
+            <label htmlFor="inputDoctor" className="col-sm-2 col-form-label">
               Doctor Name
             </label>
             <div className="col-sm-10">
               <select
                 id="inputDoctor"
                 className="form-control"
-                // value={doctor.firstName}
                 onChange={handleDoctorChange}
+                disabled={!specialization}
               >
                 <option value="default">Select a Doctor</option>
                 {doctors
@@ -96,45 +108,43 @@ export default function Profile() {
                     (doc) => doc.roleDetails.specialization === specialization
                   )
                   .map((doc, index) => (
-                    <option key={index} value={doc.staffID}>
-                      {`Dr. ${doc.firstName} ${doc.lastName}`}
-                    </option>
+                    <option
+                      key={index}
+                      value={doc.staffID}
+                    >{`Dr. ${doc.firstName} ${doc.lastName}`}</option>
                   ))}
               </select>
             </div>
           </div>
         </div>
-
         <div className="paddingspace">
           <div className="form-group row">
             <label htmlFor="inputHospital" className="col-sm-2 col-form-label">
               Any Hospital
             </label>
             <div className="col-sm-10">
-              <div className="col-sm-10">
-                <select
-                  id="inputHospital"
-                  className="form-control"
-                  value={branch}
-                  onChange={handleDoctorBranchChange}
-                >
-                  <option value="default">Which Hospital</option>
-                  {doctor &&
-                    doctor.hospitalBranch &&
-                    doctor.hospitalBranch.map((branch, index) => (
-                      <option key={index} value={branch}>
-                        {branch}
-                      </option>
-                    ))}
-                </select>
-              </div>
+              <select
+                id="inputHospital"
+                className="form-control"
+                value={branch}
+                onChange={handleDoctorBranchChange}
+                disabled={!doctor}
+              >
+                <option value="default">Which Hospital</option>
+                {doctor &&
+                  doctor.hospitalBranch &&
+                  doctor.hospitalBranch.map((branch, index) => (
+                    <option key={index} value={branch}>
+                      {branch}
+                    </option>
+                  ))}
+              </select>
             </div>
           </div>
         </div>
-
         <div className="paddingspace">
           <div className="form-group row">
-            <label htmlFor="birthday" className="col-sm-2 col-form-label">
+            <label htmlFor="date" className="col-sm-2 col-form-label">
               Appointment Date
             </label>
             <div className="col-sm-10">
@@ -150,7 +160,7 @@ export default function Profile() {
         <button type="submit" className="buttonpri">
           Search
         </button>
-        <button type="submit" className="buttonpri2">
+        <button type="button" className="buttonpri2">
           Booked Appointment
         </button>
       </form>
