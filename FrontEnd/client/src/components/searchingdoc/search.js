@@ -18,10 +18,11 @@ export default function Profile() {
 
   useEffect(() => {
     const data = localStorage.getItem("user");
-    setUserdata(data);
+    const userObject = JSON.parse(data);
+    setUserdata(userObject);
     // setPhone(data.phonenumber);
-    console.log(data.phonenumber);
-    console.log(userdata.name);
+    setPhone(userObject.phonenumber);
+    console.log(userObject);
 
     const fetchData = async () => {
       setLoading(true);
@@ -57,6 +58,9 @@ export default function Profile() {
 
   const handleSpecializationChange = (event) => {
     setSpecialization(event.target.value);
+  };
+  const handlePhonenumberChange = (event) => {
+    setPhone(event.target.value);
   };
 
   const handleSubmit = (event) => {
@@ -189,7 +193,7 @@ export default function Profile() {
                   !doctors || !specialization || !doctor || !branch || !date
                 }
                 className="form-control"
-                // onChange={handleDateChange}
+                onChange={handlePhonenumberChange}
               />
             </div>
           </div>
