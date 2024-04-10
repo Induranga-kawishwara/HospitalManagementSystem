@@ -50,7 +50,21 @@ function Doctors() {
           title="Hematologists"
           stars="4.8"
           reviews="500"
-        />
+        />        
+        <DoctorCard
+        img={profile4}
+        name="Dr. Albert Flores"
+        title="Hematologists"
+        stars="4.8"
+        reviews="500"
+      />        
+      <DoctorCard
+      img={profile4}
+      name="Dr. Albert Flores"
+      title="Hematologists"
+      stars="4.8"
+      reviews="500"
+    />
       </div>
     </div>
   );

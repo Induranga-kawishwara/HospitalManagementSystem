@@ -1,5 +1,5 @@
 .navbar-btn {
-    padding: 14px 20px;
+    padding: 10px 15px;
     color: white;
     border: 1px solid transparent;
     border-radius: 28px;
@@ -15,4 +15,29 @@
     color: #1A8EFD;
     background-color: white;
     border: 1px solid #1A8EFD;
+}
+
+@media (max-width: 768px) {
+
+    .navbar-btn {
+        color: white;
+        border: 1px solid transparent;
+        border-radius: 28px;
+        outline: transparent;
+        background-color: #1A8EFD;
+        font-size: 18px;
+        font-family: 'Rubik', sans-serif;
+        letter-spacing: .8px;
+        cursor: pointer;
+        transition: all .4s ease;
+        margin-top: 30px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    .center-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
 }
