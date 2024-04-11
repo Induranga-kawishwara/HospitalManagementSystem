@@ -12,7 +12,33 @@ const getConsultations = async (req, res) => {
 
 const newConsultation = async (req, res) => {
   try {
-    const Con = new ConsultationModel({
+    let consultation = await ConsultationModel.findOne({
+      doctorId: req.body.doctorId,
+    });
+
+    if (consultation) {
+      const existingEntry = consultation.consultations.find(
+        (entry) =>
+          entry.patientId === req.body.patientId &&
+          entry.consultationDate === req.body.consultationDate
+      );
+
+      if (!existingEntry) {
+        consultation.consultations.push({
+          patientId: req.body.patientId,
+          consultationDate: req.body.consultationDate,
+          specialization: req.body.specialization,
+          branchName: req.body.branch,
+          contactNum: req.body.PhoneNo,
+        });
+        await consultation.save();
+        return res
+          .status(200)
+          .send({ message: "Consultation saved successfully!" });
+      }
+    }
+
+    consultation = new ConsultationModel({
       doctorId: req.body.doctorId,
       consultations: [
         {
@@ -24,7 +50,7 @@ const newConsultation = async (req, res) => {
         },
       ],
     });
-    await Con.save();
+    await consultation.save();
     res.status(201).send("Consultation saved successfully!");
   } catch (error) {
     console.error("Error adding consultation:", error);
