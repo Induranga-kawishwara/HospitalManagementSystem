@@ -2,28 +2,23 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./search.css";
 
-export default function Profile() {
+function Profile() {
   const [doctors, setDoctors] = useState([]);
   const [doctor, setDoctor] = useState(null);
-  const [branch, setBranch] = useState("");
   const [userdata, setUserdata] = useState({});
-  const [phone, setPhone] = useState("");
-
-  // const [data , setData] = useState({ doctorId: "", patientId: "", consultationDate: "", contactNum: ""})
+  const [data, setData] = useState({
+    doctorId: "",
+    patientId: "",
+    consultationDate: "",
+    specialization: "",
+    branch: "",
+    PhoneNo: "",
+  });
   const [specializations, setSpecializations] = useState([]);
-  const [specialization, setSpecialization] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [date, setdate] = useState("");
 
   useEffect(() => {
-    const data = localStorage.getItem("user");
-    const userObject = JSON.parse(data);
-    setUserdata(userObject);
-    // setPhone(data.phonenumber);
-    setPhone(userObject.phonenumber);
-    console.log(userObject);
-
     const fetchData = async () => {
       setLoading(true);
       try {
@@ -42,11 +37,25 @@ export default function Profile() {
     fetchData();
   }, []);
 
-  const handleDoctorBranchChange = (event) => {
-    setBranch(event.target.value);
-  };
-  const handleDateChange = (event) => {
-    setdate(event.target.value);
+  useEffect(() => {
+    const userDataString = localStorage.getItem("user");
+    if (userDataString) {
+      try {
+        setUserdata(JSON.parse(userDataString));
+        setData((data) => ({
+          ...data,
+          PhoneNo: userdata.phonenumber || "",
+          patientId: userdata.id || "",
+        }));
+      } catch (error) {
+        console.error("Failed to parse user data:", error);
+        setError("Failed to parse user data. Please try again later.");
+      }
+    }
+  }, [userdata.id, userdata.phonenumber]);
+
+  const handleChange = ({ currentTarget: input }) => {
+    setData({ ...data, [input.name]: input.value });
   };
 
   const handleDoctorChange = (event) => {
@@ -54,17 +63,12 @@ export default function Profile() {
       (doc) => doc.staffID === event.target.value
     );
     setDoctor(selectedDoc);
+    setData({ ...data, doctorId: event.target.value });
   };
 
-  const handleSpecializationChange = (event) => {
-    setSpecialization(event.target.value);
-  };
-  const handlePhonenumberChange = (event) => {
-    setPhone(event.target.value);
-  };
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log(data);
   };
 
   if (loading) return <div>Loading...</div>;
@@ -94,8 +98,9 @@ export default function Profile() {
               <select
                 id="inputSpecialization"
                 className="form-control"
-                value={specialization}
-                onChange={handleSpecializationChange}
+                value={data.specialization}
+                name="specialization"
+                onChange={handleChange}
               >
                 <option value="">Any Specialization</option>
                 {specializations.map((spec, index) => (
@@ -107,6 +112,7 @@ export default function Profile() {
             </div>
           </div>
         </div>
+
         <div className="paddingspace">
           <div className="form-group row">
             <label htmlFor="inputDoctor" className="col-sm-2 col-form-label">
@@ -117,18 +123,18 @@ export default function Profile() {
                 id="inputDoctor"
                 className="form-control"
                 onChange={handleDoctorChange}
-                disabled={!doctors || !specialization}
+                disabled={!doctors || !data.specialization}
               >
                 <option value="default">Select a Doctor</option>
                 {doctors
                   .filter(
-                    (doc) => doc.roleDetails.specialization === specialization
+                    (doc) =>
+                      doc.roleDetails.specialization === data.specialization
                   )
                   .map((doc, index) => (
-                    <option
-                      key={index}
-                      value={doc.staffID}
-                    >{`Dr. ${doc.firstName} ${doc.lastName}`}</option>
+                    <option key={index} value={doc.staffID}>
+                      {`Dr. ${doc.firstName} ${doc.lastName}`}
+                    </option>
                   ))}
               </select>
             </div>
@@ -143,9 +149,10 @@ export default function Profile() {
               <select
                 id="inputHospital"
                 className="form-control"
-                value={branch}
-                onChange={handleDoctorBranchChange}
-                disabled={!doctors || !specialization || !doctor}
+                name="branch"
+                value={data.branch}
+                onChange={handleChange}
+                disabled={!doctors || !data.specialization || !doctor}
               >
                 <option value="default">Which Hospital</option>
                 {doctor &&
@@ -168,11 +175,13 @@ export default function Profile() {
               <input
                 type="date"
                 id="date"
-                name="date"
-                value={date}
-                disabled={!doctors || !specialization || !doctor || !branch}
+                name="consultationDate"
+                value={data.consultationDate}
+                disabled={
+                  !doctors || !data.specialization || !doctor || !data.branch
+                }
                 className="form-control"
-                onChange={handleDateChange}
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -187,24 +196,30 @@ export default function Profile() {
                 type="text"
                 id="phoneNo"
                 name="PhoneNo"
-                value={phone}
+                value={data.PhoneNo}
                 placeholder="Phone Number"
                 disabled={
-                  !doctors || !specialization || !doctor || !branch || !date
+                  !doctors ||
+                  !data.specialization ||
+                  !doctor ||
+                  !data.branch ||
+                  !data.consultationDate
                 }
                 className="form-control"
-                onChange={handlePhonenumberChange}
+                onChange={handleChange}
               />
             </div>
           </div>
         </div>
-        <button type="button" className="buttonpri">
-          Book Appoinment
+        <button type="submit" className="buttonpri">
+          Book Appointment
         </button>
-        <button type="submit" className="buttonpri2">
+        <button type="button" className="buttonpri2">
           Appointment History
         </button>
       </form>
     </div>
   );
 }
+
+export default Profile;
