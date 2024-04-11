@@ -5,8 +5,14 @@ import profile2 from "../assets/profile-2.png";
 import profile3 from "../assets/profile-3.png";
 import profile4 from "../assets/profile-4.png";
 import "./Doctors.css";
+import { useNavigate  } from "react-router-dom";
 
 function Doctors() {
+  const navigate = useNavigate();
+
+  const handledoclistClick = () => {
+    navigate("/doclist");
+  };
   return (
     <div className="doctor-section" id="doctors">
       <div className="dt-title-content">
@@ -65,8 +71,21 @@ function Doctors() {
       stars="4.8"
       reviews="500"
     />
+
+
       </div>
-    </div>
+      <div className="navbar-btn2">
+      <button
+          className="text-appointment-btn"
+          type="button"
+          onClick={handledoclistClick}          
+        >
+        See all Doctors
+        </button>
+        </div>
+        </div>
+    
+    
   );
 }
 
