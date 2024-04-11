@@ -68,7 +68,26 @@ function Profile() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(data);
+    try {
+      const res = await axios.post("http://localhost:5000/consultations", data);
+      setData((data) => ({
+        ...data,
+        PhoneNo: userdata.phonenumber || "",
+        doctorId: "",
+        consultationDate: "",
+        specialization: "",
+        branch: "",
+      }));
+      alert(res.data);
+    } catch (error) {
+      if (
+        error.response &&
+        error.response.status >= 400 &&
+        error.response.status <= 500
+      ) {
+        setError(error.response.data.message);
+      }
+    }
   };
 
   if (loading) return <div>Loading...</div>;

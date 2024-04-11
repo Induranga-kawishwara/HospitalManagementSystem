@@ -12,7 +12,19 @@ const getConsultations = async (req, res) => {
 
 const newConsultation = async (req, res) => {
   try {
-    await new ConsultationModel(req.body).save();
+    const Con = new ConsultationModel({
+      doctorId: req.body.doctorId,
+      consultations: [
+        {
+          patientId: req.body.patientId,
+          consultationDate: req.body.consultationDate,
+          specialization: req.body.specialization,
+          branchName: req.body.branch,
+          contactNum: req.body.PhoneNo,
+        },
+      ],
+    });
+    await Con.save();
     res.status(201).send("Consultation saved successfully!");
   } catch (error) {
     console.error("Error adding consultation:", error);

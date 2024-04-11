@@ -17,11 +17,15 @@ const ConsultationSchema = new Schema({
         type: Date,
         required: true,
       },
-      contactNum: {
+      specialization: {
         type: String,
         required: true,
       },
       branchName: {
+        type: String,
+        required: true,
+      },
+      contactNum: {
         type: String,
         required: true,
       },
