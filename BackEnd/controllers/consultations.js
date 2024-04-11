@@ -20,7 +20,8 @@ const newConsultation = async (req, res) => {
       const existingEntry = consultation.consultations.find(
         (entry) =>
           entry.patientId === req.body.patientId &&
-          entry.consultationDate === req.body.consultationDate
+          new Date(entry.consultationDate).toISOString() ===
+            new Date(req.body.consultationDate).toISOString()
       );
 
       if (!existingEntry) {
@@ -32,9 +33,13 @@ const newConsultation = async (req, res) => {
           contactNum: req.body.PhoneNo,
         });
         await consultation.save();
+        return res.status(200).send("Consultation saved successfully!");
+      } else {
         return res
-          .status(200)
-          .send({ message: "Consultation saved successfully!" });
+          .status(400)
+          .send(
+            "Consultation already booked for the patient on the given date."
+          );
       }
     }
 
