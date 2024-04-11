@@ -52,6 +52,15 @@
   .navbar {
     padding: 7px 1rem;
   }
+  .navbar .nav__link {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--dark);
+    transition: 0.3s;
+    margin-top: 20px;
+    text-align: center;
+  }
+  
 
   .navbar .nav__linkgroup {
     position: relative;

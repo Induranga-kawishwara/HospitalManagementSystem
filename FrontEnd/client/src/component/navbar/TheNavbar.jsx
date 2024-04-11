@@ -101,13 +101,14 @@ const TheNavbar = () => {
               Doctors
             </ScrollLink>
           </Nav.Item>
+          <div className="center-container">
           <button
             className="navbar-btn"
             type="button"
             onClick={handleChatBtnClick}
           >
             <FontAwesomeIcon icon={faCommentDots} /> Make Appointment
-          </button>
+          </button></div>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
