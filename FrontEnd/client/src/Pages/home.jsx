@@ -34,10 +34,6 @@ function Hero() {
 
   return (
     <div
-      className="form-box"
-      style={{
-        marginTop: "100px",
-      }}
     >
       <div className="section-container">
         <div className="hero-section">

@@ -17,7 +17,7 @@
     border: 1px solid #1A8EFD;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
 
     .navbar-btn {
         color: white;

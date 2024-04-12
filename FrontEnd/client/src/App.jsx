@@ -5,6 +5,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import Home from "./Pages/homepage";
+import Doclist from "./Pages/Doclist";
 import Signup from "./components/Singup";
 import Login from "./components/Login";
 import DocSearch from "./components/searchingdoc/search";
@@ -18,6 +19,7 @@ function App() {
       <TheNav />
       <Routes>
         <Route path="/" exact element={<Home />} />
+        <Route path="/doclist" exact element={<Doclist />} />
         <Route path="/signup" exact element={<Signup />} />
         <Route path="/login" exact element={<Login />} />
         <Route
