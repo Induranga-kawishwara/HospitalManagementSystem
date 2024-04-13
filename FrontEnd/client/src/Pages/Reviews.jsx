@@ -4,7 +4,6 @@ import axios from "axios";
 
 function Reviews() {
   const [customerReviews, setcustomerReviews] = useState([]);
-  // const [reviewsLength, setReviewsLength] = useState(0);
   const [reviewIndex, setReviewIndex] = useState(0);
 
   useEffect(() => {
@@ -12,7 +11,6 @@ function Reviews() {
       try {
         const result = await axios.get("http://localhost:5000/reviews");
         setcustomerReviews(result.data);
-        // setReviewsLength(result.data.length - 1);
       } catch (error) {
         console.log(error);
       }
