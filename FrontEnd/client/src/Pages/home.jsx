@@ -33,8 +33,7 @@ function Hero() {
   }, []);
 
   return (
-    <div
-    >
+    <div>
       <div className="section-container">
         <div className="hero-section">
           <div className="text-section">
