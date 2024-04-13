@@ -1,34 +1,39 @@
-import React, { useState } from "react";
-import { customerReviews } from "./rreviews";
+import React, { useEffect, useState } from "react";
 import "./Reviews.css";
+import axios from "axios";
 
 function Reviews() {
-  let rMessage, rName, rLocation;
-  const reviewsLength = customerReviews.length - 1;
-  const [review, setReview] = useState(0);
+  const [customerReviews, setcustomerReviews] = useState([]);
+  // const [reviewsLength, setReviewsLength] = useState(0);
+  const [reviewIndex, setReviewIndex] = useState(0);
 
-  // back to previous review
-  const backBtnClick = () => {
-    setReview(review <= 0 ? reviewsLength : review - 1);
-    handleReviewsUpdation();
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await axios.get("http://localhost:5000/reviews");
+        setcustomerReviews(result.data);
+        // setReviewsLength(result.data.length - 1);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
 
-  // go to newer review
-  const frontBtnClick = () => {
-    setReview(review >= reviewsLength ? 0 : review + 1);
-    handleReviewsUpdation();
-  };
-
-  // update reviews
   const handleReviewsUpdation = () => {
-    const reviewMessage = customerReviews[review];
-    rName = reviewMessage.name;
-    rLocation = reviewMessage.location;
-    rMessage = reviewMessage.message;
+    const reviewMessage = customerReviews[reviewIndex] || {};
+    const { fullName, hospitalBranch, review } = reviewMessage;
+    return { fullName, hospitalBranch, review };
   };
 
-  // list review on visit
-  handleReviewsUpdation();
+  const { fullName, hospitalBranch, review } = handleReviewsUpdation();
+
+  const moveReview = (step) => {
+    setReviewIndex(
+      (prevIndex) =>
+        (prevIndex + step + customerReviews.length) % customerReviews.length
+    );
+  };
 
   return (
     <div className="review-section" id="reviews">
@@ -41,28 +46,28 @@ function Reviews() {
 
         <p className="rw-text-format">
           <span className="rw-text-quote1">''</span>
-          <span className="rw-review">{rMessage}</span>
+          <span className="rw-review">{review}</span>
           <span className="rw-text-quote2">''</span>
         </p>
 
         <div className="rw-authors">
           <div className="rw-names">
-            <p className="rw-reviewer-name">{rName}</p>
-            <p className="rw-reviewer-place">{rLocation}</p>
+            <p className="rw-reviewer-name">{fullName}</p>
+            <p className="rw-reviewer-place">{hospitalBranch}</p>
           </div>
 
           <div className="rw-btns">
             <button
               className="rw-next-btn"
               type="button"
-              onClick={backBtnClick}
+              onClick={() => moveReview(-1)}
             >
               ←
             </button>
             <button
               className="rw-next-btn"
               type="button"
-              onClick={frontBtnClick}
+              onClick={() => moveReview(1)}
             >
               →
             </button>
