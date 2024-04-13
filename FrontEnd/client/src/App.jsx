@@ -9,8 +9,8 @@ import Doclist from "./Pages/Doclist";
 import Signup from "./components/Singup";
 import Login from "./components/Login";
 import DocSearch from "./components/searchingdoc/search";
-import TheNav from "./component/navbar/TheNav";
-import Footer from "./component/Footer/footer";
+import TheNav from "./components/navbar/TheNav";
+import Footer from "./components/Footer/footer";
 
 function App() {
   const token = localStorage.getItem("token");
