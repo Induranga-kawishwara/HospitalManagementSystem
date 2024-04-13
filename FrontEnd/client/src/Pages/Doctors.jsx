@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import DoctorCard from "./DoctorCard";
 import profile1 from "../assets/profile-1.png";
 import profile2 from "../assets/profile-2.png";
@@ -6,28 +6,16 @@ import profile3 from "../assets/profile-3.png";
 import profile4 from "../assets/profile-4.png";
 import "./Doctors.css";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 function Doctors() {
   const navigate = useNavigate();
 
-  const [doctorList, setDoctorList] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await axios.get("http://localhost:5000/users/Doctor");
-        setDoctorList(result.data);
-      } catch (error) {
-        console.error("Failed to fetch data:", error);
-      }
-    };
-    fetchData();
-  }, []);
+  const doctorList = useSelector((state) => state.doctors);
 
   const handledoclistClick = () => {
     navigate("/doclist");
   };
+
   return (
     <div className="doctor-section" id="doctors">
       <div className="dt-title-content">

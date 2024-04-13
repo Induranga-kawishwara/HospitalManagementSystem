@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useSelector } from "react-redux";
 import "./search.css";
 
 function Profile() {
-  const [doctors, setDoctors] = useState([]);
   const [doctor, setDoctor] = useState(null);
   const [userdata, setUserdata] = useState({});
   const [data, setData] = useState({
@@ -18,16 +18,15 @@ function Profile() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const doctors = useSelector((state) => state.doctors);
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const result = await axios.get("http://localhost:5000/users/Doctor");
-        setDoctors(result.data);
-        const uniqueSpecializations = [
-          ...new Set(result.data.map((doc) => doc.roleDetails.specialization)),
-        ];
-        setSpecializations(uniqueSpecializations);
+        setSpecializations([
+          ...new Set(doctors.map((doc) => doc.roleDetails.specialization)),
+        ]);
       } catch (error) {
         console.error("Failed to fetch data:", error);
         setError("Failed to load data. Please try again later.");
@@ -35,7 +34,7 @@ function Profile() {
       setLoading(false);
     };
     fetchData();
-  }, []);
+  }, [doctors]);
 
   useEffect(() => {
     const userDataString = localStorage.getItem("user");
