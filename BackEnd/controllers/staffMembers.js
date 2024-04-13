@@ -28,14 +28,14 @@ const addUser = async (req, res) => {
       return res.status(400).send({ message: error.details[0].message });
     }
 
-    const adminId = await StaffMemberModel.findOne({
-      staffID: req.body.staffID,
-    });
+    // const adminId = await StaffMemberModel.findById({
+    //   staffID: req.body.staffID,
+    // });
     const user = await StaffMemberModel.findOne({ email: req.body.email });
-    if (adminId)
-      return res
-        .status(409)
-        .send({ message: "Admin with given id already exist!" });
+    // if (adminId)
+    //   return res
+    //     .status(409)
+    //     .send({ message: "Admin with given id already exist!" });
 
     if (user)
       return res

@@ -59,9 +59,7 @@ function Profile() {
   };
 
   const handleDoctorChange = (event) => {
-    const selectedDoc = doctors.find(
-      (doc) => doc.staffID === event.target.value
-    );
+    const selectedDoc = doctors.find((doc) => doc._id === event.target.value);
     setDoctor(selectedDoc);
     setData({ ...data, doctorId: event.target.value });
   };
@@ -151,7 +149,7 @@ function Profile() {
                       doc.roleDetails.specialization === data.specialization
                   )
                   .map((doc, index) => (
-                    <option key={index} value={doc.staffID}>
+                    <option key={index} value={doc._id}>
                       {`Dr. ${doc.firstName} ${doc.lastName}`}
                     </option>
                   ))}

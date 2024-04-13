@@ -4,10 +4,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarCheck, faAngleUp } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import "./home.css";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchDoctors } from "../redux/actions";
+import axios from "axios";
 
 function Hero() {
   const navigate = useNavigate();
   const [goUp, setGoUp] = useState(false);
+  const startYear = 2010;
+  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+  const [yearsOfExperience, setYearsOfExperience] = useState(
+    currentYear - startYear
+  );
+  const dispatch = useDispatch();
+  const doctorList = useSelector((state) => state.doctors);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -19,18 +29,36 @@ function Hero() {
 
   useEffect(() => {
     const onPageScroll = () => {
-      if (window.scrollY > 600) {
-        setGoUp(true);
-      } else {
-        setGoUp(false);
-      }
+      setGoUp(window.scrollY > 600);
     };
+
     window.addEventListener("scroll", onPageScroll);
 
     return () => {
       window.removeEventListener("scroll", onPageScroll);
     };
   }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await axios.get("http://localhost:5000/users/Doctor");
+        dispatch(fetchDoctors(result.data));
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      }
+    };
+    fetchData();
+  }, [dispatch]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentYear(new Date().getFullYear());
+      setYearsOfExperience(currentYear - startYear);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [currentYear, startYear]);
 
   return (
     <div>
@@ -61,12 +89,12 @@ function Hero() {
               </div>
 
               <div className="text-stats-container">
-                <p>50+</p>
+                <p>{`${doctorList.length}+`}</p>
                 <p>Expert Doctors</p>
               </div>
 
               <div className="text-stats-container">
-                <p>10+</p>
+                <p>{`${yearsOfExperience}+`}</p>
                 <p>Years of Experience</p>
               </div>
             </div>

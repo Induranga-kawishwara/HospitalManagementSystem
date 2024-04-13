@@ -4,11 +4,11 @@ const { Schema, model } = mongoose;
 
 const StaffSchema = new Schema(
   {
-    staffID: {
-      type: String,
-      required: true,
-      unique: true,
-    },
+    // staffID: {
+    //   type: String,
+    //   required: true,
+    //   unique: true,
+    // },
     firstName: {
       type: String,
       required: true,
