@@ -20,7 +20,14 @@ function Hero() {
   const doctorList = useSelector((state) => state.doctors);
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    const scrollToTopAnimation = () => {
+      const currentPosition = window.scrollY;
+      if (currentPosition > 0) {
+        window.scrollTo(0, currentPosition - currentPosition / 10);
+        window.requestAnimationFrame(scrollToTopAnimation);
+      }
+    };
+    window.requestAnimationFrame(scrollToTopAnimation);
   };
 
   const handleBookAppointmentClick = () => {
