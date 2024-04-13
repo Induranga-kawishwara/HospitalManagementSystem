@@ -9,7 +9,8 @@ import mongoose from "mongoose";
 import staffRouter from "./routes/staffMembers.js";
 import patientRouter from "./routes/patients.js";
 import authRouter from "./routes/auth.js";
-import consultationRouter from "./routes/consultation.js";
+import consultationRouter from "./routes/consultations.js";
+import review from "./routes/review.js";
 
 const app = express();
 const PORT = 5000;
@@ -32,6 +33,7 @@ app.use("/users", staffRouter);
 app.use("/patients", patientRouter);
 app.use("/consultations", consultationRouter);
 app.use("/auth", authRouter);
+app.use("/reviews", review);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

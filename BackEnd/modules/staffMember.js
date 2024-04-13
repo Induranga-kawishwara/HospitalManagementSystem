@@ -52,4 +52,4 @@ const StaffSchema = new Schema(
   { timestamps: true }
 );
 
-export default model("StaffMember", StaffSchema);
+export default model("StaffMembers", StaffSchema);
