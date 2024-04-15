@@ -4,7 +4,7 @@ import Info from "./Info/Info";
 import BookAppointment from "./BookAppointment/BookAppointment";
 import Reviews from "./Reviews/Reviews";
 import Doctors from "./DoctorList/Doctors";
-import Slide from "../components/SlideBar/Slide";
+import Slide from "../components/SlideBar/SlideBar";
 
 function Main() {
   return (
