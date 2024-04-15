@@ -1,6 +1,6 @@
 import React from "react";
 import Carousel from "react-bootstrap/Carousel";
-import style from "./slide.module.css";
+import style from "./slideBar.module.css";
 
 function SlideBar() {
   const img = [
