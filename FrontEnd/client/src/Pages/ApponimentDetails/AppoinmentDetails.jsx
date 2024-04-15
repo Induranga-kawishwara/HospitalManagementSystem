@@ -82,7 +82,7 @@ function AppointmentDetails() {
         error.response.status >= 400 &&
         error.response.status <= 500
       ) {
-        setError(error.response.data.message);
+        alert(error.response.data);
       }
     }
   };
