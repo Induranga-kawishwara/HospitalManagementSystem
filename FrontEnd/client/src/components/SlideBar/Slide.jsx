@@ -11,7 +11,7 @@ function DarkVariantExample() {
 
   return (
     <div id="home" className={style.form_box}>
-      <Carousel data-bs-theme="dark">
+      <Carousel data-bs-theme="dark" interval={1500}>
         {img.map((imgUrl, index) => (
           <Carousel.Item key={index}>
             <div className={style.carousel_container}>

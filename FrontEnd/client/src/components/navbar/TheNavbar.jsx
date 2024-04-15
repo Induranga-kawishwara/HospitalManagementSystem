@@ -44,7 +44,7 @@ const TheNavbar = () => {
           >
             <ScrollLink
               activeClass={classes.active}
-              to="home"
+              to="/"
               spy={true}
               smooth={true}
               offset={-50}
@@ -102,13 +102,14 @@ const TheNavbar = () => {
             </ScrollLink>
           </Nav.Item>
           <div className="center-container">
-          <button
-            className="navbar-btn"
-            type="button"
-            onClick={handleChatBtnClick}
-          >
-            <FontAwesomeIcon icon={faCommentDots} /> Make Appointment
-          </button></div>
+            <button
+              className="navbar-btn"
+              type="button"
+              onClick={handleChatBtnClick}
+            >
+              <FontAwesomeIcon icon={faCommentDots} /> Make Appointment
+            </button>
+          </div>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
