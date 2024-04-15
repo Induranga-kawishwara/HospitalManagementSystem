@@ -15,7 +15,9 @@ const TheNavbar = () => {
   const handleChatBtnClick = () => {
     navigate("/docsearch");
   };
-
+  const home = () => {
+    navigate("/");
+  };
   return (
     <Navbar
       expand="xl"
@@ -42,9 +44,11 @@ const TheNavbar = () => {
           <Nav.Item
             className={`${classes.nav__link} ${classes.firstnav__link} me-4`}
           >
+            
             <ScrollLink
               activeClass={classes.active}
-              to="/"
+              onClick={home}
+              // to="/"
               spy={true}
               smooth={true}
               offset={-50}
