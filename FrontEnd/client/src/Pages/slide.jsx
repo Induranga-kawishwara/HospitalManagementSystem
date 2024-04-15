@@ -1,53 +1,29 @@
-import Carousel from 'react-bootstrap/Carousel';
-import img1 from "../assets/slide.avif";
-import img2 from "../assets/slide2.jpg";
-import img3 from "../assets/slid3.png";
+import React from "react";
+import Carousel from "react-bootstrap/Carousel";
+import style from "./darkVariantExample.module.css";
 
 function DarkVariantExample() {
+  const img = [
+    "https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "https://images.pexels.com/photos/14507074/pexels-photo-14507074.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "https://images.pexels.com/photos/45853/grey-crowned-crane-bird-crane-animal-45853.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  ];
+
   return (
-    <div
-    id="home"
-    className="form-box"
-    style={{
-      marginTop: "100px",
-    }}>
-    <Carousel data-bs-theme="dark">
-      <Carousel.Item>
-        <img
-          className="d- w-100"
-          src={img1}
-          alt="First slide"
-        />
-        <Carousel.Caption>
-          <h5>First slide label</h5>
-          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item>
-        <img
-          className="d-block w-100"
-          src={img2}
-          alt="Second slide"
-        />
-        <Carousel.Caption>
-          <h5>Second slide label</h5>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item>
-        <img
-         className="d-block w-100"
-          src={img3}
-          alt="Third slide"
-        />
-        <Carousel.Caption>
-          <h5>Third slide label</h5>
-          <p>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-          </p>
-        </Carousel.Caption>
-      </Carousel.Item>
-    </Carousel>
+    <div id="home" className={style.form_box}>
+      <Carousel data-bs-theme="dark">
+        {img.map((imgUrl, index) => (
+          <Carousel.Item key={index}>
+            <div className={style.carousel_container}>
+              <img
+                className={`d-block w-100 ${style.carousel_img}`}
+                src={imgUrl}
+                alt={`Slide ${index + 1}`}
+              />
+            </div>
+          </Carousel.Item>
+        ))}
+      </Carousel>
     </div>
   );
 }
