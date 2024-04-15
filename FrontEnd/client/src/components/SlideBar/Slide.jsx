@@ -2,7 +2,7 @@ import React from "react";
 import Carousel from "react-bootstrap/Carousel";
 import style from "./slide.module.css";
 
-function DarkVariantExample() {
+function Slide() {
   const img = [
     "https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     "https://images.pexels.com/photos/14507074/pexels-photo-14507074.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
@@ -28,4 +28,4 @@ function DarkVariantExample() {
   );
 }
 
-export default DarkVariantExample;
+export default Slide;
