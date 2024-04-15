@@ -4,13 +4,13 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
-import Home from "./Pages/homepage";
-import Doclist from "./Pages/Doclist";
-import Signup from "./components/Singup";
-import Login from "./components/Login";
-import DocSearch from "./components/searchingdoc/search";
-import TheNav from "./components/navbar/TheNav";
-import Footer from "./components/Footer/footer";
+import Home from "./Pages/Main";
+import Doclist from "./Pages/DoctorList/Doclist";
+import Signup from "./Pages/Singup/Signup";
+import Login from "./Pages/Login/Login";
+import DocSearch from "./Pages/ApponimentDetails/AppoinmentDetails";
+import TheNav from "./components/Navbar/TheNav";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   const token = localStorage.getItem("token");

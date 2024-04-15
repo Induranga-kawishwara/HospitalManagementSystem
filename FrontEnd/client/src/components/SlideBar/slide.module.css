@@ -1,0 +1,13 @@
+#home.form_box {
+  margin-top: 100px;
+}
+
+.carousel_container {
+  position: relative;
+}
+
+.carousel_img {
+  width: 600px;
+  height: 400px;
+  object-fit: cover;
+}

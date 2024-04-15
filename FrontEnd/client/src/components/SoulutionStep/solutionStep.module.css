@@ -1,0 +1,18 @@
+.about_text_step {
+  margin: 16px 0;
+}
+
+.about_text_sTitle {
+  font-family: "Rubik", sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 0.7px;
+}
+
+.about_text_description {
+  margin: 8px 24px;
+  color: #4d4b4b;
+  font-family: "Rubik", sans-serif;
+  letter-spacing: 0.7px;
+  line-height: 1.6rem;
+}

@@ -1,0 +1,132 @@
+.hero_section {
+  padding: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  background: linear-gradient(to right, #ecf2ff, #fbfcff);
+}
+/* Text section */
+.text_section {
+  width: 60%;
+  padding: 0 32px;
+}
+.text_headline {
+  margin-bottom: 12px;
+  color: rgb(77, 75, 75);
+  font-family: "Rubik", sans-serif;
+  font-size: 22px;
+  font-weight: bold;
+  letter-spacing: 0.7px;
+}
+.text_title {
+  width: 500px;
+  color: black;
+  font-family: "Poppins", sans-serif;
+  font-size: 40px;
+  font-weight: bold;
+}
+.text_description {
+  width: 475px;
+  margin: 32px 0;
+  color: rgb(77, 75, 75);
+  font-family: "Rubik", sans-serif;
+  font-size: 18px;
+  letter-spacing: 0.7px;
+  line-height: 1.6rem;
+}
+
+.text_stats {
+  margin-top: 40px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 48px;
+}
+.text_stats_container {
+  text-align: center;
+}
+.text_stats_container > p {
+  color: rgb(77, 75, 75);
+  font-family: "Poppins", sans-serif;
+  font-size: 22px;
+  letter-spacing: 0.7px;
+}
+.text_stats_container p:first-child {
+  margin-bottom: 8px;
+  color: #1a8efd;
+  font-family: "Rubik", sans-serif;
+  font-size: 32px;
+  font-weight: bold;
+}
+/* Image section */
+.hero_image_section {
+  width: 40%;
+  max-width: 100%;
+  text-align: center;
+}
+.hero_image1 {
+  width: 100%;
+  height: auto;
+}
+/* Scroll Btn */
+.scroll_up {
+  width: 45px;
+  height: 45px;
+  display: none;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  color: white;
+  border: 3px solid white;
+  border-radius: 50%;
+  background-color: #1a8efd;
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+  font-size: 24px;
+  z-index: 20;
+  cursor: pointer;
+}
+.show_scroll {
+  display: flex;
+}
+/* Responsive */
+@media screen and (max-width: 900px) {
+  .hero_image_section {
+    display: none;
+  }
+  .text_section {
+    width: 100%;
+    padding: 0;
+  }
+  .text_title,
+  .text_description {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 600px) {
+  .text_headline {
+    font-size: 20px;
+  }
+  .text_title {
+    font-size: 28px;
+  }
+  .text_description {
+    font-size: 16px;
+  }
+
+  .text_stats {
+    gap: 18px;
+  }
+  .text_stats_container > p {
+    font-size: 16px;
+  }
+  .text_stats_container p:first-child {
+    font-size: 22px;
+  }
+  .scroll_up {
+    bottom: 32px;
+    right: 32px;
+  }
+}

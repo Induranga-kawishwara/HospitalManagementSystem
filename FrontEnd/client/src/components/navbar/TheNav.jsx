@@ -7,7 +7,6 @@ const TheNav = (props) => {
       <TheNavbar onShowCart={props.onShowCart} />
     </header>
   );
-  //END
 };
 
 export default TheNav;

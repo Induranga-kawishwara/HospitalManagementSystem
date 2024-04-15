@@ -1,0 +1,126 @@
+.review_section {
+  padding: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  background: linear-gradient(to right, #ecf2ff, #fbfcff);
+}
+/* Text */
+.rw_text_content {
+  width: 100%;
+}
+.rw_text_title {
+  margin: 16px 0;
+  color: #6f7074;
+  font-family: "Rubik", sans-serif;
+  font-size: 32px;
+  font-weight: bold;
+  letter-spacing: 0.7px;
+}
+.rw_text_num {
+  color: #178bff;
+}
+.rw_text_desc {
+  margin: 16px 0;
+  color: black;
+  font-family: "Rubik", sans-serif;
+  font-size: 36px;
+  font-weight: bold;
+  letter-spacing: 0.7px;
+  line-height: 2.6rem;
+}
+.rw_text_format {
+  margin: 64px 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+}
+.rw_text_quote1 {
+  position: absolute;
+  top: -18px;
+  left: -24px;
+  color: #178bff;
+  font-family: "Poppins", sans-serif;
+  font-size: 40px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+.rw_text_quote2 {
+  position: absolute;
+  right: -18px;
+  bottom: -24px;
+  color: #178bff;
+  font-family: "Poppins", sans-serif;
+  font-size: 40px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+.rw_review {
+  display: block;
+  margin: 0 0 0 8px;
+  color: black;
+  font-family: "Rubik", sans-serif;
+  font-size: 24px;
+  letter-spacing: 0.7px;
+  line-height: 2.2rem;
+}
+.rw_authors {
+  margin: 0 0 0 8px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+.rw_reviewer_name {
+  font-family: "Poppins", sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+  letter-spacing: 0.8px;
+}
+.rw_reviewer_place {
+  margin: 6px 0 0 0;
+  color: #6f7074;
+  font-family: "Rubik", sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 0.8px;
+}
+/* Buttons */
+.rw_next_btn {
+  margin: 0 24px 0 0;
+  color: black;
+  border: 1px solid transparent;
+  background-color: transparent;
+  outline: transparent;
+  font-size: 48px;
+  cursor: pointer;
+}
+.rw_next_btn:hover {
+  color: #178bff;
+}
+/* Responsive */
+@media screen and (max-width: 700px) {
+  .review_section {
+    letter-spacing: 0.8px;
+  }
+  .rw_text_title {
+    font-size: 22px;
+  }
+  .rw_text_desc {
+    font-size: 28px;
+  }
+  .rw_review {
+    font-size: 22px;
+    letter-spacing: 0.7px;
+    line-height: 1.8rem;
+  }
+  .rw_reviewer_name {
+    font-size: 20px;
+  }
+  .rw_next_btn {
+    margin: 0 16px 0 0;
+    font-size: 40px;
+  }
+}

@@ -1,0 +1,113 @@
+.ba_section {
+  padding: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  background-color: white;
+}
+
+/* Image */
+.ba_image_content {
+  width: 50%;
+  max-width: 100%;
+  text-align: center;
+}
+
+.ba_image1 {
+  width: 80%;
+  height: auto;
+}
+
+/* Text */
+.ba_text_content {
+  width: 50%;
+}
+
+.ba_title {
+  font-family: "Poppins", sans-serif;
+  font-size: 40px;
+  font-weight: bold;
+  letter-spacing: 0.7px;
+}
+
+.ba_title > span {
+  position: relative;
+}
+
+.ba_title span::before {
+  content: "";
+  position: absolute;
+  width: 75%;
+  height: 4px;
+  background-color: #9d2553;
+  border-radius: 8px;
+  left: 0;
+  bottom: -12px;
+}
+
+.ba_description {
+  margin: 32px 0;
+  color: #4d4b4b;
+  font-family: "Rubik", sans-serif;
+  font-size: 18px;
+  letter-spacing: 0.8px;
+  line-height: 1.8rem;
+}
+
+/* Checks */
+.ba_checks {
+  margin: 28px 0;
+  font-family: "Rubik", sans-serif;
+  font-size: 22px;
+  font-weight: bold;
+  letter-spacing: 0.7px;
+}
+
+.ba_check_first {
+  margin-top: 40px;
+}
+
+.ba_check_last {
+  margin-bottom: 40px;
+}
+
+/* Book Appointment Button */
+.ba_appointment_btn {
+  padding: 18px 24px;
+  color: white;
+  border: 1px solid transparent;
+  border-radius: 50px;
+  outline: transparent;
+  background-color: #1a8efd;
+  font-size: 20px;
+  font-family: "Rubik", sans-serif;
+  letter-spacing: 0.8px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+
+.ba_appointment_btn:hover {
+  color: #1a8efd;
+  background-color: transparent;
+  border: 1px solid #1a8efd;
+}
+
+/* Responsive */
+@media screen and (max-width: 1000px) {
+  .ba_section {
+    display: block;
+  }
+  .ba_image_content {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 0 32px 0;
+  }
+  .ba_text_content {
+    width: 100%;
+  }
+  .ba_image1 {
+    width: 80%;
+    height: 80%;
+  }
+}
