@@ -10,17 +10,6 @@ FrontEnd/client/node_modules/.cache/default-development/index.pack
 FrontEnd/client/node_modules/.cache/default-development/8.pack
 FrontEnd/client/node_modules/.cache/default-development/6.pack
 FrontEnd/client/node_modules/.cache/default-development/4.pack
+FrontEnd/client/node_modules/.cache/default-development/0.pack
 
-# Node.js
-node_modules/
 
-# Logs
-*.log
-
-# Compiled files
-dist/
-build/
-
-# IDE/Editor specific files
-.vscode/
-.idea/
