@@ -1,4 +1,4 @@
-import style1 from "./appoinment.module.css";
+import style1 from "./appoinmentHistory.module.css";
 
 import React from "react";
 
