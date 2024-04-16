@@ -11,7 +11,8 @@ import Login from "./Pages/Login/Login";
 import DocSearch from "./Pages/ApponimentDetails/AppoinmentDetails";
 import TheNav from "./components/navbar/TheNav.jsx";
 import Footer from "./components/Footer/footer.jsx";
-import AppointmentHistory from "./Pages/appontmenthistory/apponhistory";
+import AppointmentHistory from "./Pages/Appontmenthistory/apponhistory";
+import DoneAppoi from "./Pages/DoneAppoinment/DoneAppoinment.jsx";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -28,6 +29,7 @@ function App() {
           exact
           element={<AppointmentHistory />}
         />
+        <Route path="/doneappoinment" exact element={<DoneAppoi />} />
         <Route
           path="/docsearch"
           element={token ? <DocSearch /> : <Navigate replace to="/login" />}

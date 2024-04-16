@@ -54,9 +54,6 @@ h1 {
   .form_group_row .col_sm_10 {
     margin-top: 10px;
   }
-  .buttonpri3 {
-    width: 100%;
-  }
 }
 
 @media (min-width: 769px) {
@@ -69,14 +66,13 @@ h1 {
     text-align: right;
   }
 }
-.buttonpri2,
-.buttonpri {
+.feedback {
   display: block;
   width: fit-content;
   margin: 10px auto;
   padding: 10px 20px;
   border-radius: 4px;
-  background-color: #7357ff;
+  background-color: #005eff;
   color: rgb(255, 255, 255);
   border: none;
   cursor: pointer;
@@ -86,32 +82,26 @@ h1 {
 
   width: 100%;
 }
-.buttonpri3 {
-  display: block;
-  width: fit-content;
-  margin: 10px auto;
+.comment {
+  border: none;
+  outline: none;
+  margin: 20px 0px 0px 0px;
   padding: 10px 20px;
   border-radius: 4px;
-  background-color: #fc5f5f;
-  color: rgb(255, 255, 255);
-  border: none;
-  cursor: pointer;
+  background-color: #d7e5fe;
+  color: rgb(0, 0, 0);
 
   font-weight: bold;
   font-size: 14px;
 
-  width: 40%;
+  width: 100%;
 }
 
 .buttonpri:hover,
 .buttonpri:focus {
   background-color: #0056b3;
 }
-.buttonpri2:hover,
+.feedback:hover,
 .buttonpri2:focus {
-  background-color: #0056b3;
-}
-.buttonpri3:hover,
-.buttonpri3:focus {
-  background-color: #c06b6b;
+  background-color: #7cb3ff;
 }

@@ -4,9 +4,9 @@ import style from "./imageslider.module.css";
 
 function ImageSlider() {
   const img = [
-    "https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    "https://images.pexels.com/photos/14507074/pexels-photo-14507074.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    "https://images.pexels.com/photos/45853/grey-crowned-crane-bird-crane-animal-45853.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "https://e1.pxfuel.com/desktop-wallpaper/735/709/desktop-wallpaper-full-best-hospital-bsnscb-graphics-hospital.jpg",
+    "https://cdn.wallpapersafari.com/93/15/qZJAWP.jpg",
+    "https://e1.pxfuel.com/desktop-wallpaper/775/265/desktop-wallpaper-hospital-room-hospital.jpg",
   ];
 
   return (
