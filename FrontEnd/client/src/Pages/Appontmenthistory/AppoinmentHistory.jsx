@@ -1,13 +1,6 @@
-
 import style1 from "./appoinment.module.css";
 
-
-
-
 import React from "react";
-import ReactDOM from "react-dom";
-
-
 
 function BusinessCard({
   people,
@@ -28,7 +21,7 @@ function BusinessCard({
         height: "60mm",
         borderRadius: "5px",
         boxShadow: shadow !== false ? "#9E9E9E 0px 0px 10px" : "",
-        ...style
+        ...style,
       }}
     >
       <div
@@ -41,7 +34,7 @@ function BusinessCard({
           position: "relative",
           borderTopRightRadius: "5px",
           borderTopLeftRadius: "5px",
-          ...headerStyle
+          ...headerStyle,
         }}
       >
         <img
@@ -54,59 +47,41 @@ function BusinessCard({
             top: 5,
             borderRadius: "100%",
             float: "right",
-            background: "#fff"
+            background: "#fff",
           }}
           src={people.avatar}
         />
-        
+
         <h1
           style={{
             fontSize: "17pt",
             margin: 0,
             marginRight: 160,
-            color: headerColor
+            color: headerColor,
           }}
         >
           {people.displayName}
         </h1>
-
       </div>
       <div style={{ padding: 10, paddingLeft: 20, position: "relative" }}>
-        
         <ul
           style={{
             fontSize: "10pt",
             listStyle: "none",
             lineHeight: "20pt",
             margin: 0,
-            padding: 0
+            padding: 0,
           }}
         >
-          {people.title && (
-            <li>
-              {people.title}
-            </li>
-          )}
-          {people.phone && (
-            <li>
-             {people.phone}
-            </li>
-          )}
-          {people.mail && (
-            <li>
-              {people.mail}
-            </li>
-          )}
+          {people.title && <li>{people.title}</li>}
+          {people.phone && <li>{people.phone}</li>}
+          {people.mail && <li>{people.mail}</li>}
 
-          {people.location && (
-            <li>
-              {people.location}
-            </li>
-          )}
+          {people.location && <li>{people.location}</li>}
         </ul>
-<button type="button" className={style1.delete}>
- Delete
- </button>
+        <button type="button" className={style1.delete}>
+          Delete
+        </button>
       </div>
     </div>
   );
@@ -123,8 +98,7 @@ function App() {
       phone: "Date -",
       mail: "Time -",
       location: "Hospital Location -",
-    }
-
+    },
   ];
   return (
     <div
@@ -133,14 +107,13 @@ function App() {
         display: "flex",
         alignItems: "",
         justifyContent: "center",
-        marginTop:"120px",
+        marginTop: "120px",
       }}
     >
       <ul style={{ listStyle: "none" }}>
-        {list.map(it => (
+        {list.map((it) => (
           <li style={{ margin: 30 }}>
             <BusinessCard people={it} />
-            
           </li>
         ))}
       </ul>
@@ -158,23 +131,6 @@ function App() {
 
 export default App;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // const BusinessCard = ({ name, jobTitle, email, phone }) => {
 
 //   return (
@@ -188,8 +144,7 @@ export default App;
 //       <p className="contact-info">Email: {email}</p>
 //       <p className="contact-info">Phone: {phone}</p>
 //     </div>
-        
-        
+
 //         <button type="submit" className={style.buttonpri}>
 //           Book Appointment
 //         </button>
@@ -202,8 +157,6 @@ export default App;
 // }
 
 // export default BusinessCard;
-
-
 
 // import React from 'react';
 // import './BusinessCard.css';
@@ -220,4 +173,3 @@ export default App;
 // };
 
 // export default BusinessCard;
-
