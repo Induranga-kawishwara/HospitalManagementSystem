@@ -66,7 +66,7 @@ h1 {
     text-align: right;
   }
 }
-
+.buttonpri2,
 .buttonpri {
   display: block;
   width: fit-content;
@@ -74,23 +74,6 @@ h1 {
   padding: 10px 20px;
   border-radius: 4px;
   background-color: #7357ff;
-  color: rgb(255, 255, 255);
-  border: none;
-  cursor: pointer;
-
-  font-weight: bold;
-  font-size: 14px;
-
-  width: 100%;
-}
-
-.buttonpri2 {
-  display: block;
-  width: fit-content;
-  margin: 10px auto;
-  padding: 10px 20px;
-  border-radius: 4px;
-  background-color: #04ff00;
   color: rgb(255, 255, 255);
   border: none;
   cursor: pointer;

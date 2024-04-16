@@ -2,8 +2,16 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import style from "./AppoinmentDetails.module.css";
+import { useNavigate } from "react-router-dom";
 
 function AppointmentDetails() {
+  
+  const navigate = useNavigate();
+  const AppointmentHistory = () => {
+    navigate("/appontmenthistory");
+  };
+
+
   const [doctor, setDoctor] = useState(null);
   const [userdata, setUserdata] = useState({});
   const [data, setData] = useState({
@@ -235,7 +243,8 @@ function AppointmentDetails() {
         <button type="submit" className={style.buttonpri}>
           Book Appointment
         </button>
-        <button type="button" className={style.buttonpri2}>
+        <button type="button" className={style.buttonpri2}
+        onClick={AppointmentHistory}>
           Appointment History
         </button>
       </form>

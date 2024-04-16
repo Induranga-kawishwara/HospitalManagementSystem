@@ -4,7 +4,7 @@ import TheNavbar from "./TheNavbar";
 const TheNav = (props) => {
   return (
     <header>
-      <TheNavbar onShowCart={props.onShowCart} />
+      <TheNavbar />
     </header>
   );
 };
