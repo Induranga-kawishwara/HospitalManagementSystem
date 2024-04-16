@@ -5,12 +5,13 @@ import style from "./AppoinmentDetails.module.css";
 import { useNavigate } from "react-router-dom";
 
 function AppointmentDetails() {
-  
   const navigate = useNavigate();
   const AppointmentHistory = () => {
     navigate("/appontmenthistory");
   };
-
+  const doneAppointmentHistory = () => {
+    navigate("/doneappoinment");
+  };
 
   const [doctor, setDoctor] = useState(null);
   const [userdata, setUserdata] = useState({});
@@ -243,9 +244,22 @@ function AppointmentDetails() {
         <button type="submit" className={style.buttonpri}>
           Book Appointment
         </button>
-        <button type="button" className={style.buttonpri2}
-        onClick={AppointmentHistory}>
+        <button
+          type="button"
+          className={style.buttonpri2}
+          onClick={AppointmentHistory}
+        >
+          Upcomming Appointment
+        </button>
+        <button
+          type="button"
+          className={style.buttonpri2}
+          onClick={doneAppointmentHistory}
+        >
           Appointment History
+        </button>
+        <button type="button" className={style.buttonpri3}>
+          Logout
         </button>
       </form>
     </div>
