@@ -27,12 +27,24 @@ function AppointmentDetails() {
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!doctors || doctors.length === 0) {
+        try {
+          const result = await axios.get("http://localhost:5000/users/Doctor");
+          dispatch(setDoctors(result.data));
+        } catch (error) {
+          console.error("Failed to fetch data:", error);
+        }
+      }
+    };
+    fetchData();
+  }, [doctors, dispatch]);
+
+  useEffect(() => {
+    const fetchData = async () => {
       setLoading(true);
       try {
-        const result = await axios.get("http://localhost:5000/users/Doctor");
-        dispatch(setDoctors(result.data));
         setSpecializations([
-          ...new Set(result.data.map((doc) => doc.roleDetails.specialization)),
+          ...new Set(doctors.map((doc) => doc.roleDetails.specialization)),
         ]);
       } catch (error) {
         console.error("Failed to fetch data:", error);
@@ -41,7 +53,7 @@ function AppointmentDetails() {
       setLoading(false);
     };
     fetchData();
-  }, [dispatch]);
+  }, [doctors]);
 
   useEffect(() => {
     const userDataString = localStorage.getItem("user");
