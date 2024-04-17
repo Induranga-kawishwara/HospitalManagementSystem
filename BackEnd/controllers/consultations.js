@@ -29,10 +29,13 @@ const newConsultation = async (req, res) => {
     if (consultation) {
       const existingEntry = consultation.consultations.find(
         (entry) =>
-          entry.patientId === req.body.patientId &&
-          new Date(entry.consultationDate).toISOString() ===
-            new Date(req.body.consultationDate).toISOString()
+          entry.consultationDetails.some(
+            (detail) => detail.patientId === req.body.patientId
+          ) &&
+          new Date(entry.consultationDateAndTime).getTime() === date.getTime()
       );
+
+      console.log(existingEntry);
 
       if (!existingEntry) {
         consultation.consultations.push({
