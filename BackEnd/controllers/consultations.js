@@ -35,8 +35,6 @@ const newConsultation = async (req, res) => {
           new Date(entry.consultationDateAndTime).getTime() === date.getTime()
       );
 
-      console.log(existingEntry);
-
       if (!existingEntry) {
         consultation.consultations.push({
           consultationDateAndTime: date,
