@@ -66,6 +66,49 @@ h1 {
     text-align: right;
   }
 }
+.delete {
+  display: block;
+  width: fit-content;
+  margin: 10px auto;
+  padding: 10px 20px;
+  border-radius: 4px;
+  background-color: #ff0000;
+  color: rgb(255, 255, 255);
+  border: none;
+  cursor: pointer;
+
+  font-weight: bold;
+  font-size: 14px;
+
+  width: 100%;
+}
+.buttonpri2,
+.buttonpri {
+  display: block;
+  width: fit-content;
+  margin: 10px auto;
+  padding: 10px 20px;
+  border-radius: 4px;
+  background-color: #7357ff;
+  color: rgb(255, 255, 255);
+  border: none;
+  cursor: pointer;
+
+  font-weight: bold;
+  font-size: 14px;
+
+  width: 100%;
+}
+
+.buttonpri:hover,
+.buttonpri:focus {
+  background-color: #0056b3;
+}
+.delete:hover,
+.buttonpri2:focus {
+  background-color: #ff5656;
+}
+
 .feedback {
   display: block;
   width: fit-content;
