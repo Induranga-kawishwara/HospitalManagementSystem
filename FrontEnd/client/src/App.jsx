@@ -1,3 +1,103 @@
+// import React, { useState } from 'react';
+// import {
+//   BrowserRouter as Router,
+//   Route,
+//   Routes,
+//   Navigate,
+// } from "react-router-dom";
+// import Home from "./Pages/Main";
+// import Doclist from "./Pages/DoctorList/Doclist";
+// import Signup from "./Pages/Singup/Signup";
+// import Login from "./Pages/Login/Login";
+// import DocSearch from "./Pages/ApponimentDetails/AppoinmentDetails";
+// import TheNav from "./components/navbar/TheNav.jsx";
+// import TheNavlogout from "./components/Navbarforlogout/TheNav.jsx";
+// import Footer from "./components/Footer/footer.jsx";
+// import AppointmentHistory from "./Pages/Appontmenthistory/AppoinmentHistory.jsx";
+// import DoneAppoi from "./Pages/DoneAppoinment/DoneAppoinment.jsx";
+
+// function App() {
+
+//   const token = localStorage.getItem("token");
+//   return (
+//     <Router>
+//       {/* <TheNav /> */}
+//       <TheNav />
+//       <Routes>
+//         <Route path="/" exact element={<Home />} />
+//         <Route path="/doclist" exact element={<Doclist />} />
+//         <Route path="/signup" exact element={<Signup />} />
+//         <Route path="/login" exact element={<Login />} />
+//         <Route
+//           path="/appontmenthistory"
+//           exact
+//           element={<AppointmentHistory />}
+//         />
+//         <Route path="/doneappoinment" exact element={<DoneAppoi />} />
+//         <Route
+//           path="/docsearch"
+//           element={token ? <DocSearch /> : <Navigate replace to="/login" />}
+//         />
+//       </Routes>
+//       <Footer />
+//     </Router>
+//   );
+// }
+
+// export default App;
+
+// import React, { useState } from 'react';
+// import HomePage from './HomePage';
+// import AboutPage from './AboutPage';
+// import ContactPage from './ContactPage';
+// import HomeNavBar from './HomeNavBar';
+// import AboutNavBar from './AboutNavBar';
+// import ContactNavBar from './ContactNavBar';
+
+// function App() {
+//   const [currentPage, setCurrentPage] = useState('home');
+
+//   const navigateTo = (page) => {
+//     setCurrentPage(page);
+//   };
+
+//   let pageContent, navBar;
+//   switch (currentPage) {
+//     case 'home':
+//       pageContent = <HomePage />;
+//       navBar = <HomeNavBar />;
+//       break;
+//     case 'about':
+//       pageContent = <AboutPage />;
+//       navBar = <AboutNavBar />;
+//       break;
+//     case 'contact':
+//       pageContent = <ContactPage />;
+//       navBar = <ContactNavBar />;
+//       break;
+//     default:
+//       pageContent = <HomePage />;
+//       navBar = <HomeNavBar />;
+//   }
+
+//   return (
+//     <div>
+//       {navBar}
+//       <div>
+//         <nav>
+//           <button onClick={() => navigateTo('home')}>Home</button>
+//           <button onClick={() => navigateTo('about')}>About</button>
+//           <button onClick={() => navigateTo('contact')}>Contact</button>
+//         </nav>
+//         {pageContent}
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default App;
+
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -10,6 +110,7 @@ import Signup from "./Pages/Singup/Signup";
 import Login from "./Pages/Login/Login";
 import DocSearch from "./Pages/ApponimentDetails/AppoinmentDetails";
 import TheNav from "./components/navbar/TheNav.jsx";
+import TheNavlogout from "./components/Navbarforlogout/TheNav.jsx";
 import Footer from "./components/Footer/footer.jsx";
 import AppointmentHistory from "./Pages/Appontmenthistory/AppoinmentHistory.jsx";
 import DoneAppoi from "./Pages/DoneAppoinment/DoneAppoinment.jsx";
@@ -27,14 +128,46 @@ function App() {
         <Route
           path="/appontmenthistory"
           exact
-          element={<AppointmentHistory />}
+          element={
+            token ? (
+              <>
+                <TheNavlogout />
+                <AppointmentHistory />
+              </>
+            ) : (
+              <Navigate replace to="/login" />
+            )
+          }
         />
-        <Route path="/doneappoinment" exact element={<DoneAppoi />} />
+        <Route
+          path="/doneappoinment"
+          exact
+          element={
+            token ? (
+              <>
+                <TheNavlogout />
+                <DoneAppoi />
+              </>
+            ) : (
+              <Navigate replace to="/login" />
+            )
+          }
+        />
         <Route
           path="/docsearch"
-          element={token ? <DocSearch /> : <Navigate replace to="/login" />}
+          element={
+            token ? (
+              <>
+                <TheNavlogout />
+                <DocSearch />
+              </>
+            ) : (
+              <Navigate replace to="/login" />
+            )
+          }
         />
       </Routes>
+
       <Footer />
     </Router>
   );

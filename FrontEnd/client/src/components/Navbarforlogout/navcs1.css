@@ -1,0 +1,31 @@
+.navbar-btn1 {
+  padding: 10px 15px;
+  color: white;
+  border: 1px solid transparent;
+  border-radius: 28px;
+  outline: transparent;
+  background-color: #ff0000;
+  font-size: 18px;
+  font-family: "Rubik", sans-serif;
+  letter-spacing: 0.8px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+.navbar-btn1:hover {
+  color: #ff0000;
+  background-color: white;
+  border: 1px solid #ff0000;
+}
+
+@media (max-width: 1200px) {
+  .navbar-btn1 {
+    margin-top: 30px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

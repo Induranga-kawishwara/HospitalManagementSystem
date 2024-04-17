@@ -1,7 +1,13 @@
 import React from "react";
 import style from "./footer.module.css";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 
 const Footer = () => {
+  const navigate = useNavigate();
+
+  const Aboutus = () => {
+    navigate("/");
+  };
   return (
     <footer className={style.hospital_footer}>
       <div className={style.footer_container}>
@@ -17,16 +23,16 @@ const Footer = () => {
           <h4>Quick Links</h4>
           <ul>
             <li>
-              <a href="/about">About Us</a>
+              <a href="/">About Us</a>
             </li>
             <li>
-              <a href="/services">Medical Services</a>
+              <a href="/">Medical Services</a>
             </li>
             <li>
-              <a href="/appointments">Make an Appointment</a>
+              <a href="/docsearch">Make an Appointment</a>
             </li>
             <li>
-              <a href="/careers">Careers</a>
+              <a href="/">Careers</a>
             </li>
           </ul>
         </div>
@@ -43,7 +49,10 @@ const Footer = () => {
         </div>
       </div>
       <div className={style.footer_bottom}>
-        <p>© {new Date().getFullYear()} Hospital Name. All rights reserved.</p>
+        <p>
+          © {new Date().getFullYear()} Serene Summit Hospital. All rights
+          reserved.
+        </p>
         <p>
           The information on this website is for general information purposes
           only. Nothing on this site should be taken as medical advice for any
