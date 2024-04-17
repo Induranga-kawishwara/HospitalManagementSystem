@@ -13,7 +13,11 @@ const TheNavbar = () => {
   const navigate = useNavigate();
 
   const handleChatBtnClick = () => {
-    navigate("/");
+    const handleChatBtnClick = () => {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      navigate("/login");
+    };
   };
   const home = () => {
     navigate("/");

@@ -86,7 +86,7 @@ h1 {
 
   width: 100%;
 }
-.buttonpri3 {
+/* .buttonpri3 {
   display: block;
   width: fit-content;
   margin: 10px auto;
@@ -101,7 +101,7 @@ h1 {
   font-size: 14px;
 
   width: 40%;
-}
+} */
 
 .buttonpri:hover,
 .buttonpri:focus {
@@ -111,7 +111,7 @@ h1 {
 .buttonpri2:focus {
   background-color: #0056b3;
 }
-.buttonpri3:hover,
+/* .buttonpri3:hover,
 .buttonpri3:focus {
   background-color: #c06b6b;
-}
+} */

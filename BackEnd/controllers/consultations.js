@@ -44,7 +44,7 @@ const newConsultation = async (req, res) => {
               specialization: req.body.specialization,
               branchName: req.body.branch,
               contactNum: req.body.PhoneNo,
-              feedback: "hiiiiiii",
+              // feedback: "hiiiiiii",
             },
           ],
         });
@@ -70,7 +70,7 @@ const newConsultation = async (req, res) => {
               specialization: req.body.specialization,
               branchName: req.body.branch,
               contactNum: req.body.PhoneNo,
-              feedback: "hiiiiiii",
+              // feedback: "hiiiiiii",
             },
           ],
         },

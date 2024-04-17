@@ -7,13 +7,8 @@ import { setDoctors } from "../../redux/actions";
 
 function AppointmentDetails() {
   const navigate = useNavigate();
-  const AppointmentHistory = () => {
-    navigate("/appontmenthistory");
-  };
-  const doneAppointmentHistory = () => {
-    navigate("/doneappoinment");
-  };
-
+  const AppointmentHistory = () => navigate("/appontmenthistory");
+  const doneAppointmentHistory = () => navigate("/doneappoinment");
   const [doctor, setDoctor] = useState(null);
   const [userdata, setUserdata] = useState({});
   const [data, setData] = useState({
@@ -27,31 +22,17 @@ function AppointmentDetails() {
   const [specializations, setSpecializations] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
   const doctors = useSelector((state) => state.doctors);
   const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!doctors || doctors.length === 0) {
-        try {
-          const result = await axios.get("http://localhost:5000/users/Doctor");
-          dispatch(setDoctors(result.data));
-        } catch (error) {
-          console.error("Failed to fetch data:", error);
-        }
-      }
-    };
-
-    fetchData();
-  }, [doctors, dispatch]);
-
-  useEffect(() => {
-    const fetchData = async () => {
       setLoading(true);
       try {
+        const result = await axios.get("http://localhost:5000/users/Doctor");
+        dispatch(setDoctors(result.data));
         setSpecializations([
-          ...new Set(doctors.map((doc) => doc.roleDetails.specialization)),
+          ...new Set(result.data.map((doc) => doc.roleDetails.specialization)),
         ]);
       } catch (error) {
         console.error("Failed to fetch data:", error);
@@ -60,7 +41,7 @@ function AppointmentDetails() {
       setLoading(false);
     };
     fetchData();
-  }, [doctors]);
+  }, [dispatch]);
 
   useEffect(() => {
     const userDataString = localStorage.getItem("user");
@@ -274,9 +255,6 @@ function AppointmentDetails() {
           onClick={doneAppointmentHistory}
         >
           Appointment History
-        </button>
-        <button type="button" className={style.buttonpri3}>
-          Logout
         </button>
       </form>
     </div>
