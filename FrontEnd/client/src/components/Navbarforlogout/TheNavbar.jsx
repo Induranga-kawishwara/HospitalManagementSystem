@@ -13,11 +13,9 @@ const TheNavbar = () => {
   const navigate = useNavigate();
 
   const handleChatBtnClick = () => {
-    const handleChatBtnClick = () => {
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-      navigate("/login");
-    };
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    navigate("/");
   };
   const home = () => {
     navigate("/");
