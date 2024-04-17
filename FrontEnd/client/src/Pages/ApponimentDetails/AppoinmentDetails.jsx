@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import style from "./appoinmentDetails.module.css";
 import { useNavigate } from "react-router-dom";
+import { setDoctors } from "../../redux/actions";
 
 function AppointmentDetails() {
   const navigate = useNavigate();
@@ -28,6 +29,22 @@ function AppointmentDetails() {
   const [error, setError] = useState(null);
 
   const doctors = useSelector((state) => state.doctors);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!doctors || doctors.length === 0) {
+        try {
+          const result = await axios.get("http://localhost:5000/users/Doctor");
+          dispatch(setDoctors(result.data));
+        } catch (error) {
+          console.error("Failed to fetch data:", error);
+        }
+      }
+    };
+
+    fetchData();
+  }, [doctors, dispatch]);
 
   useEffect(() => {
     const fetchData = async () => {

@@ -1,8 +1,8 @@
-export const FETCH_DOCTORS = "FETCH_DOCTORS";
+export const SET_DOCTORS = "SET_DOCTORS";
 export const ADD_DOCTOR = "ADD_DOCTOR";
 
-export const fetchDoctors = (doctors) => ({
-  type: FETCH_DOCTORS,
+export const setDoctors = (doctors) => ({
+  type: SET_DOCTORS,
   payload: doctors,
 });
 

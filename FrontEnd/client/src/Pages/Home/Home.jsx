@@ -5,7 +5,7 @@ import { faCalendarCheck, faAngleUp } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import style from "./home.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchDoctors } from "../../redux/actions";
+import { setDoctors } from "../../redux/actions";
 import axios from "axios";
 
 function Home() {
@@ -48,15 +48,17 @@ function Home() {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const result = await axios.get("http://localhost:5000/users/Doctor");
-        dispatch(fetchDoctors(result.data));
-      } catch (error) {
-        console.error("Failed to fetch data:", error);
+      if (!doctorList || doctorList.length === 0) {
+        try {
+          const result = await axios.get("http://localhost:5000/users/Doctor");
+          dispatch(setDoctors(result.data));
+        } catch (error) {
+          console.error("Failed to fetch data:", error);
+        }
       }
     };
     fetchData();
-  }, [dispatch]);
+  }, [doctorList, dispatch]);
 
   useEffect(() => {
     const interval = setInterval(() => {

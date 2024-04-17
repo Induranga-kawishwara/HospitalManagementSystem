@@ -12,6 +12,16 @@ const getConsultations = async (req, res) => {
 
 const newConsultation = async (req, res) => {
   try {
+    const date = new Date(req.body.consultationDate);
+
+    const time = "09:00:00";
+
+    const [hours, minutes, seconds] = time.split(":").map(Number);
+
+    date.setUTCHours(hours);
+    date.setUTCMinutes(minutes);
+    date.setUTCSeconds(seconds);
+
     let consultation = await ConsultationModel.findOne({
       doctorId: req.body.doctorId,
     });
@@ -26,11 +36,16 @@ const newConsultation = async (req, res) => {
 
       if (!existingEntry) {
         consultation.consultations.push({
-          patientId: req.body.patientId,
-          consultationDate: req.body.consultationDate,
-          specialization: req.body.specialization,
-          branchName: req.body.branch,
-          contactNum: req.body.PhoneNo,
+          consultationDateAndTime: date,
+          consultationDetails: [
+            {
+              patientId: req.body.patientId,
+              specialization: req.body.specialization,
+              branchName: req.body.branch,
+              contactNum: req.body.PhoneNo,
+              feedback: "hiiiiiii",
+            },
+          ],
         });
         await consultation.save();
         return res.status(200).send("Consultation saved successfully!");
@@ -47,11 +62,16 @@ const newConsultation = async (req, res) => {
       doctorId: req.body.doctorId,
       consultations: [
         {
-          patientId: req.body.patientId,
-          consultationDate: req.body.consultationDate,
-          specialization: req.body.specialization,
-          branchName: req.body.branch,
-          contactNum: req.body.PhoneNo,
+          consultationDateAndTime: date,
+          consultationDetails: [
+            {
+              patientId: req.body.patientId,
+              specialization: req.body.specialization,
+              branchName: req.body.branch,
+              contactNum: req.body.PhoneNo,
+              feedback: "hiiiiiii",
+            },
+          ],
         },
       ],
     });

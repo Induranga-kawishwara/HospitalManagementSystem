@@ -9,26 +9,33 @@ const ConsultationSchema = new Schema({
   },
   consultations: [
     {
-      patientId: {
-        type: String,
-        required: true,
-      },
-      consultationDate: {
+      consultationDateAndTime: {
         type: Date,
         required: true,
       },
-      specialization: {
-        type: String,
-        required: true,
-      },
-      branchName: {
-        type: String,
-        required: true,
-      },
-      contactNum: {
-        type: String,
-        required: true,
-      },
+      consultationDetails: [
+        {
+          patientId: {
+            type: String,
+            required: true,
+          },
+          specialization: {
+            type: String,
+            required: true,
+          },
+          branchName: {
+            type: String,
+            required: true,
+          },
+          contactNum: {
+            type: String,
+            required: true,
+          },
+          feedback: {
+            type: String,
+          },
+        },
+      ],
     },
   ],
 });
