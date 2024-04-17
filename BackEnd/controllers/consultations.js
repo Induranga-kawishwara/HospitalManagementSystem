@@ -15,12 +15,16 @@ const newConsultation = async (req, res) => {
     const date = new Date(req.body.consultationDate);
 
     const time = "09:00:00";
-
     const [hours, minutes, seconds] = time.split(":").map(Number);
 
     date.setUTCHours(hours);
     date.setUTCMinutes(minutes);
     date.setUTCSeconds(seconds);
+
+    const now = new Date();
+    if (date < now) {
+      return res.status(400).send("Consultation date cannot be in the past.");
+    }
 
     let consultation = await ConsultationModel.findOne({
       doctorId: req.body.doctorId,
@@ -29,25 +33,19 @@ const newConsultation = async (req, res) => {
     if (consultation) {
       const existingEntry = consultation.consultations.find(
         (entry) =>
-          entry.consultationDetails.some(
-            (detail) => detail.patientId === req.body.patientId
-          ) &&
-          new Date(entry.consultationDateAndTime).getTime() === date.getTime()
+          entry.patientId === req.body.patientId &&
+          entry.consultationDateAndTime.getTime() === date.getTime()
       );
 
       if (!existingEntry) {
         consultation.consultations.push({
+          patientId: req.body.patientId,
+          specialization: req.body.specialization,
+          branchName: req.body.branch,
+          contactNum: req.body.PhoneNo,
           consultationDateAndTime: date,
-          consultationDetails: [
-            {
-              patientId: req.body.patientId,
-              specialization: req.body.specialization,
-              branchName: req.body.branch,
-              contactNum: req.body.PhoneNo,
-              // feedback: "hiiiiiii",
-            },
-          ],
         });
+
         await consultation.save();
         return res.status(200).send("Consultation saved successfully!");
       } else {
@@ -63,16 +61,11 @@ const newConsultation = async (req, res) => {
       doctorId: req.body.doctorId,
       consultations: [
         {
+          patientId: req.body.patientId,
+          specialization: req.body.specialization,
+          branchName: req.body.branch,
+          contactNum: req.body.PhoneNo,
           consultationDateAndTime: date,
-          consultationDetails: [
-            {
-              patientId: req.body.patientId,
-              specialization: req.body.specialization,
-              branchName: req.body.branch,
-              contactNum: req.body.PhoneNo,
-              // feedback: "hiiiiiii",
-            },
-          ],
         },
       ],
     });
