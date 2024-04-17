@@ -8,6 +8,7 @@ import {
 const router = express.Router();
 
 router.get("/", getConsultations);
+router.get("/:id", getConsultations);
 router.post("/", newConsultation);
 router.delete("/:id", deleteConsultation);
 

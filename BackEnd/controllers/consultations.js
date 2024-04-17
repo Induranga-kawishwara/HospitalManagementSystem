@@ -2,8 +2,34 @@ import ConsultationModel from "../modules/consultation.js";
 
 const getConsultations = async (req, res) => {
   try {
-    const consultations = await ConsultationModel.find();
-    res.status(200).json(consultations);
+    let patientConsultations;
+
+    const { id } = req.params;
+
+    if (id) {
+      const consultations = await ConsultationModel.find({
+        "consultations.patientId": id,
+      });
+
+      // Extract consultations only for the specified patientId
+      patientConsultations = consultations.reduce((acc, curr) => {
+        const patientConsults = curr.consultations.filter(
+          (consultation) => consultation.patientId === id
+        );
+        if (patientConsults.length > 0) {
+          acc.push({
+            _id: curr._id,
+            doctorId: curr.doctorId,
+            consultations: patientConsults,
+          });
+        }
+        return acc;
+      }, []);
+    } else {
+      patientConsultations = await ConsultationModel.find();
+    }
+
+    res.status(200).json(patientConsultations);
   } catch (error) {
     console.error("Error getting consultations:", error);
     res.status(500).send("Error getting consultations");
