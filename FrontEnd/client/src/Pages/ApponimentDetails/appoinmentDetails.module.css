@@ -80,28 +80,10 @@ h1 {
   color: rgb(255, 255, 255);
   border: none;
   cursor: pointer;
-
   font-weight: bold;
   font-size: 14px;
-
   width: 100%;
 }
-/* .buttonpri3 {
-  display: block;
-  width: fit-content;
-  margin: 10px auto;
-  padding: 10px 20px;
-  border-radius: 4px;
-  background-color: #fc5f5f;
-  color: rgb(255, 255, 255);
-  border: none;
-  cursor: pointer;
-
-  font-weight: bold;
-  font-size: 14px;
-
-  width: 40%;
-} */
 
 .buttonpri:hover,
 .buttonpri:focus {
@@ -111,7 +93,3 @@ h1 {
 .buttonpri2:focus {
   background-color: #0056b3;
 }
-/* .buttonpri3:hover,
-.buttonpri3:focus {
-  background-color: #c06b6b;
-} */
