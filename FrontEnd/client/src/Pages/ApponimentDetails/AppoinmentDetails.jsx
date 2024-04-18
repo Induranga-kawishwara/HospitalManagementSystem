@@ -74,16 +74,52 @@ function AppointmentDetails() {
 
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
+    setError(null);
   };
 
   const handleDoctorChange = (event) => {
     const selectedDoc = doctors.find((doc) => doc._id === event.target.value);
     setDoctor(selectedDoc);
     setData({ ...data, doctorId: event.target.value });
+    setError(null);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    const specializationRegex = /^[a-zA-Z\s]*$/;
+    const phoneRegex = /^[0-9]{10}$/;
+
+    if (!data.specialization.trim()) {
+      setError("Please select a specialization.");
+      return;
+    } else if (!specializationRegex.test(data.specialization.trim())) {
+      setError("Please enter a valid specialization.");
+      return;
+    }
+
+    if (!data.doctorId.trim()) {
+      setError("Please select a doctor.");
+      return;
+    }
+
+    if (!data.branch.trim()) {
+      setError("Please select a hospital.");
+      return;
+    }
+
+    if (!data.consultationDate.trim()) {
+      setError("Please select an appointment date.");
+      return;
+    }
+
+    if (!data.PhoneNo.trim()) {
+      setError("Please enter a phone number.");
+      return;
+    } else if (!phoneRegex.test(data.PhoneNo.trim())) {
+      setError("Please enter a valid 10-digit phone number.");
+      return;
+    }
     try {
       const res = await axios.post("http://localhost:5000/consultations", data);
       setData((data) => ({
@@ -96,24 +132,18 @@ function AppointmentDetails() {
       }));
       alert(res.data);
     } catch (error) {
-      if (
-        error.response &&
-        error.response.status >= 400 &&
-        error.response.status <= 500
-      ) {
-        alert(error.response.data);
-      }
+      alert(error.response.data);
     }
   };
 
   if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
 
   return (
     <div className={style.search_container}>
       <form onSubmit={handleSubmit}>
         <h1>Book An Appointment</h1>
         <br />
+        {error && <div className={style.error_msg}>{error}</div>}
         <div className={style.paddingspace}>
           <div className={style.form_group_row}>
             <label

@@ -23,6 +23,69 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!data.firstName.trim()) {
+      setError("Please enter your first name.");
+      return;
+    }
+
+    if (!/^[a-zA-Z]*$/.test(data.firstName.trim())) {
+      setError("Please enter a valid first name.");
+      return;
+    }
+
+    if (!data.lastName.trim()) {
+      setError("Please enter your last name.");
+      return;
+    }
+
+    if (!/^[a-zA-Z]*$/.test(data.lastName.trim())) {
+      setError("Please enter a valid last name.");
+      return;
+    }
+
+    if (!data.gender) {
+      setError("Please select your gender.");
+      return;
+    }
+
+    if (!data.phonenumber.trim()) {
+      setError("Please enter your phone number.");
+      return;
+    }
+
+    if (!/^\d{10}$/.test(data.phonenumber.trim())) {
+      setError("Please enter a valid 10-digit phone number.");
+      return;
+    }
+
+    if (!data.address.trim()) {
+      setError("Please enter your address.");
+      return;
+    }
+
+    if (!data.city.trim()) {
+      setError("Please enter your city.");
+      return;
+    }
+
+    if (!data.email.trim()) {
+      setError("Please enter your email.");
+      return;
+    }
+
+    if (
+      !/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(data.email.trim())
+    ) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+
+    if (!data.password.trim()) {
+      setError("Please enter your password.");
+      return;
+    }
+
     try {
       const response = await axios.post("http://localhost:5000/patients", data);
       alert(response.data.message);
@@ -43,7 +106,7 @@ const Signup = () => {
       <div className={styles.signup_container}>
         <div className={styles.signup_form_container}>
           <div className={styles.left}>
-            <h1>Do you have already an Account?</h1>
+            <h1>Do you already have an Account?</h1>
             <Link to="/login">
               <button type="button" className={styles.white_btn}>
                 Login
@@ -78,8 +141,7 @@ const Signup = () => {
                 value={data.gender}
                 onChange={handleChange}
               >
-                <option value="">Gender</option> // Changed from 'selected' to
-                controlled with 'value'
+                <option value="">Gender</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
                 <option value="Other">Other</option>
