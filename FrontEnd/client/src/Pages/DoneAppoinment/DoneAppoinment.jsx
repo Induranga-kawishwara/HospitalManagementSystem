@@ -9,28 +9,25 @@ function DoneAppoinment() {
   const { patientId } = useParams();
   const dispatch = useDispatch();
   const consultationsList = useSelector((state) => state.consultations);
+  const doctorList = useSelector((state) => state.doctors);
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!consultationsList || consultationsList.length === 0) {
-        try {
-          const result = await axios.get(
-            `http://localhost:5000/consultations/${patientId}`
-          );
-          console.log(result.data);
-          dispatch(setConsultations(result.data));
-        } catch (error) {
-          console.error("Failed to fetch data:", error);
-        }
+      try {
+        const result = await axios.get(
+          `http://localhost:5000/consultations/${patientId}`
+        );
+        dispatch(setConsultations(result.data));
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
       }
     };
     fetchData();
-  }, [consultationsList, dispatch, patientId]);
+  }, [dispatch, patientId]);
 
   const filteredConsultations = consultationsList.flatMap((it) =>
     it.consultations.filter((pat) => pat.status === "done")
   );
-
   return (
     <div
       style={{
@@ -42,17 +39,44 @@ function DoneAppoinment() {
       }}
     >
       <ul style={{ listStyle: "none" }}>
-        {filteredConsultations.map((pat, index) => (
-          <li key={index} style={{ margin: 30 }}>
-            <AppoinmentCard people={pat} from="history" />
-          </li>
-        ))}
+        {filteredConsultations.map((pat, index) => {
+          const scheduledDoctor = doctorList.find(
+            (doctor) => doctor._id === pat.doctorId
+          );
+
+          return (
+            <li key={index} value={pat._id} style={{ margin: 30 }}>
+              <AppoinmentCard
+                people={{
+                  avatar: scheduledDoctor ? scheduledDoctor.avatar : "",
+                  qr: "/qr.png",
+                  displayName: scheduledDoctor
+                    ? scheduledDoctor.displayName
+                    : "",
+                  tagline: "",
+                  specialize: ` Specialize - ${pat.specialization}`,
+                  date: `Date - ${new Date(
+                    pat.consultationDateAndTime
+                  ).toLocaleDateString()}`,
+                  time: `Time - ${new Date(
+                    pat.consultationDateAndTime
+                  ).toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}`,
+                  location: `Hospital Location - ${pat.branchName}`,
+                }}
+                from="history"
+              />
+            </li>
+          );
+        })}
       </ul>
       <style>
         {`
         @import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
         .card-business * {
-          font-family:  'Quicksand',sans-serif;
+          font-family: 'Quicksand',sans-serif;
         }
      `}
       </style>

@@ -72,9 +72,9 @@ function AppoinmentCard({
             padding: 0,
           }}
         >
-          {people.title && <li>{people.title}</li>}
-          {people.phone && <li>{people.phone}</li>}
-          {people.mail && <li>{people.mail}</li>}
+          {people.specialize && <li>{people.specialize}</li>}
+          {people.date && <li>{people.date}</li>}
+          {people.time && <li>{people.time}</li>}
           {people.location && <li>{people.location}</li>}
         </ul>
         {from === "history" ? (

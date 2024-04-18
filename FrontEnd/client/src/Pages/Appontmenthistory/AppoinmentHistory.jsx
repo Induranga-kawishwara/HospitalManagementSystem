@@ -10,6 +10,7 @@ function AppoinmentHistory() {
   const { patientId } = useParams();
   const dispatch = useDispatch();
   const consultationsList = useSelector((state) => state.consultations);
+  const doctorList = useSelector((state) => state.doctors);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,11 +41,36 @@ function AppoinmentHistory() {
     >
       <ul style={{ listStyle: "none" }}>
         {consultationsList.map((it) =>
-          it.consultations.map((pat, index) => (
-            <li key={index} style={{ margin: 30 }}>
-              <AppoinmentCard people={pat} />
-            </li>
-          ))
+          it.consultations.map((pat, index) => {
+            // Find the scheduled doctor using doctorId
+            const scheduledDoctor = doctorList.find(
+              (doctor) => doctor._id === it.doctorId
+            );
+
+            return (
+              <li key={index} style={{ margin: 30 }}>
+                <AppoinmentCard
+                  people={{
+                    avatar: "",
+                    qr: "/qr.png",
+                    displayName: `${scheduledDoctor.firstName} ${scheduledDoctor.lastName}`,
+                    tagline: "",
+                    specialize: ` Specialize - ${pat.specialization}`,
+                    date: `Date - ${new Date(
+                      pat.consultationDateAndTime
+                    ).toLocaleDateString()}`,
+                    time: `Time - ${new Date(
+                      pat.consultationDateAndTime
+                    ).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}`,
+                    location: `Hospital Location - ${pat.branchName}`,
+                  }}
+                />
+              </li>
+            );
+          })
         )}
       </ul>
       <style>
