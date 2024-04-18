@@ -28,6 +28,48 @@ function DoneAppoinment() {
   const filteredConsultations = consultationsList.flatMap((it) =>
     it.consultations.filter((pat) => pat.status === "done")
   );
+
+  // Initialize an empty array to store objects containing doctor details
+  const doctorDetailsArray = [];
+
+  // Iterate over filteredConsultations array
+  filteredConsultations.forEach((consultation) => {
+    // Find the consultation in consultationList that matches the current filtered consultation's ID
+    const matchingConsultation = consultationsList.find((item) =>
+      item.consultations.find((ss) => ss._id === consultation._id)
+    );
+    console.log(matchingConsultation);
+
+    // If a matching consultation is found
+    if (matchingConsultation) {
+      // Retrieve the doctor details from the matching consultation
+      const scheduledDoctor = doctorList.find(
+        (doctor) => doctor._id === matchingConsultation.doctorId
+      );
+
+      // If a scheduled doctor is found
+      if (scheduledDoctor) {
+        const doctorDetails = {
+          doctorId: scheduledDoctor._id,
+          displayName: `${scheduledDoctor.firstName} ${scheduledDoctor.lastName}`,
+          specialize: consultation.specialization,
+          date: new Date(
+            consultation.consultationDateAndTime
+          ).toLocaleDateString(),
+          time: new Date(
+            consultation.consultationDateAndTime
+          ).toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          }),
+          location: consultation.branchName,
+        };
+
+        doctorDetailsArray.push(doctorDetails);
+      }
+    }
+  });
+
   return (
     <div
       style={{
@@ -39,38 +81,22 @@ function DoneAppoinment() {
       }}
     >
       <ul style={{ listStyle: "none" }}>
-        {filteredConsultations.map((pat, index) => {
-          const scheduledDoctor = doctorList.find(
-            (doctor) => doctor._id === pat.doctorId
-          );
-
-          return (
-            <li key={index} value={pat._id} style={{ margin: 30 }}>
-              <AppoinmentCard
-                people={{
-                  avatar: scheduledDoctor ? scheduledDoctor.avatar : "",
-                  qr: "/qr.png",
-                  displayName: scheduledDoctor
-                    ? scheduledDoctor.displayName
-                    : "",
-                  tagline: "",
-                  specialize: ` Specialize - ${pat.specialization}`,
-                  date: `Date - ${new Date(
-                    pat.consultationDateAndTime
-                  ).toLocaleDateString()}`,
-                  time: `Time - ${new Date(
-                    pat.consultationDateAndTime
-                  ).toLocaleTimeString([], {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}`,
-                  location: `Hospital Location - ${pat.branchName}`,
-                }}
-                from="history"
-              />
-            </li>
-          );
-        })}
+        {doctorDetailsArray.map((doctorDetails, index) => (
+          <li key={index} style={{ margin: 30 }}>
+            <AppoinmentCard
+              people={{
+                avatar: "",
+                qr: "/qr.png",
+                displayName: doctorDetails.displayName,
+                tagline: "",
+                date: `Date - ${doctorDetails.date}`,
+                time: `Time - ${doctorDetails.time}`,
+                location: `Hospital Location - ${doctorDetails.location}`,
+              }}
+              from="history"
+            />
+          </li>
+        ))}
       </ul>
       <style>
         {`
