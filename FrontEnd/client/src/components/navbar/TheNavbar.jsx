@@ -15,9 +15,11 @@ const TheNavbar = () => {
   const handleChatBtnClick = () => {
     navigate("/docsearch");
   };
+
   const home = () => {
     navigate("/");
   };
+
   return (
     <Navbar
       expand="xl"
@@ -44,11 +46,9 @@ const TheNavbar = () => {
           <Nav.Item
             className={`${classes.nav__link} ${classes.firstnav__link} me-4`}
           >
-            
             <ScrollLink
               activeClass={classes.active}
-              onClick={home}
-              // to="/"
+              to="home-section"
               spy={true}
               smooth={true}
               offset={-50}
@@ -60,7 +60,7 @@ const TheNavbar = () => {
           <Nav.Item className={`${classes.nav__link} me-4`}>
             <ScrollLink
               activeClass={classes.active}
-              to="services"
+              to="services-section"
               spy={true}
               smooth={true}
               offset={-50}
@@ -72,7 +72,7 @@ const TheNavbar = () => {
           <Nav.Item className={`${classes.nav__link} me-4`}>
             <ScrollLink
               activeClass={classes.active}
-              to="about"
+              to="about-section"
               spy={true}
               smooth={true}
               offset={-50}
@@ -84,7 +84,7 @@ const TheNavbar = () => {
           <Nav.Item className={`${classes.nav__link} me-4`}>
             <ScrollLink
               activeClass={classes.active}
-              to="reviews"
+              to="reviews-section"
               spy={true}
               smooth={true}
               offset={-50}
@@ -96,7 +96,7 @@ const TheNavbar = () => {
           <Nav.Item className={`${classes.nav__link} me-4`}>
             <ScrollLink
               activeClass={classes.active}
-              to="doctors"
+              to="doctors-section"
               spy={true}
               smooth={true}
               offset={-50}

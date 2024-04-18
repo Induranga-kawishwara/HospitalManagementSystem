@@ -7,8 +7,6 @@ import { setDoctors } from "../../redux/actions";
 
 function AppointmentDetails() {
   const navigate = useNavigate();
-  const AppointmentHistory = () => navigate("/appontmenthistory");
-  const doneAppointmentHistory = () => navigate("/doneappoinment");
   const [doctor, setDoctor] = useState(null);
   const [userdata, setUserdata] = useState({});
   const [data, setData] = useState({
@@ -134,6 +132,17 @@ function AppointmentDetails() {
     } catch (error) {
       alert(error.response.data);
     }
+  };
+
+  const doneAppointmentHistory = () => {
+    const patientId = userdata.id;
+
+    navigate(`/doneappoinment/${patientId}`);
+  };
+
+  const AppointmentHistory = () => {
+    const patientId = userdata.id;
+    navigate(`/appontmenthistory/${patientId}`);
   };
 
   if (loading) return <div>Loading...</div>;

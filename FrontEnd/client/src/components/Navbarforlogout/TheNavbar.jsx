@@ -15,9 +15,11 @@ const TheNavbar = () => {
     localStorage.removeItem("user");
     window.location.reload();
   };
+
   const home = () => {
     navigate("/");
   };
+
   return (
     <Navbar
       expand="xl"
@@ -45,9 +47,7 @@ const TheNavbar = () => {
             className={`${classes.nav__link} ${classes.firstnav__link} me-4`}
           >
             <ScrollLink
-              activeClass={classes.active}
-              onClick={home}
-              // to="/"
+              to="home"
               spy={true}
               smooth={true}
               offset={-50}
@@ -58,7 +58,6 @@ const TheNavbar = () => {
           </Nav.Item>
           <Nav.Item className={`${classes.nav__link} me-4`}>
             <ScrollLink
-              activeClass={classes.active}
               to="services"
               spy={true}
               smooth={true}
@@ -70,7 +69,6 @@ const TheNavbar = () => {
           </Nav.Item>
           <Nav.Item className={`${classes.nav__link} me-4`}>
             <ScrollLink
-              activeClass={classes.active}
               to="about"
               spy={true}
               smooth={true}
@@ -82,7 +80,6 @@ const TheNavbar = () => {
           </Nav.Item>
           <Nav.Item className={`${classes.nav__link} me-4`}>
             <ScrollLink
-              activeClass={classes.active}
               to="reviews"
               spy={true}
               smooth={true}
@@ -94,7 +91,6 @@ const TheNavbar = () => {
           </Nav.Item>
           <Nav.Item className={`${classes.nav__link} me-4`}>
             <ScrollLink
-              activeClass={classes.active}
               to="doctors"
               spy={true}
               smooth={true}

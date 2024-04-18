@@ -35,9 +35,9 @@ const ConsultationSchema = new Schema({
         required: true,
         default: "scheduled",
       },
-      feedback: {
-        type: String,
-      },
+      // feedback: {
+      //   type: String,
+      // },
     },
   ],
 });
