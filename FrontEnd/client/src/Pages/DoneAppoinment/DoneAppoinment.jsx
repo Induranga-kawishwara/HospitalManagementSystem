@@ -38,7 +38,6 @@ function DoneAppoinment() {
     const matchingConsultation = consultationsList.find((item) =>
       item.consultations.find((ss) => ss._id === consultation._id)
     );
-    console.log(matchingConsultation);
 
     // If a matching consultation is found
     if (matchingConsultation) {
