@@ -72,39 +72,40 @@ function DoneAppoinment() {
   return (
     <div
       style={{
-        height: "100vh",
         display: "flex",
         alignItems: "",
         justifyContent: "center",
-        marginTop: "70px",
+        marginTop: "120px",
       }}
     >
-      <ul style={{ listStyle: "none" }}>
-        {doctorDetailsArray.map((doctorDetails, index) => (
-          <li key={index} style={{ margin: 30 }}>
-            <AppoinmentCard
-              people={{
-                avatar: "",
-                qr: "/qr.png",
-                displayName: doctorDetails.displayName,
-                tagline: "",
-                date: `Date - ${doctorDetails.date}`,
-                time: `Time - ${doctorDetails.time}`,
-                location: `Hospital Location - ${doctorDetails.location}`,
-              }}
-              from="history"
-            />
-          </li>
-        ))}
-      </ul>
-      <style>
+      <form>
+        <ul style={{ listStyle: "none" }}>
+          {doctorDetailsArray.map((doctorDetails, index) => (
+            <li key={index} style={{ margin: 30 }}>
+              <AppoinmentCard
+                people={{
+                  avatar: "",
+                  qr: "/qr.png",
+                  displayName: doctorDetails.displayName,
+                  tagline: "",
+                  date: `Date - ${doctorDetails.date}`,
+                  time: `Time - ${doctorDetails.time}`,
+                  location: `Hospital Location - ${doctorDetails.location}`,
+                }}
+                from="history"
+              />
+            </li>
+          ))}
+        </ul>
+      </form>
+      {/* <style>
         {`
         @import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
         .card-business * {
           font-family: 'Quicksand',sans-serif;
         }
      `}
-      </style>
+      </style> */}
     </div>
   );
 }

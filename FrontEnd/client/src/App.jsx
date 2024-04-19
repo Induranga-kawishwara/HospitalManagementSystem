@@ -11,20 +11,34 @@ import Login from "./Pages/Login/Login";
 import DocSearch from "./Pages/ApponimentDetails/AppoinmentDetails";
 import TheNav from "./components/navbar/TheNav.jsx";
 import TheNavlogout from "./components/Navbarforlogout/TheNav.jsx";
-import Footer from "./components/Footer/footer.jsx";
+import Footer from "./components/Footer/TheFooter.jsx";
 import AppointmentHistory from "./Pages/Appontmenthistory/AppoinmentHistory.jsx";
 import DoneAppoi from "./Pages/DoneAppoinment/DoneAppoinment.jsx";
 
 function App() {
   const token = localStorage.getItem("token");
+  const isLoggedIn = token ? true : false;
+
   return (
     <Router>
-      <TheNav />
       <Routes>
-        <Route path="/" exact element={<Home />} />
-        <Route path="/doclist" exact element={<Doclist />} />
-        <Route path="/signup" exact element={<Signup />} />
-        <Route path="/login" exact element={<Login />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/doclist" element={<Doclist />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+        {/* <Route
+          path="/appointmenthistory/:patientId"
+          element={
+            isLoggedIn ? (
+              <>
+                <TheNavlogout />
+                <AppointmentHistory />
+              </>
+            ) : (
+              <Navigate replace to="/login" />
+            )
+          }
+        /> */}
         <Route
           path="/appontmenthistory/:patientId"
           exact
@@ -39,6 +53,7 @@ function App() {
             )
           }
         />
+
         <Route
           path="/doneappoinment/:patientId"
           exact
@@ -53,10 +68,24 @@ function App() {
             )
           }
         />
+
+        {/* <Route
+          path="/doneappointment/:patientId"
+          element={
+            isLoggedIn ? (
+              <>
+                <TheNavlogout />
+                <DoneAppoi />
+              </>
+            ) : (
+              <Navigate replace to="/login" />
+            )
+          }
+        /> */}
         <Route
           path="/docsearch"
           element={
-            token ? (
+            isLoggedIn ? (
               <>
                 <TheNavlogout />
                 <DocSearch />
@@ -67,10 +96,88 @@ function App() {
           }
         />
       </Routes>
-
+      {isLoggedIn && <TheNavlogout />}
+      {!isLoggedIn && <TheNav />}
       <Footer />
     </Router>
   );
 }
 
 export default App;
+
+// import {
+//   BrowserRouter as Router,
+//   Route,
+//   Routes,
+//   Navigate,
+// } from "react-router-dom";
+// import Home from "./Pages/Main";
+// import Doclist from "./Pages/DoctorList/Doclist";
+// import Signup from "./Pages/Singup/Signup";
+// import Login from "./Pages/Login/Login";
+// import DocSearch from "./Pages/ApponimentDetails/AppoinmentDetails";
+// import TheNav from "./components/navbar/TheNav.jsx";
+// import TheNavlogout from "./components/Navbarforlogout/TheNav.jsx";
+// import Footer from "./components/Footer/footer.jsx";
+// import AppointmentHistory from "./Pages/Appontmenthistory/AppoinmentHistory.jsx";
+// import DoneAppoi from "./Pages/DoneAppoinment/DoneAppoinment.jsx";
+
+// function App() {
+//   const token = localStorage.getItem("token");
+//   return (
+//     <Router>
+//       <TheNav />
+//       <Routes>
+//         <Route path="/" exact element={<Home />} />
+//         <Route path="/doclist" exact element={<Doclist />} />
+//         <Route path="/signup" exact element={<Signup />} />
+//         <Route path="/login" exact element={<Login />} />
+//         <Route
+//           path="/appontmenthistory/:patientId"
+//           exact
+//           element={
+//             token ? (
+//               <>
+//                 <TheNavlogout />
+//                 <AppointmentHistory />
+//               </>
+//             ) : (
+//               <Navigate replace to="/login" />
+//             )
+//           }
+//         />
+//         <Route
+//           path="/doneappoinment/:patientId"
+//           exact
+//           element={
+//             token ? (
+//               <>
+//                 <TheNavlogout />
+//                 <DoneAppoi />
+//               </>
+//             ) : (
+//               <Navigate replace to="/login" />
+//             )
+//           }
+//         />
+//         <Route
+//           path="/docsearch"
+//           element={
+//             token ? (
+//               <>
+//                 <TheNavlogout />
+//                 <DocSearch />
+//               </>
+//             ) : (
+//               <Navigate replace to="/login" />
+//             )
+//           }
+//         />
+//       </Routes>
+
+//       <Footer />
+//     </Router>
+//   );
+// }
+
+// export default App;
