@@ -47,8 +47,7 @@ const TheNavbar = () => {
             className={`${classes.nav__link} ${classes.firstnav__link} me-4`}
           >
             <ScrollLink
-              activeClass={classes.active}
-              to="home-section"
+              to="home"
               spy={true}
               smooth={true}
               offset={-50}
@@ -59,8 +58,7 @@ const TheNavbar = () => {
           </Nav.Item>
           <Nav.Item className={`${classes.nav__link} me-4`}>
             <ScrollLink
-              activeClass={classes.active}
-              to="services-section"
+              to="services"
               spy={true}
               smooth={true}
               offset={-50}
@@ -71,8 +69,7 @@ const TheNavbar = () => {
           </Nav.Item>
           <Nav.Item className={`${classes.nav__link} me-4`}>
             <ScrollLink
-              activeClass={classes.active}
-              to="about-section"
+              to="about"
               spy={true}
               smooth={true}
               offset={-50}
@@ -83,8 +80,7 @@ const TheNavbar = () => {
           </Nav.Item>
           <Nav.Item className={`${classes.nav__link} me-4`}>
             <ScrollLink
-              activeClass={classes.active}
-              to="reviews-section"
+              to="reviews"
               spy={true}
               smooth={true}
               offset={-50}
@@ -95,8 +91,7 @@ const TheNavbar = () => {
           </Nav.Item>
           <Nav.Item className={`${classes.nav__link} me-4`}>
             <ScrollLink
-              activeClass={classes.active}
-              to="doctors-section"
+              to="doctors"
               spy={true}
               smooth={true}
               offset={-50}
