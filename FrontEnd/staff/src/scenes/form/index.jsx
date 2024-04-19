@@ -3,6 +3,8 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
+import { Input } from "@mui/material"; // Inside your component
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 const Form = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -63,6 +65,41 @@ const Form = () => {
                 helperText={touched.lastName && errors.lastName}
                 sx={{ gridColumn: "span 2" }}
               />
+              <Input
+                fullWidth
+                variant="filled"
+                type="file" // Set type to "file" for image input
+                label="Upload Image Of Employee" // Label for the input (optional)
+                name="image" // Name of the input (optional, used for form submission)
+                sx={{ gridColumn: "span 4" }}
+              />
+              <TextField
+                fullWidth
+                variant="filled"
+                type="date" // Change type to "date"
+                label="Date Of Birth" // Change label to appropriate label
+                name="date" // Change name to appropriate name
+                sx={{ gridColumn: "span 4" }}
+              />
+
+              <FormControl
+                fullWidth
+                variant="filled"
+                sx={{ gridColumn: "span 4" }}
+              >
+                <InputLabel id="gender-label">Gender</InputLabel>
+                <Select
+                  labelId="gender-label"
+                  id="gender"
+                  label="Gender"
+                  name="gender" // Name of the input (optional, used for form submission)
+                >
+                  <MenuItem value="male">Male</MenuItem>
+                  <MenuItem value="female">Female</MenuItem>
+                  <MenuItem value="other">Other</MenuItem>
+                </Select>
+              </FormControl>
+
               <TextField
                 fullWidth
                 variant="filled"
@@ -115,6 +152,42 @@ const Form = () => {
                 helperText={touched.address2 && errors.address2}
                 sx={{ gridColumn: "span 4" }}
               />
+
+              <FormControl
+                fullWidth
+                variant="filled"
+                sx={{ gridColumn: "span 4" }}
+              >
+                <InputLabel id="gender-label">Hospital Branch</InputLabel>
+                <Select
+                  labelId="hospital-label"
+                  id="hospital"
+                  label="Hospital Branch"
+                  name="gender" // Name of the input (optional, used for form submission)
+                >
+                  <MenuItem value="Malabe">Malabe</MenuItem>
+                  <MenuItem value="Kottawa">Kottawa</MenuItem>
+                  <MenuItem value="other">Other</MenuItem>
+                </Select>
+              </FormControl>
+
+              <FormControl
+                fullWidth
+                variant="filled"
+                sx={{ gridColumn: "span 4" }}
+              >
+                <InputLabel id="gender-label">Department</InputLabel>
+                <Select
+                  labelId="department"
+                  id="department"
+                  label="department"
+                  name="department" // Name of the input (optional, used for form submission)
+                >
+                  <MenuItem value="dental">Dental</MenuItem>
+                  <MenuItem value="OPD">OPD</MenuItem>
+                  <MenuItem value="other">Other</MenuItem>
+                </Select>
+              </FormControl>
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
               <Button type="submit" color="secondary" variant="contained">
