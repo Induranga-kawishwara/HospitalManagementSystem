@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import Footer from "../../components/Footer/TheFooter.jsx";
+import { setDoctors } from "../../redux/actions";
 import AppoinmentCard from "../../components/AppoinmentCard/AppoinmentCard";
 
 function AppoinmentHistory() {
@@ -11,20 +11,30 @@ function AppoinmentHistory() {
   const [consultationsList, setConsultations] = useState([]);
   const doctorList = useSelector((state) => state.doctors);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await axios.get(
+        if (!doctorList || doctorList.length === 0) {
+          const doctorsResult = await axios.get(
+            "http://localhost:5000/users/Doctor"
+          );
+          dispatch(setDoctors(doctorsResult.data));
+        }
+
+        const consultationsResult = await axios.get(
           `http://localhost:5000/consultations/${patientId}`
         );
-        setConsultations(result.data);
+        setConsultations(consultationsResult.data);
       } catch (error) {
         console.error("Failed to fetch data:", error);
       }
     };
 
     fetchData();
-  }, [patientId]);
+  }, [patientId, doctorList, dispatch]);
+
   const handleDelete = async (id) => {
     try {
       const result = await axios.delete(

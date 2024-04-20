@@ -1,5 +1,6 @@
+import React, { useState } from "react";
+import axios from "axios";
 import style1 from "./appoinmentHistory.module.css";
-import React from "react";
 
 function AppoinmentCard({
   id,
@@ -8,12 +9,34 @@ function AppoinmentCard({
   shadow = true,
   style = {},
   from = "default",
-  onDelete, // Receive onDelete callback function as prop
+  onDelete,
   ...props
 }) {
+  const [data, setData] = useState({
+    consultationId: id,
+    fullName: JSON.parse(localStorage.getItem("user")).name,
+    hospitalBranch: people.location,
+    feedback: "",
+    date: people.date,
+  });
+
+  const handleFeedClick = async () => {
+    console.log(data);
+    try {
+      if (data.feedback) {
+        await axios.post("http://localhost:5000/reviews", data);
+      }
+    } catch (error) {
+      console.error("Failed to handle appointment deletion:", error);
+    }
+  };
+
   const handleDeleteClick = () => {
-    // Call the onDelete callback with the id of the current appointment
     onDelete(id);
+  };
+
+  const handleFeedbackChange = async (event) => {
+    setData({ ...data, feedback: event.target.value });
   };
 
   return (
@@ -77,10 +100,12 @@ function AppoinmentCard({
             padding: 0,
           }}
         >
-          {people.specialize && <li>{people.specialize}</li>}
-          {people.date && <li>{people.date}</li>}
-          {people.time && <li>{people.time}</li>}
-          {people.location && <li>{people.location}</li>}
+          {people.specialize && <li>{`Specialize -${people.specialize}`}</li>}
+          {people.date && <li>{`Date - ${people.date}`}</li>}
+          {people.time && <li>{`Time - ${people.time}`}</li>}
+          {people.location && (
+            <li>{`Hospital Location -${people.location}`}</li>
+          )}
         </ul>
         {from === "history" ? (
           <>
@@ -88,13 +113,19 @@ function AppoinmentCard({
               className={style1.comment}
               type="text"
               placeholder="Type something..."
+              value={data.feedback} // Bind the value of the input field to the feedback state
+              onChange={handleFeedbackChange} // Call handleFeedbackChange when the input field changes
             />
-            <button type="button" className={style1.feedback}>
+            <button
+              type="button"
+              onClick={handleFeedClick}
+              className={style1.feedback}
+            >
               Send Feedback
             </button>
             <button
               type="button"
-              onClick={handleDeleteClick} // Call handleDeleteClick when delete button is clicked
+              onClick={handleDeleteClick}
               className={style1.delete}
             >
               Delete
@@ -103,7 +134,7 @@ function AppoinmentCard({
         ) : (
           <button
             type="button"
-            onClick={handleDeleteClick} // Call handleDeleteClick when delete button is clicked
+            onClick={handleDeleteClick}
             className={style1.delete}
           >
             Delete

@@ -15,7 +15,11 @@ const ReviewSchema = new Schema({
     type: String,
     required: true,
   },
-  review: {
+  feedback: {
+    type: String,
+    required: true,
+  },
+  date: {
     type: String,
     required: true,
   },

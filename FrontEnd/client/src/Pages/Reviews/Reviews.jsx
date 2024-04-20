@@ -20,11 +20,11 @@ function Reviews() {
 
   const handleReviewsUpdation = () => {
     const reviewMessage = customerReviews[reviewIndex] || {};
-    const { fullName, hospitalBranch, review } = reviewMessage;
-    return { fullName, hospitalBranch, review };
+    const { fullName, hospitalBranch, feedback, date } = reviewMessage;
+    return { fullName, hospitalBranch, feedback, date };
   };
 
-  const { fullName, hospitalBranch, review } = handleReviewsUpdation();
+  const { fullName, hospitalBranch, feedback, date } = handleReviewsUpdation();
 
   const moveReview = (step) => {
     setReviewIndex(
@@ -46,7 +46,7 @@ function Reviews() {
 
         <p className={style.rw_text_format}>
           <span className={style.rw_text_quote1}>''</span>
-          <span className={style.rw_review}>{review}</span>
+          <span className={style.rw_review}>{feedback}</span>
           <span className={style.rw_text_quote2}>''</span>
         </p>
 
@@ -54,6 +54,7 @@ function Reviews() {
           <div className={style.rw_names}>
             <p className={style.rw_reviewer_name}>{fullName}</p>
             <p className={style.rw_reviewer_place}>{hospitalBranch}</p>
+            <p className={style.rw_reviewer_place}>{date}</p>
           </div>
 
           <div className={style.rw_btns}>

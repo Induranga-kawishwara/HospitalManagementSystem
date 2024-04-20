@@ -11,6 +11,7 @@ const getReview = async (req, res) => {
 };
 
 const addReview = async (req, res) => {
+  console.log(req.body);
   try {
     const existingReview = await ReviewModel.findOne({
       consultationId: req.body.consultationId,
