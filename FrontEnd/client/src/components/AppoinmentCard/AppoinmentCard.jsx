@@ -24,7 +24,8 @@ function AppoinmentCard({
     console.log(data);
     try {
       if (data.feedback) {
-        await axios.post("http://localhost:5000/reviews", data);
+        const res = await axios.post("http://localhost:5000/reviews", data);
+        alert(res.data);
       }
     } catch (error) {
       console.error("Failed to handle appointment deletion:", error);
@@ -104,18 +105,18 @@ function AppoinmentCard({
           {people.date && <li>{`Date - ${people.date}`}</li>}
           {people.time && <li>{`Time - ${people.time}`}</li>}
           {people.location && (
-            <li>{`Hospital Location -${people.location}`}</li>
+            <li>{`Hospital Location - ${people.location}`}</li>
           )}
         </ul>
         {from === "history" ? (
           <>
-            <input
+            <textarea
               className={style1.comment}
-              type="text"
               placeholder="Type something..."
-              value={data.feedback} // Bind the value of the input field to the feedback state
-              onChange={handleFeedbackChange} // Call handleFeedbackChange when the input field changes
+              value={data.feedback}
+              onChange={handleFeedbackChange}
             />
+
             <button
               type="button"
               onClick={handleFeedClick}

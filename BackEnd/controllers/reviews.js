@@ -11,22 +11,27 @@ const getReview = async (req, res) => {
 };
 
 const addReview = async (req, res) => {
-  console.log(req.body);
   try {
     const existingReview = await ReviewModel.findOne({
       consultationId: req.body.consultationId,
     });
+
     if (existingReview) {
-      return res
-        .status(409)
-        .send({ message: "Review for the consultation already exists!" });
+      await ReviewModel.findOneAndUpdate(
+        { consultationId: req.body.consultationId },
+        req.body,
+        { new: true }
+      );
+
+      return res.status(200).send("Consultation review updated successfully!");
     }
+
     await new ReviewModel(req.body).save();
 
-    res.status(201).send({ message: "Review added successfully!" });
+    res.status(201).send("Review added successfully!");
   } catch (error) {
-    console.error("Error adding review:", error);
-    res.status(500).send("Error adding review");
+    console.error("Error adding or updating review:", error);
+    res.status(500).send("Error adding or updating review");
   }
 };
 
