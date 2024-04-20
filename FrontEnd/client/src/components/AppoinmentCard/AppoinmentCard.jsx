@@ -27,12 +27,18 @@ function AppoinmentCard({ id, people, from = "default", onDelete }) {
           const rev = result.data.find(
             (review) => id === review.consultationId
           );
-          setData({ ...data, feedback: rev ? rev.feedback : "" });
+          setData((prevData) => ({
+            ...prevData,
+            feedback: rev ? rev.feedback : "",
+          }));
         } else {
           const rev = customerReviews.find(
             (review) => id === review.consultationId
           );
-          setData({ ...data, feedback: rev ? rev.feedback : "" });
+          setData((prevData) => ({
+            ...prevData,
+            feedback: rev ? rev.feedback : "",
+          }));
         }
       } catch (error) {
         console.error("Failed to fetch data:", error);
@@ -40,7 +46,7 @@ function AppoinmentCard({ id, people, from = "default", onDelete }) {
     };
 
     fetchData();
-  }, [customerReviews, id]);
+  }, [customerReviews, id, dispatch]);
 
   const handleFeedClick = async () => {
     try {
