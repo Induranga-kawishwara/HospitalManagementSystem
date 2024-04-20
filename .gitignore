@@ -11,3 +11,6 @@ build/
 # IDE/Editor specific files
 .vscode/
 .idea/
+
+.eslintcache
+
