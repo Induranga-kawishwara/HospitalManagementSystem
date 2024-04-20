@@ -9,7 +9,9 @@ function AppoinmentCard({ id, people, from = "default", onDelete }) {
   const customerReviews = useSelector((state) => state.reviews);
   const [data, setData] = useState({
     consultationId: id,
-    fullName: JSON.parse(localStorage.getItem("user")).name,
+    fullName: localStorage.getItem("user")
+      ? JSON.parse(localStorage.getItem("user")).name
+      : "",
     hospitalBranch: people.location,
     feedback: "",
     date: people.date,
@@ -25,18 +27,22 @@ function AppoinmentCard({ id, people, from = "default", onDelete }) {
           const rev = result.data.find(
             (review) => id === review.consultationId
           );
-          console.log(rev);
+          setData({ ...data, feedback: rev ? rev.feedback : "" });
+        } else {
+          const rev = customerReviews.find(
+            (review) => id === review.consultationId
+          );
           setData({ ...data, feedback: rev ? rev.feedback : "" });
         }
       } catch (error) {
         console.error("Failed to fetch data:", error);
       }
     };
+
     fetchData();
   }, [customerReviews, id]);
 
   const handleFeedClick = async () => {
-    console.log(data);
     try {
       if (data.feedback) {
         const res = await axios.post("http://localhost:5000/reviews", data);
@@ -51,69 +57,18 @@ function AppoinmentCard({ id, people, from = "default", onDelete }) {
     onDelete(id);
   };
 
-  const handleFeedbackChange = async (event) => {
+  const handleFeedbackChange = (event) => {
     setData({ ...data, feedback: event.target.value });
   };
 
   return (
-    <div
-      className="card-business"
-      style={{
-        background: "#fff",
-        width: "110mm",
-        height: "auto",
-        borderRadius: "5px",
-        boxShadow: "#9E9E9E 0px 0px 10px",
-      }}
-    >
-      <div
-        style={{
-          background: "#4285F4",
-          height: "12mm",
-          padding: 10,
-          paddingTop: 15,
-          paddingLeft: 20,
-          position: "relative",
-          borderTopRightRadius: "5px",
-          borderTopLeftRadius: "5px",
-        }}
-      >
-        <img
-          width={"60mm"}
-          height={"60mm"}
-          alt="avatar"
-          style={{
-            position: "absolute",
-            right: 15,
-            top: 5,
-            borderRadius: "100%",
-            float: "right",
-            background: "#fff",
-          }}
-          src={people.avatar}
-        />
-
-        <h1
-          style={{
-            fontSize: "17pt",
-            margin: 0,
-            marginRight: 160,
-            color: "#fff",
-          }}
-        >
-          {people.displayName}
-        </h1>
+    <div className={style1.card_business}>
+      <div className={style1.card_header}>
+        <img width={"60mm"} height={"60mm"} alt="avatar" src={people.avatar} />
+        <h1>{people.displayName}</h1>
       </div>
-      <div style={{ padding: 10, paddingLeft: 20, position: "relative" }}>
-        <ul
-          style={{
-            fontSize: "10pt",
-            listStyle: "none",
-            lineHeight: "20pt",
-            margin: 0,
-            padding: 0,
-          }}
-        >
+      <div className={style1.card_content}>
+        <ul>
           {people.specialize && <li>{`Specialize -${people.specialize}`}</li>}
           {people.date && <li>{`Date - ${people.date}`}</li>}
           {people.time && <li>{`Time - ${people.time}`}</li>}
@@ -121,7 +76,7 @@ function AppoinmentCard({ id, people, from = "default", onDelete }) {
             <li>{`Hospital Location - ${people.location}`}</li>
           )}
         </ul>
-        {from === "history" ? (
+        {from === "history" && (
           <>
             <textarea
               className={style1.comment}
@@ -145,7 +100,8 @@ function AppoinmentCard({ id, people, from = "default", onDelete }) {
               Delete
             </button>
           </>
-        ) : (
+        )}
+        {from !== "history" && (
           <button
             type="button"
             onClick={handleDeleteClick}
