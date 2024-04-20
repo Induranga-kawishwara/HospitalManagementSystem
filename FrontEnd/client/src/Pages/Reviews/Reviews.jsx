@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from "react";
 import style from "./reviews.module.css";
 import axios from "axios";
+import { setReviews } from "../../redux/actions";
+import { useSelector, useDispatch } from "react-redux";
 
 function Reviews() {
-  const [customerReviews, setCustomerReviews] = useState([]);
+  const dispatch = useDispatch();
+  const customerReviews = useSelector((state) => state.reviews);
   const [reviewIndex, setReviewIndex] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await axios.get("http://localhost:5000/reviews");
-        setCustomerReviews(result.data);
+        if (!customerReviews || customerReviews.length === 0) {
+          const result = await axios.get("http://localhost:5000/reviews");
+          dispatch(setReviews(result.data));
+        }
       } catch (error) {
-        console.log(error);
+        console.error("Failed to fetch data:", error);
       }
     };
     fetchData();

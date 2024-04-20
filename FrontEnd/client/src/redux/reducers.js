@@ -1,8 +1,8 @@
-import { SET_DOCTORS, ADD_DOCTOR, SET_CONSULTATIONS } from "./actions";
+import { SET_DOCTORS, ADD_DOCTOR, SET_REVIEWS } from "./actions";
 
 const initialState = {
   doctors: [],
-  consultations: [],
+  reviews: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -12,8 +12,8 @@ const rootReducer = (state = initialState, action) => {
     case ADD_DOCTOR:
       return { ...state, doctors: [...state.doctors, action.payload] };
 
-    case SET_CONSULTATIONS:
-      return { ...state, consultations: action.payload };
+    case SET_REVIEWS:
+      return { ...state, reviews: action.payload };
     default:
       return state;
   }

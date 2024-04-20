@@ -1,17 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import style1 from "./appoinmentHistory.module.css";
+import { setReviews } from "../../redux/actions";
+import { useSelector, useDispatch } from "react-redux";
 
-function AppoinmentCard({
-  id,
-  people,
-  headerStyle = {},
-  shadow = true,
-  style = {},
-  from = "default",
-  onDelete,
-  ...props
-}) {
+function AppoinmentCard({ id, people, from = "default", onDelete }) {
+  const dispatch = useDispatch();
+  const customerReviews = useSelector((state) => state.reviews);
   const [data, setData] = useState({
     consultationId: id,
     fullName: JSON.parse(localStorage.getItem("user")).name,
@@ -19,6 +14,26 @@ function AppoinmentCard({
     feedback: "",
     date: people.date,
   });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (!customerReviews || customerReviews.length === 0) {
+          const result = await axios.get("http://localhost:5000/reviews");
+          dispatch(setReviews(result.data));
+
+          const rev = result.data.find(
+            (review) => id === review.consultationId
+          );
+          console.log(rev);
+          setData({ ...data, feedback: rev ? rev.feedback : "" });
+        }
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      }
+    };
+    fetchData();
+  }, [customerReviews, id]);
 
   const handleFeedClick = async () => {
     console.log(data);
@@ -48,8 +63,7 @@ function AppoinmentCard({
         width: "110mm",
         height: "auto",
         borderRadius: "5px",
-        boxShadow: shadow !== false ? "#9E9E9E 0px 0px 10px" : "",
-        ...style,
+        boxShadow: "#9E9E9E 0px 0px 10px",
       }}
     >
       <div
@@ -62,7 +76,6 @@ function AppoinmentCard({
           position: "relative",
           borderTopRightRadius: "5px",
           borderTopLeftRadius: "5px",
-          ...headerStyle,
         }}
       >
         <img

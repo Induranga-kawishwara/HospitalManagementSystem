@@ -1,6 +1,6 @@
 export const SET_DOCTORS = "SET_DOCTORS";
 export const ADD_DOCTOR = "ADD_DOCTOR";
-export const SET_CONSULTATIONS = "SET_CONSULTATIONS";
+export const SET_REVIEWS = "SET_REVIEWS";
 
 export const setDoctors = (doctors) => ({
   type: SET_DOCTORS,
@@ -12,7 +12,7 @@ export const addDoctor = (doctor) => ({
   payload: doctor,
 });
 
-export const setConsultations = (consultations) => ({
-  type: SET_CONSULTATIONS,
-  payload: consultations,
+export const setReviews = (reviews) => ({
+  type: SET_REVIEWS,
+  payload: reviews,
 });
