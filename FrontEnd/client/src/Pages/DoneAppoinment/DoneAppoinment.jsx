@@ -70,8 +70,6 @@ function DoneAppoinment() {
             const scheduledDoctor = doctorList.find(
               (doctor) => doctor._id === it.doctorId
             );
-            console.log(pat);
-
             if (pat.status === "done") {
               return (
                 <div key={index} style={{ margin: 30 }}>

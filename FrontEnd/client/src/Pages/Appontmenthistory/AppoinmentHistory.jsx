@@ -6,11 +6,9 @@ import { setDoctors } from "../../redux/actions";
 import AppoinmentCard from "../../components/AppoinmentCard/AppoinmentCard";
 
 function AppoinmentHistory() {
-  console.log("ddd");
   const { patientId } = useParams();
   const [consultationsList, setConsultations] = useState([]);
   const doctorList = useSelector((state) => state.doctors);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -98,6 +96,7 @@ function AppoinmentHistory() {
                 </div>
               );
             }
+            return null;
           })
         )}
       </ul>
