@@ -1,0 +1,34 @@
+.notFoundContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.notFoundText {
+  font-size: 24px;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.notFoundImage {
+  width: 200px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.goBackButton {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.goBackButton:hover {
+  background-color: #0056b3;
+}
