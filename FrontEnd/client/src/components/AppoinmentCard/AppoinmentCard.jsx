@@ -2,15 +2,20 @@ import style1 from "./appoinmentHistory.module.css";
 import React from "react";
 
 function AppoinmentCard({
+  id,
   people,
-  headerColor = "#fff",
-  headerBg = "#4285F4",
   headerStyle = {},
   shadow = true,
   style = {},
   from = "default",
+  onDelete, // Receive onDelete callback function as prop
   ...props
 }) {
+  const handleDeleteClick = () => {
+    // Call the onDelete callback with the id of the current appointment
+    onDelete(id);
+  };
+
   return (
     <div
       className="card-business"
@@ -25,7 +30,7 @@ function AppoinmentCard({
     >
       <div
         style={{
-          background: headerBg,
+          background: "#4285F4",
           height: "12mm",
           padding: 10,
           paddingTop: 15,
@@ -56,7 +61,7 @@ function AppoinmentCard({
             fontSize: "17pt",
             margin: 0,
             marginRight: 160,
-            color: headerColor,
+            color: "#fff",
           }}
         >
           {people.displayName}
@@ -82,16 +87,25 @@ function AppoinmentCard({
             <input
               className={style1.comment}
               type="text"
-              //value={text} // Bind the value of the input to the state
-              //onChange={handleChange} // Handle changes in the input
               placeholder="Type something..."
             />
             <button type="button" className={style1.feedback}>
               Send Feedback
             </button>
+            <button
+              type="button"
+              onClick={handleDeleteClick} // Call handleDeleteClick when delete button is clicked
+              className={style1.delete}
+            >
+              Delete
+            </button>
           </>
         ) : (
-          <button type="button" className={style1.delete}>
+          <button
+            type="button"
+            onClick={handleDeleteClick} // Call handleDeleteClick when delete button is clicked
+            className={style1.delete}
+          >
             Delete
           </button>
         )}

@@ -106,14 +106,15 @@ const newConsultation = async (req, res) => {
 const deleteConsultation = async (req, res) => {
   const consultationID = req.params.id;
   try {
-    const consultationToDelete = await ConsultationModel.findById(
-      consultationID
+    const consultationToDelete = await ConsultationModel.findOneAndUpdate(
+      { "consultations._id": consultationID },
+      { $pull: { consultations: { _id: consultationID } } },
+      { new: true }
     );
 
     if (!consultationToDelete) {
       return res.status(404).send("Consultation not found");
     }
-    await consultationToDelete.remove();
     res.status(200).send("Consultation deleted successfully");
   } catch (error) {
     console.error("Error deleting consultation:", error);

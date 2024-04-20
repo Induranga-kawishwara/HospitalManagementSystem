@@ -170,6 +170,7 @@ function DoneAppoinment() {
                       })}`,
                       location: `Hospital Location - ${pat.branchName}`,
                     }}
+                    from="history"
                   />
                 </div>
               );

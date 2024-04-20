@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import Footer from "../../components/Footer/TheFooter.jsx";
-
 import AppoinmentCard from "../../components/AppoinmentCard/AppoinmentCard";
 
 function AppoinmentHistory() {
@@ -25,7 +24,26 @@ function AppoinmentHistory() {
     };
 
     fetchData();
-  }, [patientId]); // Only run useEffect when patientId changes
+  }, [patientId]);
+  const handleDelete = async (id) => {
+    try {
+      const result = await axios.delete(
+        `http://localhost:5000/consultations/${id}`
+      );
+
+      const updatedConsultations = consultationsList.map((it) => {
+        return {
+          ...it,
+          consultations: it.consultations.filter((pat) => pat._id !== id),
+        };
+      });
+
+      setConsultations(updatedConsultations);
+      alert(result.data);
+    } catch (error) {
+      console.error("Failed to delete consultation:", error);
+    }
+  };
 
   return (
     <div
@@ -42,7 +60,6 @@ function AppoinmentHistory() {
             const scheduledDoctor = doctorList.find(
               (doctor) => doctor._id === it.doctorId
             );
-            console.log(pat);
 
             if (pat.status === "scheduled") {
               return (
@@ -65,6 +82,8 @@ function AppoinmentHistory() {
                       })}`,
                       location: `Hospital Location - ${pat.branchName}`,
                     }}
+                    id={pat._id}
+                    onDelete={handleDelete}
                   />
                 </div>
               );
