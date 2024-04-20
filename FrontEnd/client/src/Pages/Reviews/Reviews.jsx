@@ -21,7 +21,7 @@ function Reviews() {
       }
     };
     fetchData();
-  }, []);
+  }, [customerReviews, dispatch]);
 
   const handleReviewsUpdation = () => {
     const reviewMessage = customerReviews[reviewIndex] || {};
