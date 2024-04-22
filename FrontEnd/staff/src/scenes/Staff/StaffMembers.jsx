@@ -6,6 +6,7 @@ import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettin
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import Header from "../../components/Header";
+import Button from "@mui/material/Button";
 
 const StaffMembers = () => {
   const theme = useTheme();
@@ -28,7 +29,6 @@ const StaffMembers = () => {
     {
       field: "phone",
       headerName: "Phone Number",
-      flex: 1,
     },
     {
       field: "email",
@@ -36,37 +36,44 @@ const StaffMembers = () => {
       flex: 1,
     },
     {
-      field: "accessLevel",
-      headerName: "Access Level",
-      flex: 1,
-      renderCell: ({ row: { access } }) => {
-        return (
-          <Box
-            width="60%"
-            m="0 auto"
-            p="5px"
-            display="flex"
-            justifyContent="center"
-            backgroundColor={
-              access === "admin"
-                ? colors.greenAccent[600]
-                : access === "manager"
-                ? colors.greenAccent[700]
-                : colors.greenAccent[700]
-            }
-            borderRadius="4px"
-          >
-            {access === "admin" && <AdminPanelSettingsOutlinedIcon />}
-            {access === "manager" && <SecurityOutlinedIcon />}
-            {access === "user" && <LockOpenOutlinedIcon />}
-            <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
-              {access}
-            </Typography>
-          </Box>
-        );
-      },
+      field: "position", // New field for Position or Rank
+      headerName: "Position", // Column header
+      flex: 1, // Flex size
+    },
+    {
+      field: "editdetails",
+      headerName: "Edit Details",
+      renderCell: () => (
+        <Button
+          variant="contained"
+          sx={{ backgroundColor: colors.greenAccent[700], color: "#ffffff" }}
+          onClick={() => handleButtonClick} // handleButtonClick function to be defined
+        >
+          Edit Details
+        </Button>
+      ),
+    },
+    {
+      field: "delete", // New field for Delete button
+      headerName: "Delete", // Column header
+      renderCell: () => (
+        <Button
+          variant="contained"
+          color="error"
+          onClick={() => handleDeleteButtonClick} // handleDeleteButtonClick function to be defined
+        >
+          Delete
+        </Button>
+      ),
     },
   ];
+
+  const handleDeleteButtonClick = (id) => {
+    // Implement the action to be performed when the delete button is clicked, using the id parameter
+  };
+  const handleButtonClick = (id) => {
+    // Implement the action to be performed when the button is clicked, using the id parameter
+  };
 
   return (
     <Box m="20px">

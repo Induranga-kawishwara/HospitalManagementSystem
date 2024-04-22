@@ -1,17 +1,18 @@
-import { Box } from "@mui/material";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { Box, Typography, useTheme } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { mockDataContacts } from "../../data/mockData";
+import { mockDataTeam } from "../../data/mockData";
+import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
+import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
+import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import Header from "../../components/Header";
-import { useTheme } from "@mui/material";
+import Button from "@mui/material/Button";
 
-const Contacts = () => {
+const StaffMembers = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-
   const columns = [
-    { field: "id", headerName: "ID", flex: 0.5 },
-    { field: "registrarId", headerName: "Registrar ID" },
+    { field: "id", headerName: "ID" },
     {
       field: "name",
       headerName: "Name",
@@ -26,9 +27,29 @@ const Contacts = () => {
       align: "left",
     },
     {
+      field: "bloodtype",
+      headerName: "Blood Type",
+      type: "number",
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "gender",
+      headerName: "Gender",
+      type: "number",
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "birthday",
+      headerName: "Birth Day",
+      type: "number",
+      headerAlign: "left",
+      align: "left",
+    },
+    {
       field: "phone",
       headerName: "Phone Number",
-      flex: 1,
     },
     {
       field: "email",
@@ -36,28 +57,43 @@ const Contacts = () => {
       flex: 1,
     },
     {
-      field: "address",
-      headerName: "Address",
-      flex: 1,
+      field: "editdetails",
+      headerName: "Edit Details",
+      renderCell: () => (
+        <Button
+          variant="contained"
+          sx={{ backgroundColor: colors.greenAccent[700], color: "#ffffff" }}
+          onClick={() => handleButtonClick} // handleButtonClick function to be defined
+        >
+          Edit Details
+        </Button>
+      ),
     },
     {
-      field: "city",
-      headerName: "City",
-      flex: 1,
-    },
-    {
-      field: "zipCode",
-      headerName: "Zip Code",
-      flex: 1,
+      field: "delete", // New field for Delete button
+      headerName: "Delete", // Column header
+      renderCell: () => (
+        <Button
+          variant="contained"
+          color="error"
+          onClick={() => handleDeleteButtonClick} // handleDeleteButtonClick function to be defined
+        >
+          Delete
+        </Button>
+      ),
     },
   ];
 
+  const handleDeleteButtonClick = (id) => {
+    // Implement the action to be performed when the delete button is clicked, using the id parameter
+  };
+  const handleButtonClick = (id) => {
+    // Implement the action to be performed when the button is clicked, using the id parameter
+  };
+
   return (
     <Box m="20px">
-      <Header
-        title="CONTACTS"
-        subtitle="List of Contacts for Future Reference"
-      />
+      <Header title="Blood Bank" subtitle="Managing Blood Bank" />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -85,19 +121,12 @@ const Contacts = () => {
           "& .MuiCheckbox-root": {
             color: `${colors.greenAccent[200]} !important`,
           },
-          "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-            color: `${colors.grey[100]} !important`,
-          },
         }}
       >
-        <DataGrid
-          rows={mockDataContacts}
-          columns={columns}
-          components={{ Toolbar: GridToolbar }}
-        />
+        <DataGrid checkboxSelection rows={mockDataTeam} columns={columns} />
       </Box>
     </Box>
   );
 };
 
-export default Contacts;
+export default StaffMembers;

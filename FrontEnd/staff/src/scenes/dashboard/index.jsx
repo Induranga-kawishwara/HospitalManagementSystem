@@ -31,8 +31,7 @@ const Dashboard = () => {
               padding: "10px 20px",
             }}
           >
-            <DownloadOutlined sx={{ mr: "10px" }} />
-            Download Reports
+            Logout
           </Button>
         </Box>
       </Box>

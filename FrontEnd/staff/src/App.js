@@ -29,7 +29,7 @@ function App() {
               <Route path="/" element={<Dashboard />} />
               <Route path="/team" element={<StaffMembers />} />
               <Route path="/patients" element={<Patients />} />
-              <Route path="/contacts" element={<Contacts />} />
+              <Route path="/bloodinformation" element={<Contacts />} />
               <Route path="/form" element={<Form />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/calendar" element={<Calendar />} />
