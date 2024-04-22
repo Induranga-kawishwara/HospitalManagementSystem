@@ -386,10 +386,14 @@ const Farm = () => {
                 </Select>
               </FormControl>
             </Box>
-
             <Box display="flex" justifyContent="end" mt="20px">
               <Button type="submit" color="secondary" variant="contained">
                 Create New User
+              </Button>
+            </Box>{" "}
+            <Box display="flex" justifyContent="end" mt="20px">
+              <Button type="submit" color="secondary" variant="contained">
+                Edit And Save
               </Button>
             </Box>
           </form>

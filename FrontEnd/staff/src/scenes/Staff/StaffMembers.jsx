@@ -7,6 +7,7 @@ import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import Header from "../../components/Header";
 import Button from "@mui/material/Button";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 
 const StaffMembers = () => {
   const theme = useTheme();
@@ -60,19 +61,21 @@ const StaffMembers = () => {
         <Button
           variant="contained"
           color="error"
-          onClick={() => handleDeleteButtonClick} // handleDeleteButtonClick function to be defined
+          onClick={() => handleDeleteButtonClick}
+          // handleDeleteButtonClick function to be defined
         >
           Delete
         </Button>
       ),
     },
   ];
+  const navigate = useNavigate();
 
   const handleDeleteButtonClick = (id) => {
     // Implement the action to be performed when the delete button is clicked, using the id parameter
   };
   const handleButtonClick = (id) => {
-    // Implement the action to be performed when the button is clicked, using the id parameter
+    navigate("/form");
   };
 
   return (
