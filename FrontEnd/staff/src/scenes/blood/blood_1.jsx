@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { Box, Button, TextField, MenuItem } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -7,7 +7,7 @@ import Header from "../../components/Header";
 
 const Blood = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
-  const [selectedBloodType, setSelectedBloodType] = useState('');
+  const [selectedBloodType, setSelectedBloodType] = useState("");
 
   const handleFormSubmit = (values) => {
     console.log(values);
@@ -20,7 +20,10 @@ const Blood = () => {
 
   return (
     <Box m="20px">
-      <Header title="ADD A NEW BLOOD DONOR" subtitle="Register as a Blood Donor and Save Lives" />
+      <Header
+        title="ADD A NEW BLOOD DONOR"
+        subtitle="Register as a Blood Donor and Save Lives"
+      />
 
       <Formik
         onSubmit={handleFormSubmit}
@@ -79,7 +82,7 @@ const Blood = () => {
                 onChange={handleBloodTypeChange}
                 error={!!errors.bloodType}
                 helperText={errors.bloodType}
-                InputLabelProps={{ style: { color: 'black' } }} // Change color here
+                InputLabelProps={{ style: { color: "black" } }} // Change color here
                 sx={{ gridColumn: "span 4" }}
               >
                 {bloodTypes.map((option) => (
@@ -99,7 +102,7 @@ const Blood = () => {
                 name="email"
                 error={!!touched.email && !!errors.email}
                 helperText={touched.email && errors.email}
-                InputLabelProps={{ style: { color: 'black' } }} // Change color here
+                InputLabelProps={{ style: { color: "black" } }} // Change color here
                 sx={{ gridColumn: "span 4" }}
               />
               <TextField
@@ -113,7 +116,7 @@ const Blood = () => {
                 name="contact"
                 error={!!touched.contact && !!errors.contact}
                 helperText={touched.contact && errors.contact}
-                InputLabelProps={{ style: { color: 'black' } }} // Change color here
+                InputLabelProps={{ style: { color: "black" } }} // Change color here
                 sx={{ gridColumn: "span 4" }}
               />
               <TextField
@@ -127,14 +130,13 @@ const Blood = () => {
                 name="address"
                 error={!!touched.address && !!errors.address}
                 helperText={touched.address && errors.address}
-                InputLabelProps={{ style: { color: 'black' } }} // Change color here
+                InputLabelProps={{ style: { color: "black" } }} // Change color here
                 sx={{ gridColumn: "span 4" }}
               />
-
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
               <Button type="submit" color="secondary" variant="contained">
-              ADD A DONOR
+                ADD A DONOR
               </Button>
             </Box>
           </form>
