@@ -7,6 +7,7 @@ import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import Header from "../../components/Header";
 import Button from "@mui/material/Button";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 
 const Patients = () => {
   const theme = useTheme();
@@ -62,11 +63,13 @@ const Patients = () => {
       ),
     },
   ];
+  const navigate = useNavigate();
+
   const handleDeleteButtonClick = (id) => {
     // Implement the action to be performed when the delete button is clicked, using the id parameter
   };
   const handleButtonClick = (id) => {
-    // Implement the action to be performed when the button is clicked, using the id parameter
+    navigate("/addpatients");
   };
 
   return (

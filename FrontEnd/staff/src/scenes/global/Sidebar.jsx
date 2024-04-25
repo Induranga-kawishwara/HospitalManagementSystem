@@ -52,6 +52,7 @@ const Sidebar = () => {
         },
         "& .pro-inner-item": {
           padding: "5px 35px 5px 20px !important",
+          padding: "5px 20px !important",
         },
         "& .pro-inner-item:hover": {
           color: "#868dfb !important",
@@ -128,7 +129,7 @@ const Sidebar = () => {
             <Typography
               variant="h6"
               color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
+              sx={{ m: "15px 1px 5px 20px" }}
             >
               Data
             </Typography>
@@ -153,13 +154,7 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-            <Item
-              title="Blood Bank"
-              to="/blood"
-              icon={<BloodtypeIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+
             <Typography
               variant="h6"
               color={colors.grey[300]}
@@ -168,9 +163,24 @@ const Sidebar = () => {
               Pages
             </Typography>
             <Item
-              title="Add A Person"
+              title="Add A Staff Person"
               to="/form"
-              icon={<PersonOutlined />}
+              icon={<LocalHospital />}
+              // icon={<PersonOutlined />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Add Patients"
+              to="/addpatients"
+              icon={<PeopleOutlined />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Add Blood Bank"
+              to="/blood"
+              icon={<BloodtypeIcon />}
               selected={selected}
               setSelected={setSelected}
             />
@@ -192,7 +202,7 @@ const Sidebar = () => {
             <Typography
               variant="h6"
               color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
+              sx={{ m: "15px 0 50px 20px" }}
             />
           </Box>
         </Menu>
