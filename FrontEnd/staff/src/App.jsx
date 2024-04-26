@@ -7,6 +7,7 @@ import StaffMembers from "./scenes/Staff/StaffMembers";
 import Patients from "./scenes/patients/Patients";
 import Contacts from "./scenes/contacts";
 import Form from "./scenes/form";
+import Patientsadd from "./scenes/Patientsadd/patientsadd";
 import FAQ from "./scenes/faq";
 import Blood from "./scenes/blood/blood_1";
 import { CssBaseline, ThemeProvider } from "@mui/material";
@@ -34,6 +35,7 @@ function App() {
               <Route path="/faq" element={<FAQ />} />
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/blood" element={<Blood />} />
+              <Route path="/addpatients" element={<Patientsadd />} />
             </Routes>
           </main>
         </div>
