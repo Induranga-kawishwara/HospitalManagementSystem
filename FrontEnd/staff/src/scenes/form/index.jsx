@@ -15,7 +15,7 @@ import {
 
 const Farm = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
-  const [formData, setFormData] = useState({
+  const formData = {
     firstName: "",
     lastName: "",
     email: "",
@@ -33,22 +33,11 @@ const Farm = () => {
     workingTimeEnd: "",
     workingTimeStartMin: "",
     workingTimeEndMin: "",
-  });
+  };
 
   const handleFormSubmit = (values) => {
     console.log(values);
   };
-
-  // const handleChange = (e) => {
-  //   const { name, value, type, checked, files } = e.target;
-  //   const newValue =
-  //     type === "checkbox" ? checked : type === "file" ? files[0] : value;
-
-  //   setFormData({
-  //     ...formData,
-  //     [name]: newValue,
-  //   });
-  // };
 
   const validationSchema = yup.object().shape({
     firstName: yup.string().required("First name is required"),
@@ -87,7 +76,6 @@ const Farm = () => {
         initialValues={formData}
         onSubmit={handleFormSubmit}
         validationSchema={validationSchema}
-        // handleChange={handleChange}
       >
         {(formikProps) => (
           <form onSubmit={formikProps.handleSubmit}>
