@@ -405,7 +405,11 @@ const Farm = () => {
               <FormControl
                 fullWidth
                 variant="filled"
-                sx={{ gridColumn: "span 4" }}
+                sx={{
+                  gridColumn: "span 4",
+                  display: "flex",
+                  alignItems: "center",
+                }}
               >
                 <Box
                   sx={{
