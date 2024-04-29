@@ -14,6 +14,43 @@ const Farm = () => {
     console.log(values);
   };
 
+  const initialValues = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    contact: "",
+    address1: "",
+    address2: "",
+  };
+
+  const validationSchema = yup.object().shape({
+    firstName: yup.string().required("First name is required"),
+    lastName: yup.string().required("Last name is required"),
+    email: yup
+      .string()
+      .email("Invalid email format")
+      .required("Email is required"),
+    contact: yup
+      .string()
+      .matches(
+        /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/,
+        "Invalid phone number"
+      )
+      .required("Contact number is required"),
+    address: yup.string().required("Address line is required"),
+    image: yup.mixed().required("Image upload is required"),
+    date: yup.date().required("Date of birth is required"),
+    gender: yup.string().required("Gender is required"),
+    staffType: yup.string().required("Position is required"),
+    hospitalBranch: yup.string().required("Hospital branch is required"),
+    department: yup.string().required("Department is required"),
+    selectedDays: yup.array().min(1, "At least one day must be selected"),
+    workingTimeStart: yup.number().required("Starting hour is required"),
+    workingTimeEnd: yup.number().required("Ending hour is required"),
+    workingTimeStartMin: yup.number().required("Starting minute is required"),
+    workingTimeEndMin: yup.number().required("Ending minute is required"),
+  });
+
   return (
     <Box m="20px">
       <Header title="CREATE USER" subtitle="Create a New User Profile" />
@@ -21,7 +58,7 @@ const Farm = () => {
       <Formik
         onSubmit={handleFormSubmit}
         initialValues={initialValues}
-        validationSchema={checkoutSchema}
+        validationSchema={validationSchema}
       >
         {({
           values,
@@ -137,13 +174,13 @@ const Farm = () => {
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Address 2"
+                label="City"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.address2}
-                name="address2"
-                error={!!touched.address2 && !!errors.address2}
-                helperText={touched.address2 && errors.address2}
+                value={values.address1}
+                name="city"
+                error={!!touched.address1 && !!errors.address1}
+                helperText={touched.address1 && errors.address1}
                 sx={{ gridColumn: "span 4" }}
               />
             </Box>
@@ -162,29 +199,6 @@ const Farm = () => {
       </Formik>
     </Box>
   );
-};
-
-const phoneRegExp =
-  /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
-
-const checkoutSchema = yup.object().shape({
-  firstName: yup.string().required("required"),
-  lastName: yup.string().required("required"),
-  email: yup.string().email("invalid email").required("required"),
-  contact: yup
-    .string()
-    .matches(phoneRegExp, "Phone number is not valid")
-    .required("required"),
-  address1: yup.string().required("required"),
-  address2: yup.string().required("required"),
-});
-const initialValues = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  contact: "",
-  address1: "",
-  address2: "",
 };
 
 export default Farm;
