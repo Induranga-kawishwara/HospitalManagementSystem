@@ -103,9 +103,10 @@ const Blood = () => {
                 label="Blood Type"
                 value={values.bloodType}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 name="bloodType"
-                error={!!errors.bloodType}
-                helperText={errors.bloodType}
+                error={!!touched.bloodType && !!errors.bloodType}
+                helperText={touched.bloodType && errors.bloodType}
                 // InputLabelProps={{ style: { color: "black" } }} // Change color here
                 sx={{ gridColumn: "span 4" }}
               >

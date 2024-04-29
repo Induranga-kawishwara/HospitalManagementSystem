@@ -3,7 +3,7 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { MenuItem } from "@mui/material";
 
 const Farm = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -39,7 +39,7 @@ const Farm = () => {
       )
       .required("Contact number is required"),
     address: yup.string().required("Address line is required"),
-    city: yup.number().required("City is required"),
+    city: yup.string().required("City is required"),
     gender: yup.string().required("Gender is required"),
   });
 
@@ -107,28 +107,23 @@ const Farm = () => {
                 onBlur={handleBlur}
                 onChange={handleChange}
               />
-
-              <FormControl
+              <TextField
+                select
                 fullWidth
                 variant="filled"
-                sx={{ gridColumn: "span 4" }}
+                label="Gender"
+                value={values.gender}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                name="gender"
                 error={!!touched.gender && !!errors.gender}
                 helperText={touched.gender && errors.gender}
-                onBlur={handleBlur}
-                onChange={handleChange}
+                sx={{ gridColumn: "span 4" }}
               >
-                <InputLabel id="gender-label">Gender</InputLabel>
-                <Select
-                  labelId="gender-label"
-                  id="gender"
-                  label="Gender"
-                  name="gender" // Name of the input (optional, used for form submission)
-                >
-                  <MenuItem value="male">Male</MenuItem>
-                  <MenuItem value="female">Female</MenuItem>
-                  <MenuItem value="other">Other</MenuItem>
-                </Select>
-              </FormControl>
+                <MenuItem value="male">Male</MenuItem>
+                <MenuItem value="female">Female</MenuItem>
+                <MenuItem value="other">Other</MenuItem>
+              </TextField>
 
               <TextField
                 fullWidth
