@@ -430,12 +430,23 @@ const Farm = () => {
                           checked={values.selectedDays.includes(day)}
                           onChange={(e) => {
                             const isChecked = e.target.checked;
-                            handleChange("selectedDays")([
-                              ...values.selectedDays.filter(
-                                (selectedDay) => selectedDay !== day
-                              ),
-                              ...(isChecked ? [day] : []),
-                            ]);
+                            if (isChecked) {
+                              handleChange({
+                                target: {
+                                  name: "selectedDays",
+                                  value: [...values.selectedDays, day],
+                                },
+                              });
+                            } else {
+                              handleChange({
+                                target: {
+                                  name: "selectedDays",
+                                  value: values.selectedDays.filter(
+                                    (selectedDay) => selectedDay !== day
+                                  ),
+                                },
+                              });
+                            }
                           }}
                           name={day.toLowerCase()}
                         />
