@@ -3,7 +3,7 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { MenuItem } from "@mui/material";
 
 const Farm = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -39,7 +39,7 @@ const Farm = () => {
       )
       .required("Contact number is required"),
     address: yup.string().required("Address line is required"),
-    city: yup.number().required("City is required"),
+    city: yup.string().required("City is required"),
     gender: yup.string().required("Gender is required"),
   });
 
@@ -78,7 +78,7 @@ const Farm = () => {
                 value={values.firstName}
                 name="firstName"
                 error={!!touched.firstName && !!errors.firstName}
-                helpertext={touched.firstName && errors.firstName}
+                helperText={touched.firstName && errors.firstName}
                 sx={{ gridColumn: "span 2" }}
               />
               <TextField
@@ -91,7 +91,7 @@ const Farm = () => {
                 value={values.lastName}
                 name="lastName"
                 error={!!touched.lastName && !!errors.lastName}
-                helpertext={touched.lastName && errors.lastName}
+                helperText={touched.lastName && errors.lastName}
                 sx={{ gridColumn: "span 2" }}
               />
 
@@ -103,32 +103,27 @@ const Farm = () => {
                 name="date" // Change name to appropriate name
                 sx={{ gridColumn: "span 4" }}
                 error={!!touched.date && !!errors.date}
-                helpertext={touched.date && errors.date}
+                helperText={touched.date && errors.date}
                 onBlur={handleBlur}
                 onChange={handleChange}
               />
-
-              <FormControl
+              <TextField
+                select
                 fullWidth
                 variant="filled"
-                sx={{ gridColumn: "span 4" }}
+                label="Gender"
+                value={values.gender}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                name="gender"
                 error={!!touched.gender && !!errors.gender}
                 helperText={touched.gender && errors.gender}
-                onBlur={handleBlur}
-                onChange={handleChange}
+                sx={{ gridColumn: "span 4" }}
               >
-                <InputLabel id="gender-label">Gender</InputLabel>
-                <Select
-                  labelId="gender-label"
-                  id="gender"
-                  label="Gender"
-                  name="gender" // Name of the input (optional, used for form submission)
-                >
-                  <MenuItem value="male">Male</MenuItem>
-                  <MenuItem value="female">Female</MenuItem>
-                  <MenuItem value="other">Other</MenuItem>
-                </Select>
-              </FormControl>
+                <MenuItem value="male">Male</MenuItem>
+                <MenuItem value="female">Female</MenuItem>
+                <MenuItem value="other">Other</MenuItem>
+              </TextField>
 
               <TextField
                 fullWidth
@@ -140,7 +135,7 @@ const Farm = () => {
                 value={values.email}
                 name="email"
                 error={!!touched.email && !!errors.email}
-                helpertext={touched.email && errors.email}
+                helperText={touched.email && errors.email}
                 sx={{ gridColumn: "span 4" }}
               />
               <TextField
@@ -153,7 +148,7 @@ const Farm = () => {
                 value={values.contact}
                 name="contact"
                 error={!!touched.contact && !!errors.contact}
-                helpertext={touched.contact && errors.contact}
+                helperText={touched.contact && errors.contact}
                 sx={{ gridColumn: "span 4" }}
               />
               <TextField
@@ -166,7 +161,7 @@ const Farm = () => {
                 value={values.address}
                 name="address"
                 error={!!touched.address && !!errors.address}
-                helpertext={touched.address && errors.address}
+                helperText={touched.address && errors.address}
                 sx={{ gridColumn: "span 4" }}
               />
               <TextField
@@ -179,7 +174,7 @@ const Farm = () => {
                 value={values.city}
                 name="city"
                 error={!!touched.city && !!errors.city}
-                helpertext={touched.city && errors.city}
+                helperText={touched.city && errors.city}
                 sx={{ gridColumn: "span 4" }}
               />
             </Box>

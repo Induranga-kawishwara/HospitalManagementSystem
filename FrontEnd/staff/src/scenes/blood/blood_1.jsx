@@ -80,7 +80,7 @@ const Blood = () => {
                 value={values.firstName}
                 name="firstName"
                 error={!!touched.firstName && !!errors.firstName}
-                helpertext={touched.firstName && errors.firstName}
+                helperText={touched.firstName && errors.firstName}
                 sx={{ gridColumn: "span 2" }}
               />
               <TextField
@@ -93,7 +93,7 @@ const Blood = () => {
                 value={values.lastName}
                 name="lastName"
                 error={!!touched.lastName && !!errors.lastName}
-                helpertext={touched.lastName && errors.lastName}
+                helperText={touched.lastName && errors.lastName}
                 sx={{ gridColumn: "span 2" }}
               />
               <TextField
@@ -103,9 +103,10 @@ const Blood = () => {
                 label="Blood Type"
                 value={values.bloodType}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 name="bloodType"
-                error={!!errors.bloodType}
-                helpertext={errors.bloodType}
+                error={!!touched.bloodType && !!errors.bloodType}
+                helperText={touched.bloodType && errors.bloodType}
                 // InputLabelProps={{ style: { color: "black" } }} // Change color here
                 sx={{ gridColumn: "span 4" }}
               >
@@ -125,7 +126,7 @@ const Blood = () => {
                 value={values.email}
                 name="email"
                 error={!!touched.email && !!errors.email}
-                helpertext={touched.email && errors.email}
+                helperText={touched.email && errors.email}
                 // InputLabelProps={{ style: { color: "black" } }} // Change color here
                 sx={{ gridColumn: "span 4" }}
               />
@@ -139,7 +140,7 @@ const Blood = () => {
                 value={values.contact}
                 name="contact"
                 error={!!touched.contact && !!errors.contact}
-                helpertext={touched.contact && errors.contact}
+                helperText={touched.contact && errors.contact}
                 // InputLabelProps={{ style: { color: "black" } }} // Change color here
                 sx={{ gridColumn: "span 4" }}
               />
@@ -153,7 +154,7 @@ const Blood = () => {
                 value={values.address}
                 name="address"
                 error={!!touched.address && !!errors.address}
-                helpertext={touched.address && errors.address}
+                helperText={touched.address && errors.address}
                 // InputLabelProps={{ style: { color: "black" } }} // Change color here
                 sx={{ gridColumn: "span 4" }}
               />

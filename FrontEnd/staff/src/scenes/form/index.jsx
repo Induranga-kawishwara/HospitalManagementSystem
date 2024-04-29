@@ -6,9 +6,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
 import {
   FormControl,
-  InputLabel,
   MenuItem,
-  Select,
   Checkbox,
   FormControlLabel,
 } from "@mui/material";
@@ -147,53 +145,43 @@ const Farm = () => {
                 sx={{ gridColumn: "span 4" }}
               />
 
-              <FormControl
+              <TextField
+                select
                 fullWidth
                 variant="filled"
+                label="Gender"
+                value={values.gender}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                name="gender"
+                error={!!touched.gender && !!errors.gender}
+                helperText={touched.gender && errors.gender}
                 sx={{ gridColumn: "span 4" }}
               >
-                <InputLabel id="gender-label">Gender</InputLabel>
-                <Select
-                  labelId="gender-label"
-                  id="gender"
-                  label="Gender"
-                  name="gender"
-                  error={touched.gender && errors.gender}
-                  helperText={touched.gender && errors.gender}
-                  onBlur={handleBlur}
-                  value={values.gender}
-                  onChange={handleChange}
-                >
-                  <MenuItem value="male">Male</MenuItem>
-                  <MenuItem value="female">Female</MenuItem>
-                  <MenuItem value="other">Other</MenuItem>
-                </Select>
-              </FormControl>
+                <MenuItem value="male">Male</MenuItem>
+                <MenuItem value="female">Female</MenuItem>
+                <MenuItem value="other">Other</MenuItem>
+              </TextField>
 
-              <FormControl
+              <TextField
+                select
                 fullWidth
                 variant="filled"
+                label="Position"
+                value={values.staffType}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                name="staffType"
+                error={!!touched.staffType && !!errors.staffType}
+                helperText={touched.staffType && errors.staffType}
                 sx={{ gridColumn: "span 4" }}
               >
-                <InputLabel id="staffType">Position</InputLabel>
-                <Select
-                  labelId="staffType"
-                  id="staffType"
-                  label="staffType"
-                  name="staffType"
-                  error={touched.staffType && errors.staffType}
-                  helperText={touched.staffType && errors.staffType}
-                  onBlur={handleBlur}
-                  value={values.staffType}
-                  onChange={handleChange}
-                >
-                  <MenuItem value="Doctor">Doctor</MenuItem>
-                  <MenuItem value="Nurse">Nurse</MenuItem>
-                  <MenuItem value="Cleaner">Cleaner</MenuItem>
-                  <MenuItem value="Administrative">Admin</MenuItem>
-                  <MenuItem value="other">Other</MenuItem>
-                </Select>
-              </FormControl>
+                <MenuItem value="Doctor">Doctor</MenuItem>
+                <MenuItem value="Nurse">Nurse</MenuItem>
+                <MenuItem value="Cleaner">Cleaner</MenuItem>
+                <MenuItem value="Administrative">Admin</MenuItem>
+                <MenuItem value="other">Other</MenuItem>
+              </TextField>
 
               <TextField
                 fullWidth
@@ -250,158 +238,130 @@ const Farm = () => {
                 />
               )}
 
-              <FormControl
+              <TextField
+                select
                 fullWidth
                 variant="filled"
+                label="Hospital Branch"
+                value={values.hospitalBranch}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                name="hospitalBranch"
+                error={!!touched.hospitalBranch && !!errors.hospitalBranch}
+                helperText={touched.hospitalBranch && errors.hospitalBranch}
                 sx={{ gridColumn: "span 4" }}
               >
-                <InputLabel id="hospitalBranch">Hospital Branch</InputLabel>
-                <Select
-                  labelId="hospitalBranch"
-                  id="hospital"
-                  label="Hospital Branch"
-                  value={values.hospitalBranch}
-                  error={touched.hospitalBranch && errors.hospitalBranch}
-                  helperText={touched.hospitalBranch && errors.hospitalBranch}
-                  onBlur={handleBlur}
-                  name="hospitalBranch"
-                  onChange={handleChange}
-                >
-                  <MenuItem value="Malabe">Malabe</MenuItem>
-                  <MenuItem value="Kottawa">Kottawa</MenuItem>
-                  <MenuItem value="other">Other</MenuItem>
-                </Select>
-              </FormControl>
+                <MenuItem value="Malabe">Malabe</MenuItem>
+                <MenuItem value="Kottawa">Kottawa</MenuItem>
+                <MenuItem value="other">Other</MenuItem>
+              </TextField>
 
-              <FormControl
+              <TextField
+                select
                 fullWidth
                 variant="filled"
+                label="Department"
+                value={values.department}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                name="department"
+                error={!!touched.department && !!errors.department}
+                helperText={touched.department && errors.department}
                 sx={{ gridColumn: "span 4" }}
               >
-                <InputLabel id="gender-label">Department</InputLabel>
-                <Select
-                  labelId="department"
-                  id="department"
-                  label="department"
-                  name="department"
-                  value={values.department}
-                  onChange={handleChange}
-                  error={touched.department && errors.department}
-                  helperText={touched.department && errors.department}
-                  onBlur={handleBlur}
-                >
-                  <MenuItem value="dental">Dental</MenuItem>
-                  <MenuItem value="OPD">OPD</MenuItem>
-                  <MenuItem value="other">Other</MenuItem>
-                </Select>
-              </FormControl>
-              <FormControl
-                fullWidth
-                variant="filled"
-                sx={{ gridColumn: "span 2" }}
-              >
-                <InputLabel id="workingTimeStart">Starting Hour</InputLabel>
-                <Select
-                  labelId="workingTimeStart"
-                  id="workingTimeStart"
-                  label="workingTimeStart"
-                  name="workingTimeStart"
-                  value={values.workingTimeStart}
-                  onChange={handleChange}
-                  error={touched.workingTimeStart && errors.workingTimeStart}
-                  helperText={
-                    touched.workingTimeStart && errors.workingTimeStart
-                  }
-                  onBlur={handleBlur}
-                >
-                  {Array.from(Array(24).keys()).map((hour) => (
-                    <MenuItem key={hour} value={hour + 1}>
-                      {hour + 1}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-              <FormControl
-                fullWidth
-                variant="filled"
-                sx={{ gridColumn: "span 2" }}
-              >
-                <InputLabel id="workingTimeEnd">Ending Hour</InputLabel>
-                <Select
-                  labelId="workingTimeEnd"
-                  id="workingTimeEnd"
-                  label="workingTimeEnd"
-                  name="workingTimeEnd"
-                  value={values.workingTimeEnd}
-                  onChange={handleChange}
-                  error={touched.workingTimeEnd && errors.workingTimeEnd}
-                  helperText={touched.workingTimeEnd && errors.workingTimeEnd}
-                  onBlur={handleBlur}
-                >
-                  {Array.from(Array(24).keys()).map((hour) => (
-                    <MenuItem key={hour} value={hour + 1}>
-                      {hour + 1}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+                <MenuItem value="dental">Dental</MenuItem>
+                <MenuItem value="OPD">OPD</MenuItem>
+                <MenuItem value="other">Other</MenuItem>
+              </TextField>
 
-              <FormControl
+              <TextField
+                select
                 fullWidth
                 variant="filled"
+                label="Starting Hour"
+                value={values.workingTimeStart}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                name="workingTimeStart"
+                error={!!touched.workingTimeStart && !!errors.workingTimeStart}
+                helperText={touched.workingTimeStart && errors.workingTimeStart}
                 sx={{ gridColumn: "span 2" }}
               >
-                <InputLabel id="workingTimeStartMin">
-                  Starting Minute
-                </InputLabel>
-                <Select
-                  labelId="workingTimeStartMin"
-                  id="workingTimeStartMin"
-                  label="workingTimeStartMin"
-                  name="workingTimeStartMin"
-                  value={values.workingTimeStartMin}
-                  onChange={handleChange}
-                  error={
-                    touched.workingTimeStartMin && errors.workingTimeStartMin
-                  }
-                  helperText={
-                    touched.workingTimeStartMin && errors.workingTimeStartMin
-                  }
-                  onBlur={handleBlur}
-                >
-                  {Array.from(Array(60).keys()).map((hour) => (
-                    <MenuItem key={hour} value={hour + 1}>
-                      {hour + 1}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-              <FormControl
+                {Array.from(Array(24).keys()).map((hour) => (
+                  <MenuItem key={hour} value={hour + 1}>
+                    {hour + 1}
+                  </MenuItem>
+                ))}
+              </TextField>
+
+              <TextField
+                select
                 fullWidth
                 variant="filled"
+                label="Ending Hour"
+                value={values.workingTimeEnd}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                name="workingTimeEnd"
+                error={!!touched.workingTimeEnd && !!errors.workingTimeEnd}
+                helperText={touched.workingTimeEnd && errors.workingTimeEnd}
                 sx={{ gridColumn: "span 2" }}
               >
-                <InputLabel id="workingTimeEndMin">Ending Minute</InputLabel>
-                <Select
-                  labelId="workingTimeEndMin"
-                  id="workingTimeEndMin"
-                  label="workingTimeEndMin"
-                  name="workingTimeEndMin"
-                  value={values.workingTimeEndMin}
-                  onChange={handleChange}
-                  error={touched.workingTimeEndMin && errors.workingTimeEndMin}
-                  helperText={
-                    touched.workingTimeEndMin && errors.workingTimeEndMin
-                  }
-                  onBlur={handleBlur}
-                >
-                  {Array.from(Array(60).keys()).map((hour) => (
-                    <MenuItem key={hour} value={hour + 1}>
-                      {hour + 1}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+                {Array.from(Array(24).keys()).map((hour) => (
+                  <MenuItem key={hour} value={hour + 1}>
+                    {hour + 1}
+                  </MenuItem>
+                ))}
+              </TextField>
+
+              <TextField
+                select
+                fullWidth
+                variant="filled"
+                label="Starting Minute"
+                value={values.workingTimeStartMin}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                name="workingTimeStartMin"
+                error={
+                  !!touched.workingTimeStartMin && !!errors.workingTimeStartMin
+                }
+                helperText={
+                  touched.workingTimeStartMin && errors.workingTimeStartMin
+                }
+                sx={{ gridColumn: "span 2" }}
+              >
+                {Array.from(Array(60).keys()).map((hour) => (
+                  <MenuItem key={hour} value={hour + 1}>
+                    {hour + 1}
+                  </MenuItem>
+                ))}
+              </TextField>
+
+              <TextField
+                select
+                fullWidth
+                variant="filled"
+                label="Ending Minute"
+                value={values.workingTimeEndMin}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                name="workingTimeEndMin"
+                error={
+                  !!touched.workingTimeEndMin && !!errors.workingTimeEndMin
+                }
+                helperText={
+                  touched.workingTimeEndMin && errors.workingTimeEndMin
+                }
+                sx={{ gridColumn: "span 2" }}
+              >
+                {Array.from(Array(60).keys()).map((hour) => (
+                  <MenuItem key={hour} value={hour + 1}>
+                    {hour + 1}
+                  </MenuItem>
+                ))}
+              </TextField>
+
               <FormControl
                 fullWidth
                 variant="filled"
