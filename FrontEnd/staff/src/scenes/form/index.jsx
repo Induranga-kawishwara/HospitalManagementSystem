@@ -76,7 +76,7 @@ const Farm = () => {
         initialValues={formData}
         onSubmit={(values, actions) => {
           handleFormSubmit(values);
-          actions.resetForm(); // Reset the form after submission
+          actions.resetForm();
         }}
         validationSchema={validationSchema}
       >
@@ -115,12 +115,13 @@ const Farm = () => {
                 type="text"
                 label="Last Name"
                 value={formikProps.values.lastName}
+                onBlur={formikProps.handleBlur}
                 error={
-                  !!formikProps.touched.firstName &&
-                  !!formikProps.errors.firstName
+                  !!formikProps.touched.lastName &&
+                  !!formikProps.errors.lastName
                 }
                 helperText={
-                  formikProps.touched.firstName && formikProps.errors.firstName
+                  formikProps.touched.lastName && formikProps.errors.lastName
                 }
                 name="lastName"
                 onChange={formikProps.handleChange}
@@ -134,6 +135,13 @@ const Farm = () => {
                 label="Upload Image Of Employee"
                 name="image"
                 onChange={formikProps.handleChange}
+                error={
+                  !!formikProps.touched.image && !!formikProps.errors.image
+                }
+                helperText={
+                  formikProps.touched.image && formikProps.errors.image
+                }
+                onBlur={formikProps.handleBlur}
                 sx={{ gridColumn: "span 4" }}
               />
 
@@ -143,6 +151,9 @@ const Farm = () => {
                 type="date"
                 label="Date Of Birth"
                 name="date"
+                error={!!formikProps.touched.date && !!formikProps.errors.date}
+                helperText={formikProps.touched.date && formikProps.errors.date}
+                onBlur={formikProps.handleBlur}
                 onChange={formikProps.handleChange}
                 sx={{ gridColumn: "span 4" }}
               />
@@ -158,6 +169,13 @@ const Farm = () => {
                   id="gender"
                   label="Gender"
                   name="gender"
+                  error={
+                    !!formikProps.touched.gender && !!formikProps.errors.gender
+                  }
+                  helperText={
+                    formikProps.touched.gender && formikProps.errors.gender
+                  }
+                  onBlur={formikProps.handleBlur}
                   value={formikProps.values.gender}
                   onChange={formikProps.handleChange}
                 >
@@ -178,6 +196,15 @@ const Farm = () => {
                   id="staffType"
                   label="staffType"
                   name="staffType"
+                  error={
+                    !!formikProps.touched.staffType &&
+                    !!formikProps.errors.staffType
+                  }
+                  helperText={
+                    formikProps.touched.staffType &&
+                    formikProps.errors.staffType
+                  }
+                  onBlur={formikProps.handleBlur}
                   value={formikProps.values.staffType}
                   onChange={formikProps.handleChange}
                 >
@@ -194,7 +221,13 @@ const Farm = () => {
                 variant="filled"
                 type="text"
                 label="Email"
-                // onBlur={handleBlur}
+                error={
+                  !!formikProps.touched.email && !!formikProps.errors.email
+                }
+                helperText={
+                  formikProps.touched.email && formikProps.errors.email
+                }
+                onBlur={formikProps.handleBlur}
                 onChange={formikProps.handleChange}
                 value={formikProps.values.email}
                 name="email"
@@ -207,6 +240,13 @@ const Farm = () => {
                 label="Contact Number"
                 // onBlur={handleBlur}
                 onChange={formikProps.handleChange}
+                error={
+                  !!formikProps.touched.contact && !!formikProps.errors.contact
+                }
+                helperText={
+                  formikProps.touched.contact && formikProps.errors.contact
+                }
+                onBlur={formikProps.handleBlur}
                 value={formikProps.values.contact}
                 name="contact"
                 sx={{ gridColumn: "span 4" }}
@@ -219,6 +259,13 @@ const Farm = () => {
                 // onBlur={handleBlur}
                 onChange={formikProps.handleChange}
                 value={formikProps.values.address}
+                error={
+                  !!formikProps.touched.address && !!formikProps.errors.address
+                }
+                helperText={
+                  formikProps.touched.address && formikProps.errors.address
+                }
+                onBlur={formikProps.handleBlur}
                 name="address"
                 sx={{ gridColumn: "span 4" }}
               />
@@ -228,6 +275,15 @@ const Farm = () => {
                   variant="filled"
                   type="text"
                   label="Specialization"
+                  error={
+                    !!formikProps.touched.specialization &&
+                    !!formikProps.errors.specialization
+                  }
+                  helperText={
+                    formikProps.touched.specialization &&
+                    formikProps.errors.specialization
+                  }
+                  onBlur={formikProps.handleBlur}
                   onChange={formikProps.handleChange}
                   value={formikProps.values.specialization}
                   name="specialization"
@@ -246,6 +302,15 @@ const Farm = () => {
                   id="hospital"
                   label="Hospital Branch"
                   value={formikProps.values.hospitalBranch}
+                  error={
+                    !!formikProps.touched.hospitalBranch &&
+                    !!formikProps.errors.hospitalBranch
+                  }
+                  helperText={
+                    formikProps.touched.hospitalBranch &&
+                    formikProps.errors.hospitalBranch
+                  }
+                  onBlur={formikProps.handleBlur}
                   name="hospitalBranch"
                   onChange={formikProps.handleChange}
                 >
@@ -268,6 +333,15 @@ const Farm = () => {
                   name="department"
                   value={formikProps.values.department}
                   onChange={formikProps.handleChange}
+                  error={
+                    !!formikProps.touched.department &&
+                    !!formikProps.errors.department
+                  }
+                  helperText={
+                    formikProps.touched.department &&
+                    formikProps.errors.department
+                  }
+                  onBlur={formikProps.handleBlur}
                 >
                   <MenuItem value="dental">Dental</MenuItem>
                   <MenuItem value="OPD">OPD</MenuItem>
@@ -287,6 +361,15 @@ const Farm = () => {
                   name="workingTimeStart"
                   value={formikProps.values.workingTimeStart}
                   onChange={formikProps.handleChange}
+                  error={
+                    !!formikProps.touched.workingTimeStart &&
+                    !!formikProps.errors.workingTimeStart
+                  }
+                  helperText={
+                    formikProps.touched.workingTimeStart &&
+                    formikProps.errors.workingTimeStartMin
+                  }
+                  onBlur={formikProps.handleBlur}
                 >
                   {Array.from(Array(24).keys()).map((hour) => (
                     <MenuItem key={hour} value={hour + 1}>
@@ -308,6 +391,15 @@ const Farm = () => {
                   name="workingTimeEnd"
                   value={formikProps.values.workingTimeEnd}
                   onChange={formikProps.handleChange}
+                  error={
+                    !!formikProps.touched.workingTimeEnd &&
+                    !!formikProps.errors.workingTimeEnd
+                  }
+                  helperText={
+                    formikProps.touched.workingTimeEnd &&
+                    formikProps.errors.workingTimeEnd
+                  }
+                  onBlur={formikProps.handleBlur}
                 >
                   {Array.from(Array(24).keys()).map((hour) => (
                     <MenuItem key={hour} value={hour + 1}>
@@ -332,6 +424,15 @@ const Farm = () => {
                   name="workingTimeStartMin"
                   value={formikProps.values.workingTimeStartMin}
                   onChange={formikProps.handleChange}
+                  error={
+                    !!formikProps.touched.workingTimeStartMin &&
+                    !!formikProps.errors.workingTimeStartMin
+                  }
+                  helperText={
+                    formikProps.touched.workingTimeStartMin &&
+                    formikProps.errors.workingTimeStartMin
+                  }
+                  onBlur={formikProps.handleBlur}
                 >
                   {Array.from(Array(60).keys()).map((hour) => (
                     <MenuItem key={hour} value={hour + 1}>
@@ -353,6 +454,15 @@ const Farm = () => {
                   name="workingTimeEndMin"
                   value={formikProps.values.workingTimeEndMin}
                   onChange={formikProps.handleChange}
+                  error={
+                    !!formikProps.touched.workingTimeEndMin &&
+                    !!formikProps.errors.workingTimeEndMin
+                  }
+                  helperText={
+                    formikProps.touched.workingTimeEndMin &&
+                    formikProps.errors.workingTimeEndMin
+                  }
+                  onBlur={formikProps.handleBlur}
                 >
                   {Array.from(Array(60).keys()).map((hour) => (
                     <MenuItem key={hour} value={hour + 1}>
