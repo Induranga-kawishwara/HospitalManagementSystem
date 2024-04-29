@@ -3,9 +3,7 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
-import { Input } from "@mui/material";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import { Checkbox, FormControlLabel } from "@mui/material";
 
 const Farm = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -18,9 +16,11 @@ const Farm = () => {
     firstName: "",
     lastName: "",
     email: "",
+    date: "",
     contact: "",
-    address1: "",
-    address2: "",
+    address: "",
+    city: "",
+    gender: "",
   };
 
   const validationSchema = yup.object().shape({
@@ -30,6 +30,7 @@ const Farm = () => {
       .string()
       .email("Invalid email format")
       .required("Email is required"),
+    date: yup.date().required("Date of birth is required"),
     contact: yup
       .string()
       .matches(
@@ -38,17 +39,8 @@ const Farm = () => {
       )
       .required("Contact number is required"),
     address: yup.string().required("Address line is required"),
-    image: yup.mixed().required("Image upload is required"),
-    date: yup.date().required("Date of birth is required"),
+    city: yup.number().required("City is required"),
     gender: yup.string().required("Gender is required"),
-    staffType: yup.string().required("Position is required"),
-    hospitalBranch: yup.string().required("Hospital branch is required"),
-    department: yup.string().required("Department is required"),
-    selectedDays: yup.array().min(1, "At least one day must be selected"),
-    workingTimeStart: yup.number().required("Starting hour is required"),
-    workingTimeEnd: yup.number().required("Ending hour is required"),
-    workingTimeStartMin: yup.number().required("Starting minute is required"),
-    workingTimeEndMin: yup.number().required("Ending minute is required"),
   });
 
   return (
@@ -111,12 +103,20 @@ const Farm = () => {
                 label="Date Of Birth" // Change label to appropriate label
                 name="date" // Change name to appropriate name
                 sx={{ gridColumn: "span 4" }}
+                error={!!touched.date && !!errors.date}
+                helperText={touched.date && errors.date}
+                onBlur={handleBlur}
+                onChange={handleChange}
               />
 
               <FormControl
                 fullWidth
                 variant="filled"
                 sx={{ gridColumn: "span 4" }}
+                error={!!touched.gender && !!errors.gender}
+                helperText={touched.gender && errors.gender}
+                onBlur={handleBlur}
+                onChange={handleChange}
               >
                 <InputLabel id="gender-label">Gender</InputLabel>
                 <Select
@@ -161,13 +161,13 @@ const Farm = () => {
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Address 1"
+                label="Address"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.address1}
-                name="address1"
-                error={!!touched.address1 && !!errors.address1}
-                helperText={touched.address1 && errors.address1}
+                value={values.address}
+                name="address"
+                error={!!touched.address && !!errors.address}
+                helperText={touched.address && errors.address}
                 sx={{ gridColumn: "span 4" }}
               />
               <TextField
@@ -177,10 +177,10 @@ const Farm = () => {
                 label="City"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.address1}
+                value={values.city}
                 name="city"
-                error={!!touched.address1 && !!errors.address1}
-                helperText={touched.address1 && errors.address1}
+                error={!!touched.city && !!errors.city}
+                helperText={touched.city && errors.city}
                 sx={{ gridColumn: "span 4" }}
               />
             </Box>
