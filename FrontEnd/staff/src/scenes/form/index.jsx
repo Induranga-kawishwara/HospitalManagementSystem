@@ -338,12 +338,12 @@ const Farm = () => {
                 variant="filled"
                 sx={{ gridColumn: "span 2" }}
               >
-                <InputLabel id="workingtimeEndMin">Ending Minute</InputLabel>
+                <InputLabel id="workingTimeEndMin">Ending Minute</InputLabel>
                 <Select
-                  labelId="workingtimeEndMin"
-                  id="workingtimeEndMin"
-                  label="workingtimeEndMin"
-                  name="workingtimeEndMin"
+                  labelId="workingTimeEndMin"
+                  id="workingTimeEndMin"
+                  label="workingTimeEndMin"
+                  name="workingTimeEndMin"
                   value={formikProps.values.workingTimeEndMin}
                   onChange={formikProps.handleChange}
                 >
@@ -359,7 +359,6 @@ const Farm = () => {
                 variant="filled"
                 sx={{ gridColumn: "span 4" }}
               >
-                {/* <InputLabel>Select Days</InputLabel> */}
                 <Box
                   sx={{
                     display: "flex",
