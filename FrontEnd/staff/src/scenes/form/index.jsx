@@ -58,7 +58,7 @@ const Farm = () => {
     date: yup.date().required("Date of birth is required"),
     gender: yup.string().required("Gender is required"),
     staffType: yup.string().required("Position is required"),
-    specialization: yup.string().required("Specialization is required"),
+    // specialization: yup.string().required("Specialization is required"),
     hospitalBranch: yup.string().required("Hospital branch is required"),
     department: yup.string().required("Department is required"),
     selectedDays: yup.array().min(1, "At least one day must be selected"),
@@ -74,7 +74,10 @@ const Farm = () => {
 
       <Formik
         initialValues={formData}
-        onSubmit={handleFormSubmit}
+        onSubmit={(values, actions) => {
+          handleFormSubmit(values);
+          actions.resetForm(); // Reset the form after submission
+        }}
         validationSchema={validationSchema}
       >
         {(formikProps) => (
