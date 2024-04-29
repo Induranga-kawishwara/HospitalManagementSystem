@@ -122,7 +122,7 @@ const Dashboard = () => {
         <Box
           width="312%"
           gridColumn="span 4"
-          gridRow="span 2"
+          gridRow="auto / span 5"
           backgroundColor={colors.primary[400]}
           overflow="auto"
         >
@@ -166,13 +166,13 @@ const Dashboard = () => {
                 </Typography>
               </Box>
               <Box color={colors.grey[100]}>{transaction.date}</Box>
-              {/* <Box
+              <Box
                 backgroundColor={colors.greenAccent[500]}
                 p="5px 10px"
                 borderRadius="4px"
               >
                 ${transaction.cost}
-              </Box> */}
+              </Box>
             </Box>
           ))}
         </Box>

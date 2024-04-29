@@ -69,7 +69,7 @@ const Sidebar = () => {
             onClick={() => setIsCollapsed(!isCollapsed)}
             icon={isCollapsed ? <MenuOutlined /> : undefined}
             style={{
-              margin: "10px 0 20px 0",
+              // margin: "10px 0 20px 0",
               color: colors.grey[100],
             }}
           >
@@ -106,7 +106,7 @@ const Sidebar = () => {
                   variant="h2"
                   color={colors.grey[100]}
                   fontWeight="bold"
-                  sx={{ m: "10px 0 0 0" }}
+                  sx={{ m: "10px" }}
                 >
                   Pasidu
                 </Typography>
@@ -202,7 +202,7 @@ const Sidebar = () => {
             <Typography
               variant="h6"
               color={colors.grey[300]}
-              sx={{ m: "15px 0 50px 20px" }}
+              sx={{ m: "100%" }}
             />
           </Box>
         </Menu>
