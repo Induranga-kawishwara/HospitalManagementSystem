@@ -3,7 +3,7 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
-import { Input } from "@mui/material"; // Inside your component
+import { Input } from "@mui/material";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { Checkbox, FormControlLabel } from "@mui/material";
 

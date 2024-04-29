@@ -31,6 +31,22 @@ const patientValidation = (data) => {
     firstName: Joi.string().required().label("First Name"),
     lastName: Joi.string().required().label("Last Name"),
     gender: Joi.string().required().label("Gender"),
+    birthday: Joi.date()
+      .required()
+      .max("now")
+      .label("Birthday")
+      .custom((value, helpers) => {
+        const today = new Date();
+        const fiveYearsAgo = new Date();
+        fiveYearsAgo.setFullYear(today.getFullYear() - 5);
+
+        if (value < fiveYearsAgo) {
+          return value;
+        } else {
+          return helpers.error("Birthday must be at least 5 years old");
+        }
+      }),
+    typeOfPosition: Joi.string().required().label("Type of Position"),
     phonenumber: JoiPhoneNumber.string()
       .phoneNumber()
       .required()

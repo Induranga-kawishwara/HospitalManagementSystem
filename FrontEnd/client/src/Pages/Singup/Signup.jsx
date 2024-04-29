@@ -8,6 +8,7 @@ const Signup = () => {
     firstName: "",
     lastName: "",
     gender: "",
+    birthday: "",
     phonenumber: "",
     address: "",
     city: "",
@@ -46,6 +47,10 @@ const Signup = () => {
 
     if (!data.gender) {
       setError("Please select your gender.");
+      return;
+    }
+    if (!data.birthday) {
+      setError("Please Enter your birthday.");
       return;
     }
 
@@ -146,6 +151,16 @@ const Signup = () => {
                 <option value="Female">Female</option>
                 <option value="Other">Other</option>
               </select>
+
+              <input
+                type="date"
+                id="date"
+                name="birthday"
+                value={data.birthday}
+                className={styles.input}
+                onChange={handleChange}
+              />
+
               <input
                 type="text"
                 placeholder="Phone Number"
