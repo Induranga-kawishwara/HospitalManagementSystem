@@ -16,7 +16,7 @@ const getPatient = async (req, res) => {
 
 const addPatient = async (req, res) => {
   try {
-    const { error } = patientValidation();
+    const { error } = patientValidation(req.body);
     if (error) {
       return res.status(400).send({ message: error.details[0].message });
     }
