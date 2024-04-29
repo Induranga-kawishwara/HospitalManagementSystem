@@ -1,37 +1,96 @@
-import { Box, Button, TextField } from "@mui/material";
+import React, { useState } from "react";
+import { Box, Button, TextField, Input } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
-import { Input } from "@mui/material"; // Inside your component
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import { Checkbox, FormControlLabel } from "@mui/material";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Checkbox,
+  FormControlLabel,
+} from "@mui/material";
 
 const Farm = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    contact: "",
+    address: "",
+    image: null,
+    date: "",
+    gender: "",
+    staffType: "",
+    specialization: "",
+    hospitalBranch: "",
+    department: "",
+    selectedDays: [],
+    workingTimeStart: "",
+    workingTimeEnd: "",
+    workingTimeStartMin: "",
+    workingTimeEndMin: "",
+  });
 
   const handleFormSubmit = (values) => {
     console.log(values);
   };
+
+  const handleChange = (e) => {
+    const { name, value, type, checked, files } = e.target;
+    const newValue =
+      type === "checkbox" ? checked : type === "file" ? files[0] : value;
+
+    setFormData({
+      ...formData,
+      [name]: newValue,
+    });
+  };
+
+  const validationSchema = yup.object().shape({
+    firstName: yup.string().required("First name is required"),
+    lastName: yup.string().required("Last name is required"),
+    email: yup
+      .string()
+      .email("Invalid email format")
+      .required("Email is required"),
+    contact: yup
+      .string()
+      .matches(
+        /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/,
+        "Invalid phone number"
+      )
+      .required("Contact number is required"),
+    address: yup.string().required("Address line  is required"),
+    image: yup.mixed().required("Image upload is required"),
+    date: yup.date().required("Date of birth is required"),
+    gender: yup.string().required("Gender is required"),
+    staffType: yup.string().required("Position is required"),
+    specialization: yup.string().required("Specialization is required"),
+    hospitalBranch: yup.string().required("Hospital branch is required"),
+    department: yup.string().required("Department is required"),
+    selectedDays: yup.array().min(1, "At least one day must be selected"),
+    workingTimeStart: yup.number().required("Starting hour is required"),
+    workingTimeEnd: yup.number().required("Ending hour is required"),
+    workingTimeStartMin: yup.number().required("Starting minute is required"),
+    workingTimeEndMin: yup.number().required("Ending minute is required"),
+  });
 
   return (
     <Box m="20px">
       <Header title="CREATE USER" subtitle="Create a New User Profile" />
 
       <Formik
+        initialValues={formData}
         onSubmit={handleFormSubmit}
-        initialValues={initialValues}
-        validationSchema={checkoutSchema}
+        validationSchema={validationSchema}
+        handleChange={handleChange}
       >
-        {({
-          values,
-          errors,
-          touched,
-          handleBlur,
-          handleChange,
-          handleSubmit,
-        }) => (
-          <form onSubmit={handleSubmit}>
+        {(formikProps) => (
+          <form onSubmit={formikProps.handleSubmit}>
             <Box
               display="grid"
               gap="30px"
@@ -45,41 +104,40 @@ const Farm = () => {
                 variant="filled"
                 type="text"
                 label="First Name"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.firstName}
+                value={formikProps.values.firstName}
                 name="firstName"
-                error={!!touched.firstName && !!errors.firstName}
-                helperText={touched.firstName && errors.firstName}
+                onChange={formikProps.handleChange}
                 sx={{ gridColumn: "span 2" }}
               />
+
               <TextField
                 fullWidth
                 variant="filled"
                 type="text"
                 label="Last Name"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.lastName}
+                value={formikProps.values.lastName}
                 name="lastName"
-                error={!!touched.lastName && !!errors.lastName}
-                helperText={touched.lastName && errors.lastName}
+                onChange={formikProps.handleChange}
                 sx={{ gridColumn: "span 2" }}
               />
+
               <Input
                 fullWidth
                 variant="filled"
-                type="file" // Set type to "file" for image input
-                label="Upload Image Of Employee" // Label for the input (optional)
-                name="image" // Name of the input (optional, used for form submission)
+                type="file"
+                label="Upload Image Of Employee"
+                name="image"
+                onChange={formikProps.handleChange}
                 sx={{ gridColumn: "span 4" }}
               />
+
               <TextField
                 fullWidth
                 variant="filled"
-                type="date" // Change type to "date"
-                label="Date Of Birth" // Change label to appropriate label
-                name="date" // Change name to appropriate name
+                type="date"
+                label="Date Of Birth"
+                name="date"
+                onChange={formikProps.handleChange}
                 sx={{ gridColumn: "span 4" }}
               />
 
@@ -93,7 +151,9 @@ const Farm = () => {
                   labelId="gender-label"
                   id="gender"
                   label="Gender"
-                  name="gender" // Name of the input (optional, used for form submission)
+                  name="gender"
+                  value={formikProps.values.gender}
+                  onChange={formikProps.handleChange}
                 >
                   <MenuItem value="male">Male</MenuItem>
                   <MenuItem value="female">Female</MenuItem>
@@ -106,18 +166,19 @@ const Farm = () => {
                 variant="filled"
                 sx={{ gridColumn: "span 4" }}
               >
-                <InputLabel id="gender-label">Position</InputLabel>
+                <InputLabel id="staffType">Position</InputLabel>
                 <Select
-                  labelId="position"
-                  id="position"
-                  label="Position"
-                  name="position" // Name of the input (optional, used for form submission)
+                  labelId="staffType"
+                  id="staffType"
+                  label="staffType"
+                  name="staffType"
+                  value={formikProps.values.staffType}
+                  onChange={formikProps.handleChange}
                 >
-                  <MenuItem value="male">Doctor </MenuItem>
-                  <MenuItem value="female">Admin</MenuItem>
-                  <MenuItem value="other">Cleaner</MenuItem>
-                  <MenuItem value="male">Nurse </MenuItem>
-                  <MenuItem value="female">Admin</MenuItem>
+                  <MenuItem value="Doctor">Doctor </MenuItem>
+                  <MenuItem value="Nurse">Nurse </MenuItem>
+                  <MenuItem value="Cleaner">Cleaner</MenuItem>
+                  <MenuItem value="Administrative">Admin</MenuItem>
                   <MenuItem value="other">Other</MenuItem>
                 </Select>
               </FormControl>
@@ -127,12 +188,10 @@ const Farm = () => {
                 variant="filled"
                 type="text"
                 label="Email"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.email}
+                // onBlur={handleBlur}
+                onChange={formikProps.handleChange}
+                value={formikProps.values.email}
                 name="email"
-                error={!!touched.email && !!errors.email}
-                helperText={touched.email && errors.email}
                 sx={{ gridColumn: "span 4" }}
               />
               <TextField
@@ -140,38 +199,32 @@ const Farm = () => {
                 variant="filled"
                 type="text"
                 label="Contact Number"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.contact}
+                // onBlur={handleBlur}
+                onChange={formikProps.handleChange}
+                value={formikProps.values.contact}
                 name="contact"
-                error={!!touched.contact && !!errors.contact}
-                helperText={touched.contact && errors.contact}
                 sx={{ gridColumn: "span 4" }}
               />
               <TextField
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Address 1"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.address1}
-                name="address1"
-                error={!!touched.address1 && !!errors.address1}
-                helperText={touched.address1 && errors.address1}
+                label="Address"
+                // onBlur={handleBlur}
+                onChange={formikProps.handleChange}
+                value={formikProps.values.address}
+                name="address"
                 sx={{ gridColumn: "span 4" }}
               />
               <TextField
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Address 2"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.address2}
-                name="address2"
-                error={!!touched.address2 && !!errors.address2}
-                helperText={touched.address2 && errors.address2}
+                label="Specialization"
+                // onBlur={handleBlur}
+                onChange={formikProps.handleChange}
+                value={formikProps.values.specialization}
+                name="specialization"
                 sx={{ gridColumn: "span 4" }}
               />
 
@@ -180,12 +233,14 @@ const Farm = () => {
                 variant="filled"
                 sx={{ gridColumn: "span 4" }}
               >
-                <InputLabel id="gender-label">Hospital Branch</InputLabel>
+                <InputLabel id="hospitalBranch">Hospital Branch</InputLabel>
                 <Select
-                  labelId="hospital-label"
+                  labelId="hospitalBranch"
                   id="hospital"
                   label="Hospital Branch"
-                  name="gender" // Name of the input (optional, used for form submission)
+                  value={formikProps.values.hospitalBranch}
+                  name="hospitalBranch"
+                  onChange={formikProps.handleChange}
                 >
                   <MenuItem value="Malabe">Malabe</MenuItem>
                   <MenuItem value="Kottawa">Kottawa</MenuItem>
@@ -203,122 +258,28 @@ const Farm = () => {
                   labelId="department"
                   id="department"
                   label="department"
-                  name="department" // Name of the input (optional, used for form submission)
+                  name="department"
+                  value={formikProps.values.department}
+                  onChange={formikProps.handleChange}
                 >
                   <MenuItem value="dental">Dental</MenuItem>
                   <MenuItem value="OPD">OPD</MenuItem>
                   <MenuItem value="other">Other</MenuItem>
                 </Select>
               </FormControl>
-
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Address 2"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.address2}
-                name="address2"
-                error={!!touched.address2 && !!errors.address2}
-                helperText={touched.address2 && errors.address2}
-                sx={{ gridColumn: "span 4" }}
-              />
-
-              {/* <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Select Days"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.selectedDays}
-                name="selectedDays"
-                error={!!touched.selectedDays && !!errors.selectedDays}
-                helperText={touched.selectedDays && errors.selectedDays}
-                sx={{ gridColumn: "span 4" }}
-              /> */}
-
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Select Days"
-                onBlur={handleBlur}
-                value={values.selectedDays}
-                name="selectedDays"
-                error={!!touched.selectedDays && !!errors.selectedDays}
-                helperText={touched.selectedDays && errors.selectedDays}
-                sx={{ gridColumn: "span 4" }}
-              />
-
-              <FormControlLabel
-                control={<Checkbox />}
-                label="Mo"
-                name="selectedDays"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value="Mo"
-              />
-              <FormControlLabel
-                control={<Checkbox />}
-                label="Tu"
-                name="selectedDays"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value="Tu"
-              />
-              <FormControlLabel
-                control={<Checkbox />}
-                label="We"
-                name="selectedDays"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value="We"
-              />
-              <FormControlLabel
-                control={<Checkbox />}
-                label="Th"
-                name="selectedDays"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value="Th"
-              />
-              <FormControlLabel
-                control={<Checkbox />}
-                label="Fr"
-                name="selectedDays"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value="Fr"
-              />
-              <FormControlLabel
-                control={<Checkbox />}
-                label="Sa"
-                name="selectedDays"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value="Sa"
-              />
-              <FormControlLabel
-                control={<Checkbox />}
-                label="Su"
-                name="selectedDays"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value="Su"
-              />
               <FormControl
                 fullWidth
                 variant="filled"
                 sx={{ gridColumn: "span 2" }}
               >
-                <InputLabel id="gender-label">Starting Hour</InputLabel>
+                <InputLabel id="workingTimeStart">Starting Hour</InputLabel>
                 <Select
-                  labelId="hospital-label"
-                  id="hospital"
-                  label="Hospital Branch"
-                  name="gender" // Name of the input (optional, used for form submission)
+                  labelId="workingTimeStart"
+                  id="workingTimeStart"
+                  label="workingTimeStart"
+                  name="workingTimeStart"
+                  value={formikProps.values.workingTimeStart}
+                  onChange={formikProps.handleChange}
                 >
                   {Array.from(Array(24).keys()).map((hour) => (
                     <MenuItem key={hour} value={hour + 1}>
@@ -332,12 +293,14 @@ const Farm = () => {
                 variant="filled"
                 sx={{ gridColumn: "span 2" }}
               >
-                <InputLabel id="gender-label">Ending Hour</InputLabel>
+                <InputLabel id="workingTimeEnd">Ending Hour</InputLabel>
                 <Select
-                  labelId="hospital-label"
-                  id="hospital"
-                  label="Hospital Branch"
-                  name="gender" // Name of the input (optional, used for form submission)
+                  labelId="workingTimeEnd"
+                  id="workingTimeEnd"
+                  label="workingTimeEnd"
+                  name="workingTimeEnd"
+                  value={formikProps.values.workingTimeEnd}
+                  onChange={formikProps.handleChange}
                 >
                   {Array.from(Array(24).keys()).map((hour) => (
                     <MenuItem key={hour} value={hour + 1}>
@@ -352,12 +315,16 @@ const Farm = () => {
                 variant="filled"
                 sx={{ gridColumn: "span 2" }}
               >
-                <InputLabel id="gender-label">Starting Minute</InputLabel>
+                <InputLabel id="workingTimeStartMin">
+                  Starting Minute
+                </InputLabel>
                 <Select
-                  labelId="hospital-label"
-                  id="hospital"
-                  label="Hospital Branch"
-                  name="gender" // Name of the input (optional, used for form submission)
+                  labelId="workingTimeStartMin"
+                  id="workingTimeStartMin"
+                  label="workingTimeStartMin"
+                  name="workingTimeStartMin"
+                  value={formikProps.values.workingTimeStartMin}
+                  onChange={formikProps.handleChange}
                 >
                   {Array.from(Array(60).keys()).map((hour) => (
                     <MenuItem key={hour} value={hour + 1}>
@@ -371,12 +338,14 @@ const Farm = () => {
                 variant="filled"
                 sx={{ gridColumn: "span 2" }}
               >
-                <InputLabel id="gender-label">Ending Minute</InputLabel>
+                <InputLabel id="workingtimeEndMin">Ending Minute</InputLabel>
                 <Select
-                  labelId="hospital-label"
-                  id="hospital"
-                  label="Hospital Branch"
-                  name="gender" // Name of the input (optional, used for form submission)
+                  labelId="workingtimeEndMin"
+                  id="workingtimeEndMin"
+                  label="workingtimeEndMin"
+                  name="workingtimeEndMin"
+                  value={formikProps.values.workingTimeEndMin}
+                  onChange={formikProps.handleChange}
                 >
                   {Array.from(Array(60).keys()).map((hour) => (
                     <MenuItem key={hour} value={hour + 1}>
@@ -385,45 +354,70 @@ const Farm = () => {
                   ))}
                 </Select>
               </FormControl>
-            </Box>
-            <Box display="flex" justifyContent="end" mt="20px">
-              <Button type="submit" color="secondary" variant="contained">
-                Create New User
-              </Button>
-            </Box>{" "}
-            <Box display="flex" justifyContent="end" mt="20px">
-              <Button type="submit" color="secondary" variant="contained">
-                Edit And Save
-              </Button>
+              <FormControl
+                fullWidth
+                variant="filled"
+                sx={{ gridColumn: "span 4" }}
+              >
+                {/* <InputLabel>Select Days</InputLabel> */}
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    flexWrap: "wrap",
+                  }}
+                >
+                  {[
+                    "Monday",
+                    "Tuesday",
+                    "Wednesday",
+                    "Thursday",
+                    "Friday",
+                    "Saturday",
+                    "Sunday",
+                  ].map((day) => (
+                    <FormControlLabel
+                      key={day}
+                      control={
+                        <Checkbox
+                          checked={formikProps.values.selectedDays.includes(
+                            day
+                          )}
+                          onChange={(e) => {
+                            const isChecked = e.target.checked;
+                            formikProps.setFieldValue(
+                              "selectedDays",
+                              isChecked
+                                ? [...formikProps.values.selectedDays, day]
+                                : formikProps.values.selectedDays.filter(
+                                    (selectedDay) => selectedDay !== day
+                                  )
+                            );
+                          }}
+                          name={day.toLowerCase()}
+                        />
+                      }
+                      label={day}
+                    />
+                  ))}
+                </Box>
+              </FormControl>
+              <Box
+                display="flex"
+                justifyContent="end"
+                mt="20px"
+                gridColumn="span 4"
+              >
+                <Button type="submit" color="secondary" variant="contained">
+                  Create New User
+                </Button>
+              </Box>
             </Box>
           </form>
         )}
       </Formik>
     </Box>
   );
-};
-
-const phoneRegExp =
-  /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
-
-const checkoutSchema = yup.object().shape({
-  firstName: yup.string().required("required"),
-  lastName: yup.string().required("required"),
-  email: yup.string().email("invalid email").required("required"),
-  contact: yup
-    .string()
-    .matches(phoneRegExp, "Phone number is not valid")
-    .required("required"),
-  address1: yup.string().required("required"),
-  address2: yup.string().required("required"),
-});
-const initialValues = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  contact: "",
-  address1: "",
-  address2: "",
 };
 
 export default Farm;
