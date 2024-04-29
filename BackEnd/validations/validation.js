@@ -3,6 +3,12 @@ import JoiPhoneNumberExtensions from "joi-phone-number";
 import passwordComplexity from "joi-password-complexity";
 
 const JoiPhoneNumber = Joi.extend(JoiPhoneNumberExtensions);
+const today = new Date();
+const fiveYearsAgo = new Date(
+  today.getFullYear() - 5,
+  today.getMonth(),
+  today.getDate()
+);
 
 const complexityOptions = {
   min: 8,
@@ -34,18 +40,9 @@ const patientValidation = (data) => {
     birthday: Joi.date()
       .required()
       .max("now")
-      .label("Birthday")
-      .custom((value, helpers) => {
-        const today = new Date();
-        const fiveYearsAgo = new Date();
-        fiveYearsAgo.setFullYear(today.getFullYear() - 5);
-
-        if (value < fiveYearsAgo) {
-          return value;
-        } else {
-          return helpers.error("Birthday must be at least 5 years old");
-        }
-      }),
+      .message("Birthday cannot be in the future.")
+      .max(fiveYearsAgo)
+      .message("You must be at least 5 years old."),
     typeOfPosition: Joi.string().required().label("Type of Position"),
     phonenumber: JoiPhoneNumber.string()
       .phoneNumber()
