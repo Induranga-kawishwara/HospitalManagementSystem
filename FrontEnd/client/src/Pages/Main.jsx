@@ -5,17 +5,52 @@ import BookAppointment from "./BookAppointment/BookAppointment";
 import Reviews from "./Reviews/Reviews";
 import Doctors from "./DoctorList/Doctors";
 import Slide from "../components/ImageSlider/ImageSlider";
+import React, { useEffect, useState } from "react";
 
 function Main() {
+  const [currentSection, setCurrentSection] = useState(null);
+
+  useEffect(() => {
+    const handleScrollToSection = () => {
+      const path = window.location.hash.substring(1);
+      setCurrentSection(path);
+      const targetSection = document.getElementById(path);
+      if (targetSection) {
+        setTimeout(() => {
+          const sectionOffset = 100;
+          const offsetTop = targetSection.offsetTop - sectionOffset;
+          window.scrollTo({ top: offsetTop, behavior: "smooth" });
+        }, 10); // Delay the calculation by 100 milliseconds
+      }
+    };
+
+    handleScrollToSection(); // Scroll to section on initial load
+
+    window.addEventListener("hashchange", handleScrollToSection);
+
+    return () => {
+      window.removeEventListener("hashchange", handleScrollToSection);
+    };
+  }, []);
   return (
     <div>
-      <Slide />
+      <section id="home">
+        <Slide />
+      </section>
       <Hero />
-      <Info />
-      <About />
+      <section id="info">
+        <Info />
+      </section>
+      <section id="about">
+        <About />
+      </section>
       <BookAppointment />
-      <Reviews />
-      <Doctors />
+      <section id="reviews">
+        <Reviews />
+      </section>
+      <section id="doctorspg">
+        <Doctors />
+      </section>
     </div>
   );
 }
