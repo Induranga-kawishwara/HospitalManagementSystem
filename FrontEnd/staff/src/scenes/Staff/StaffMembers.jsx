@@ -3,8 +3,6 @@ import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataTeam } from "../../data/mockData";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
-import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
-import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import Header from "../../components/Header";
 import Button from "@mui/material/Button";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
@@ -12,6 +10,8 @@ import { Link as RouterLink, useNavigate } from "react-router-dom";
 const StaffMembers = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const navigate = useNavigate();
+
   const columns = [
     { field: "id", headerName: "ID" },
     {
@@ -48,7 +48,9 @@ const StaffMembers = () => {
         <Button
           variant="contained"
           sx={{ backgroundColor: colors.greenAccent[700], color: "#ffffff" }}
-          onClick={() => handleButtonClick} // handleButtonClick function to be defined
+          onClick={() => {
+            navigate("/form");
+          }} // handleButtonClick function to be defined
         >
           Edit Details
         </Button>
@@ -69,13 +71,13 @@ const StaffMembers = () => {
       ),
     },
   ];
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const handleDeleteButtonClick = (id) => {
     // Implement the action to be performed when the delete button is clicked, using the id parameter
   };
   const handleButtonClick = (id) => {
-    navigate("/form");
+    navigate("/blood");
   };
 
   return (
