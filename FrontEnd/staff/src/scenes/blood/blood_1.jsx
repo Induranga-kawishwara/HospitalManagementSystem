@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Box, Button, TextField, MenuItem } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -6,17 +6,40 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
 
 const Blood = () => {
+  const initialValues = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    contact: "",
+    address: "",
+    bloodType: "",
+  };
+
   const isNonMobile = useMediaQuery("(min-width:600px)");
-  const [selectedBloodType, setSelectedBloodType] = useState("");
 
   const handleFormSubmit = (values) => {
     console.log(values);
-    console.log("Selected Blood Type:", selectedBloodType);
   };
 
-  const handleBloodTypeChange = (event) => {
-    setSelectedBloodType(event.target.value);
-  };
+  const validationSchema = yup.object().shape({
+    firstName: yup.string().required("First name is required"),
+    lastName: yup.string().required("Last name is required"),
+    email: yup
+      .string()
+      .email("Invalid email format")
+      .required("Email is required"),
+    contact: yup
+      .string()
+      .matches(
+        /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/,
+        "Invalid phone number"
+      )
+      .required("Contact number is required"),
+    address: yup.string().required("Address line is required"),
+    bloodType: yup.string().required("bloodType is required"),
+  });
+
+  const bloodTypes = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 
   return (
     <Box m="20px">
@@ -28,7 +51,7 @@ const Blood = () => {
       <Formik
         onSubmit={handleFormSubmit}
         initialValues={initialValues}
-        validationSchema={checkoutSchema}
+        validationSchema={validationSchema}
       >
         {({
           values,
@@ -57,7 +80,7 @@ const Blood = () => {
                 value={values.firstName}
                 name="firstName"
                 error={!!touched.firstName && !!errors.firstName}
-                helperText={touched.firstName && errors.firstName}
+                helpertext={touched.firstName && errors.firstName}
                 sx={{ gridColumn: "span 2" }}
               />
               <TextField
@@ -70,7 +93,7 @@ const Blood = () => {
                 value={values.lastName}
                 name="lastName"
                 error={!!touched.lastName && !!errors.lastName}
-                helperText={touched.lastName && errors.lastName}
+                helpertext={touched.lastName && errors.lastName}
                 sx={{ gridColumn: "span 2" }}
               />
               <TextField
@@ -78,11 +101,12 @@ const Blood = () => {
                 fullWidth
                 variant="filled"
                 label="Blood Type"
-                value={selectedBloodType}
-                onChange={handleBloodTypeChange}
+                value={values.bloodType}
+                onChange={handleChange}
+                name="bloodType"
                 error={!!errors.bloodType}
-                helperText={errors.bloodType}
-                InputLabelProps={{ style: { color: "black" } }} // Change color here
+                helpertext={errors.bloodType}
+                // InputLabelProps={{ style: { color: "black" } }} // Change color here
                 sx={{ gridColumn: "span 4" }}
               >
                 {bloodTypes.map((option) => (
@@ -101,8 +125,8 @@ const Blood = () => {
                 value={values.email}
                 name="email"
                 error={!!touched.email && !!errors.email}
-                helperText={touched.email && errors.email}
-                InputLabelProps={{ style: { color: "black" } }} // Change color here
+                helpertext={touched.email && errors.email}
+                // InputLabelProps={{ style: { color: "black" } }} // Change color here
                 sx={{ gridColumn: "span 4" }}
               />
               <TextField
@@ -115,8 +139,8 @@ const Blood = () => {
                 value={values.contact}
                 name="contact"
                 error={!!touched.contact && !!errors.contact}
-                helperText={touched.contact && errors.contact}
-                InputLabelProps={{ style: { color: "black" } }} // Change color here
+                helpertext={touched.contact && errors.contact}
+                // InputLabelProps={{ style: { color: "black" } }} // Change color here
                 sx={{ gridColumn: "span 4" }}
               />
               <TextField
@@ -129,8 +153,8 @@ const Blood = () => {
                 value={values.address}
                 name="address"
                 error={!!touched.address && !!errors.address}
-                helperText={touched.address && errors.address}
-                InputLabelProps={{ style: { color: "black" } }} // Change color here
+                helpertext={touched.address && errors.address}
+                // InputLabelProps={{ style: { color: "black" } }} // Change color here
                 sx={{ gridColumn: "span 4" }}
               />
             </Box>
@@ -145,30 +169,4 @@ const Blood = () => {
     </Box>
   );
 };
-
-const phoneRegExp =
-  /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
-
-const checkoutSchema = yup.object().shape({
-  firstName: yup.string().required("required"),
-  lastName: yup.string().required("required"),
-  email: yup.string().email("invalid email").required("required"),
-  contact: yup
-    .string()
-    .matches(phoneRegExp, "Phone number is not valid")
-    .required("required"),
-  address: yup.string().required("required"),
-  bloodType: yup.string().required("required"),
-});
-const initialValues = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  contact: "",
-  address: "",
-  bloodType: "",
-};
-
-const bloodTypes = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
-
 export default Blood;

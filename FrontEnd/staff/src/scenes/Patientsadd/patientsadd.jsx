@@ -78,7 +78,7 @@ const Farm = () => {
                 value={values.firstName}
                 name="firstName"
                 error={!!touched.firstName && !!errors.firstName}
-                helperText={touched.firstName && errors.firstName}
+                helpertext={touched.firstName && errors.firstName}
                 sx={{ gridColumn: "span 2" }}
               />
               <TextField
@@ -91,7 +91,7 @@ const Farm = () => {
                 value={values.lastName}
                 name="lastName"
                 error={!!touched.lastName && !!errors.lastName}
-                helperText={touched.lastName && errors.lastName}
+                helpertext={touched.lastName && errors.lastName}
                 sx={{ gridColumn: "span 2" }}
               />
 
@@ -103,7 +103,7 @@ const Farm = () => {
                 name="date" // Change name to appropriate name
                 sx={{ gridColumn: "span 4" }}
                 error={!!touched.date && !!errors.date}
-                helperText={touched.date && errors.date}
+                helpertext={touched.date && errors.date}
                 onBlur={handleBlur}
                 onChange={handleChange}
               />
@@ -140,7 +140,7 @@ const Farm = () => {
                 value={values.email}
                 name="email"
                 error={!!touched.email && !!errors.email}
-                helperText={touched.email && errors.email}
+                helpertext={touched.email && errors.email}
                 sx={{ gridColumn: "span 4" }}
               />
               <TextField
@@ -153,7 +153,7 @@ const Farm = () => {
                 value={values.contact}
                 name="contact"
                 error={!!touched.contact && !!errors.contact}
-                helperText={touched.contact && errors.contact}
+                helpertext={touched.contact && errors.contact}
                 sx={{ gridColumn: "span 4" }}
               />
               <TextField
@@ -166,7 +166,7 @@ const Farm = () => {
                 value={values.address}
                 name="address"
                 error={!!touched.address && !!errors.address}
-                helperText={touched.address && errors.address}
+                helpertext={touched.address && errors.address}
                 sx={{ gridColumn: "span 4" }}
               />
               <TextField
@@ -179,7 +179,7 @@ const Farm = () => {
                 value={values.city}
                 name="city"
                 error={!!touched.city && !!errors.city}
-                helperText={touched.city && errors.city}
+                helpertext={touched.city && errors.city}
                 sx={{ gridColumn: "span 4" }}
               />
             </Box>

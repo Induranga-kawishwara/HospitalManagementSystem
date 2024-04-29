@@ -459,6 +459,9 @@ const Farm = () => {
                     />
                   ))}
                 </Box>
+                {touched.selectedDays && errors.selectedDays && (
+                  <div style={{ color: "red" }}>{errors.selectedDays}</div>
+                )}
               </FormControl>
               <Box
                 display="flex"
