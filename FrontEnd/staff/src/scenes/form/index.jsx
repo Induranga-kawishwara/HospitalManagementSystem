@@ -70,12 +70,12 @@ const Farm = () => {
         "http://localhost:5000/users",
         updatedValues
       );
-      alert(response.data.message);
+      alert(response.data);
       console.log(updatedValues);
       actions.resetForm();
     } catch (error) {
       console.error("Error adding StaffMember:", error);
-      alert(error.response.data.message);
+      alert(error.response.data);
     }
   };
 

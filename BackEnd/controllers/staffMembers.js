@@ -68,13 +68,13 @@ const addUser = async (req, res) => {
       address: req.body.address,
       image: req.body.image,
       email: req.body.email,
-      hospitalBranch: [req.body.hospitalBranch],
+      hospitalBranch: req.body.hospitalBranch,
       roleDetails: {
         department: req.body.department,
         shift: req.body.shift,
         specialization: req.body.specialization,
       },
-      selectedDays: [req.body.selectedDays],
+      selectedDays: req.body.selectedDays,
       workingTimeStart: workingTimeStartDate,
       workingTimeEnd: workingTimeEndDate,
     }).save();
