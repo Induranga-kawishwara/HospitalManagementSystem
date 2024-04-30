@@ -31,7 +31,7 @@ const Farm = () => {
     gender: "",
     staffType: "",
     specialization: "",
-    hospitalBranch: "",
+    hospitalBranch: [],
     department: "",
     shift: "",
     selectedDays: [],
@@ -66,15 +66,15 @@ const Farm = () => {
 
       const updatedValues = { ...values, image: downloadURL };
 
-      // const response = await axios.post(
-      //   "http://localhost:5000/doctor",
-      //   updatedValues
-      // );
-      // alert(response.data.message);
+      const response = await axios.post(
+        "http://localhost:5000/users",
+        updatedValues
+      );
+      alert(response.data.message);
       console.log(updatedValues);
       actions.resetForm();
     } catch (error) {
-      console.error("Error adding doctor:", error);
+      console.error("Error adding StaffMember:", error);
       alert(error.response.data.message);
     }
   };
