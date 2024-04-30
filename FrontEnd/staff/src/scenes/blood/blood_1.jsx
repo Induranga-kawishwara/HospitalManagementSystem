@@ -4,6 +4,7 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
+import axios from "axios";
 
 const Blood = () => {
   const initialValues = {
@@ -17,8 +18,20 @@ const Blood = () => {
 
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
-  const handleFormSubmit = (values) => {
-    console.log(values);
+  const handleFormSubmit = async (values, actions) => {
+    try {
+      console.log(values);
+
+      const response = await axios.post(
+        "http://localhost:5000/bloodBank",
+        values
+      );
+      alert(response.data);
+      actions.resetForm();
+    } catch (error) {
+      console.error("Error adding StaffMember:", error);
+      alert(error.response.data);
+    }
   };
 
   const validationSchema = yup.object().shape({
