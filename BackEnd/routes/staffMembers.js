@@ -4,6 +4,7 @@ import { getStaff, addUser, deleteUser } from "../controllers/staffMembers.js";
 const router = express.Router();
 
 router.get("/:staffType", getStaff);
+router.get("/", getStaff);
 router.post("/", addUser);
 router.delete("/:id", deleteUser);
 

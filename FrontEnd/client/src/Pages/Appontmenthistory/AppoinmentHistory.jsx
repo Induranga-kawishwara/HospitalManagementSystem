@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { setDoctors } from "../../redux/actions";
 import style from "./NotFoundPage.module.css";
-import { Link } from "react-router-dom"; // Add this line to import Link
+import { Link } from "react-router-dom";
 
 import AppoinmentCard from "../../components/AppoinmentCard/AppoinmentCard";
 
