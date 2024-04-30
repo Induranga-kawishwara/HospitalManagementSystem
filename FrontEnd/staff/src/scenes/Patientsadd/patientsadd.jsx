@@ -4,23 +4,39 @@ import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
 import { MenuItem } from "@mui/material";
+import axios from "axios";
 
-const Farm = () => {
+const PatientsAdd = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
-
-  const handleFormSubmit = (values) => {
-    console.log(values);
-  };
 
   const initialValues = {
     firstName: "",
     lastName: "",
-    email: "",
-    date: "",
-    contact: "",
+    gender: "",
+    birthday: "",
+    phonenumber: "",
     address: "",
     city: "",
-    gender: "",
+    email: "",
+    password: "",
+  };
+
+  const handleSubmit = async (values, actions) => {
+    try {
+      console.log(values);
+      const updatedValues = { ...values, password: `${values.firstName}@1A` };
+
+      const response = await axios.post(
+        "http://localhost:5000/patients",
+        updatedValues
+      );
+      alert(response.data.message);
+      console.log(updatedValues);
+      actions.resetForm();
+    } catch (error) {
+      console.error("Error adding StaffMember:", error);
+      alert(error.response.data.message);
+    }
   };
 
   const validationSchema = yup.object().shape({
@@ -30,8 +46,8 @@ const Farm = () => {
       .string()
       .email("Invalid email format")
       .required("Email is required"),
-    date: yup.date().required("Date of birth is required"),
-    contact: yup
+    birthday: yup.date().required("Date of birth is required"),
+    phonenumber: yup
       .string()
       .matches(
         /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/,
@@ -47,7 +63,7 @@ const Farm = () => {
     <Box m="20px">
       <Header title="CREATE USER" subtitle="Create a New User Profile" />
       <Formik
-        onSubmit={handleFormSubmit}
+        onSubmit={handleSubmit}
         initialValues={initialValues}
         validationSchema={validationSchema}
       >
@@ -100,10 +116,10 @@ const Farm = () => {
                 variant="filled"
                 type="date" // Change type to "date"
                 label="Date Of Birth" // Change label to appropriate label
-                name="date" // Change name to appropriate name
+                name="birthday" // Change name to appropriate name
                 sx={{ gridColumn: "span 4" }}
-                error={!!touched.date && !!errors.date}
-                helperText={touched.date && errors.date}
+                error={!!touched.birthday && !!errors.birthday}
+                helperText={touched.birthday && errors.birthday}
                 onBlur={handleBlur}
                 onChange={handleChange}
               />
@@ -145,10 +161,10 @@ const Farm = () => {
                 label="Contact Number"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.contact}
-                name="contact"
-                error={!!touched.contact && !!errors.contact}
-                helperText={touched.contact && errors.contact}
+                value={values.phonenumber}
+                name="phonenumber"
+                error={!!touched.phonenumber && !!errors.phonenumber}
+                helperText={touched.phonenumber && errors.phonenumber}
                 sx={{ gridColumn: "span 4" }}
               />
               <TextField
@@ -182,12 +198,12 @@ const Farm = () => {
               <Button type="submit" color="secondary" variant="contained">
                 Create New Patients
               </Button>
-            </Box>{" "}
-            <Box display="flex" justifyContent="end" mt="20px">
+            </Box>
+            {/* <Box display="flex" justifyContent="end" mt="20px">
               <Button type="submit" color="secondary" variant="contained">
                 Edit And Save
               </Button>
-            </Box>
+            </Box> */}
           </form>
         )}
       </Formik>
@@ -195,4 +211,4 @@ const Farm = () => {
   );
 };
 
-export default Farm;
+export default PatientsAdd;

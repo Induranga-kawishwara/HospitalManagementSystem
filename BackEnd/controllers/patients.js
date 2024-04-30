@@ -28,7 +28,17 @@ const addPatient = async (req, res) => {
 
     const salt = await bcrypt.genSalt(Number(process.env.SALT));
     const hashPassword = await bcrypt.hash(req.body.password, salt);
-    await new PatientModel({ ...req.body, password: hashPassword }).save();
+    await new PatientModel({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      gender: req.body.lastName,
+      birthday: req.body.lastName,
+      phonenumber: req.body.lastName,
+      address: req.body.lastName,
+      city: req.body.lastName,
+      email: req.body.lastName,
+      password: hashPassword,
+    }).save();
 
     res.status(201).send({ message: "User saved successfully!" });
   } catch (error) {
