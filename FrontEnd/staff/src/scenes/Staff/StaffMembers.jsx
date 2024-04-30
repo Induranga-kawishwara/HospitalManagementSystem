@@ -56,7 +56,7 @@ const StaffMembers = () => {
   };
 
   const columns = [
-    { field: "id", headerName: "ID" },
+    { field: "no", headerName: "NO" },
     {
       field: "name",
       headerName: "Name",
@@ -86,12 +86,12 @@ const StaffMembers = () => {
     {
       field: "editdetails",
       headerName: "Edit Details",
-      renderCell: () => (
+      renderCell: (params) => (
         <Button
           variant="contained"
           sx={{ backgroundColor: colors.greenAccent[700], color: "#ffffff" }}
           onClick={() => {
-            navigate("/form");
+            navigate(`/form/${params.row.id}`);
           }}
         >
           Edit Details
@@ -113,8 +113,9 @@ const StaffMembers = () => {
     },
   ];
 
-  const rows = staff.map((doctor) => ({
+  const rows = staff.map((doctor, index) => ({
     id: doctor._id,
+    no: index + 1,
     name: `${doctor.firstName} ${doctor.lastName}`,
     email: doctor.email,
     age: calculateAge(doctor.date),

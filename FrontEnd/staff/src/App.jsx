@@ -31,7 +31,7 @@ function App() {
               <Route path="/team" element={<StaffMembers />} />
               <Route path="/patients" element={<Patients />} />
               <Route path="/bloodinformation" element={<Contacts />} />
-              <Route path="/form" element={<Form />} />
+              <Route path="/form/:id?" element={<Form />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/blood" element={<Blood />} />

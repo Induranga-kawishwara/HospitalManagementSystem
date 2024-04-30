@@ -30,7 +30,9 @@ const PatientsAdd = () => {
         "http://localhost:5000/patients",
         updatedValues
       );
-      alert(response.data.message);
+      alert(
+        `${response.data.message}  tempory Password :-${values.firstName}@1A`
+      );
       console.log(updatedValues);
       actions.resetForm();
     } catch (error) {
