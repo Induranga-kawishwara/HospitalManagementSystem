@@ -1,5 +1,4 @@
 import DoctorCard from "../../components/DoctorCard/DoctorCard";
-import profile1 from "../../assets/profile-1.png";
 import style from "./doctors.module.css";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
@@ -49,12 +48,11 @@ function Doctors() {
       <div className={style.dt_cards_content}>
         {doctorList.slice(0, 4).map((doc, index) => (
           <DoctorCard
-            img={profile1}
+            img={doc.image}
             key={index}
             name={`Dr.${doc.firstName} ${doc.lastName}`}
             title={doc.roleDetails.specialization}
-            stars="4.9"
-            reviews="1800"
+            branch={doc.hospitalBranch}
           />
         ))}
       </div>

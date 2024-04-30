@@ -4,11 +4,6 @@ const { Schema, model } = mongoose;
 
 const StaffSchema = new Schema(
   {
-    // staffID: {
-    //   type: String,
-    //   required: true,
-    //   unique: true,
-    // },
     firstName: {
       type: String,
       required: true,
@@ -21,6 +16,10 @@ const StaffSchema = new Schema(
       type: String,
       required: true,
     },
+    date: {
+      type: Date,
+      required: true,
+    },
     staffType: {
       type: String,
       required: true,
@@ -31,6 +30,10 @@ const StaffSchema = new Schema(
       required: true,
     },
     address: {
+      type: String,
+      required: true,
+    },
+    image: {
       type: String,
       required: true,
     },
@@ -47,6 +50,18 @@ const StaffSchema = new Schema(
       department: { type: String },
       shift: { type: String },
       specialization: { type: String },
+    },
+    selectedDays: {
+      type: [String],
+      required: true,
+    },
+    workingTimeStart: {
+      type: Date,
+      required: true,
+    },
+    workingTimeEnd: {
+      type: Date,
+      required: true,
     },
   },
   { timestamps: true }

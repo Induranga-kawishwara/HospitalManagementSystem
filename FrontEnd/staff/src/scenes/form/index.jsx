@@ -10,6 +10,13 @@ import {
   Checkbox,
   FormControlLabel,
 } from "@mui/material";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { initializeApp } from "firebase/app";
+import firebaseConfig from "../../config/firebase.config";
+import axios from "axios";
+
+// Initialize Firebase app
+initializeApp(firebaseConfig.firebaseConfig);
 
 const Farm = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -24,18 +31,52 @@ const Farm = () => {
     gender: "",
     staffType: "",
     specialization: "",
-    hospitalBranch: "",
+    hospitalBranch: [],
     department: "",
+    shift: "",
     selectedDays: [],
     workingTimeStart: "",
     workingTimeEnd: "",
     workingTimeStartMin: "",
     workingTimeEndMin: "",
   };
+  const storage = getStorage();
 
-  const handleSubmit = (values, actions) => {
-    console.log(values);
-    actions.resetForm();
+  const uploadImageToFirebase = async (file) => {
+    if (!file) return null;
+
+    const storageRef = ref(storage, `Doctors/${file.name}`);
+
+    try {
+      await uploadBytes(storageRef, file);
+      console.log("Image uploaded successfully!");
+      const downloadURL = await getDownloadURL(storageRef);
+      console.log("Download URL:", downloadURL);
+      return downloadURL;
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      throw error;
+    }
+  };
+
+  const handleSubmit = async (values, actions) => {
+    try {
+      console.log(values.image);
+      const downloadURL = await uploadImageToFirebase(values.image);
+
+      const updatedValues = { ...values, image: downloadURL };
+
+      const response = await axios.post(
+        "http://localhost:5000/users",
+        updatedValues
+      );
+      alert(response.data);
+      console.log(updatedValues);
+      actions.resetForm();
+    } catch (error) {
+      console.error("Error adding StaffMember:", error);
+      alert(error.response.data);
+    }
   };
 
   const validationSchema = yup.object().shape({
@@ -125,7 +166,15 @@ const Farm = () => {
                 type="file"
                 label="Upload Image Of Employee"
                 name="image"
-                onChange={handleChange}
+                onChange={(e) => {
+                  const fileName = e.target.files[0];
+                  handleChange({
+                    target: {
+                      name: "image",
+                      value: fileName,
+                    },
+                  });
+                }}
                 error={touched.image && errors.image}
                 helperText={touched.image && errors.image}
                 onBlur={handleBlur}
@@ -222,7 +271,7 @@ const Farm = () => {
                 name="address"
                 sx={{ gridColumn: "span 4" }}
               />
-              {values.staffType === "Doctor" && (
+              {values.staffType === "Doctor" ? (
                 <TextField
                   fullWidth
                   variant="filled"
@@ -236,6 +285,23 @@ const Farm = () => {
                   name="specialization"
                   sx={{ gridColumn: "span 4" }}
                 />
+              ) : (
+                <TextField
+                  select
+                  fullWidth
+                  variant="filled"
+                  label="Shift"
+                  error={touched.shift && errors.shift}
+                  helperText={touched.shift && errors.shift}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.shift}
+                  name="shift"
+                  sx={{ gridColumn: "span 4" }}
+                >
+                  <MenuItem value="day">day</MenuItem>
+                  <MenuItem value="night">Night</MenuItem>
+                </TextField>
               )}
 
               <TextField
@@ -332,8 +398,11 @@ const Farm = () => {
                 sx={{ gridColumn: "span 2" }}
               >
                 {Array.from(Array(60).keys()).map((hour) => (
-                  <MenuItem key={hour} value={hour + 1}>
-                    {hour + 1}
+                  <MenuItem
+                    key={hour}
+                    value={hour < 10 ? `0${hour}` : `${hour}`}
+                  >
+                    {hour < 10 ? `0${hour}` : `${hour}`}
                   </MenuItem>
                 ))}
               </TextField>
@@ -356,8 +425,11 @@ const Farm = () => {
                 sx={{ gridColumn: "span 2" }}
               >
                 {Array.from(Array(60).keys()).map((hour) => (
-                  <MenuItem key={hour} value={hour + 1}>
-                    {hour + 1}
+                  <MenuItem
+                    key={hour}
+                    value={hour < 10 ? `0${hour}` : `${hour}`}
+                  >
+                    {hour < 10 ? `0${hour}` : `${hour}`}
                   </MenuItem>
                 ))}
               </TextField>

@@ -85,7 +85,7 @@ function DoneAppoinment() {
                     <div key={index} style={{ margin: 30 }}>
                       <AppoinmentCard
                         people={{
-                          avatar: "",
+                          avatar: scheduledDoctor.image,
                           qr: "/qr.png",
                           displayName:
                             scheduledDoctor.firstName +

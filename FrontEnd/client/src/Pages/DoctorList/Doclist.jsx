@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import DoctorCard from "../../components/DoctorCard/DoctorCard";
-import profile1 from "../../assets/profile-1.png";
 import style from "./doctors.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
@@ -35,12 +34,11 @@ function Doctors() {
       <div className={style.dt_cards_content}>
         {doctorList.map((doc) => (
           <DoctorCard
-            img={profile1}
+            img={doc.image}
             key={doc._id}
             name={`Dr.${doc.firstName} ${doc.lastName}`}
             title={doc.roleDetails.specialization}
-            stars="4.9"
-            reviews="1800"
+            branch={doc.hospitalBranch}
           />
         ))}
       </div>

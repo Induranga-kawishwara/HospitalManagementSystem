@@ -28,21 +28,61 @@ const addUser = async (req, res) => {
       return res.status(400).send({ message: error.details[0].message });
     }
 
-    // const adminId = await StaffMemberModel.findById({
-    //   staffID: req.body.staffID,
-    // });
     const user = await StaffMemberModel.findOne({ email: req.body.email });
-    // if (adminId)
-    //   return res
-    //     .status(409)
-    //     .send({ message: "Admin with given id already exist!" });
 
-    if (user)
+    if (user) {
       return res
         .status(409)
-        .send({ message: "User with given email already exist!" });
+        .send({ message: "User with given email already exists!" });
+    }
 
-    await new StaffMemberModel(req.body).save();
+    const selectedDays = req.body.selectedDays.reduce((acc, curr) => {
+      return acc.concat(curr);
+    }, []);
+
+    const workingTimeStartHour = parseInt(req.body.workingTimeStart);
+    const workingTimeStartMinute = parseInt(req.body.workingTimeStartMin);
+    const workingTimeEndHour = parseInt(req.body.workingTimeEnd);
+    const workingTimeEndMinute = parseInt(req.body.workingTimeEndMin);
+
+    const currentDate = new Date();
+    const workingTimeStartDate = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      currentDate.getDate(),
+      workingTimeStartHour,
+      workingTimeStartMinute
+    );
+
+    const workingTimeEndDate = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      currentDate.getDate(),
+      workingTimeEndHour,
+      workingTimeEndMinute
+    );
+
+    await new StaffMemberModel({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      gender: req.body.gender,
+      date: req.body.date,
+      staffType: req.body.staffType,
+      phoneNum: req.body.contact,
+      address: req.body.address,
+      image: req.body.image,
+      email: req.body.email,
+      hospitalBranch: req.body.hospitalBranch,
+      roleDetails: {
+        department: req.body.department,
+        shift: req.body.shift,
+        specialization: req.body.specialization,
+      },
+      selectedDays: selectedDays,
+      workingTimeStart: workingTimeStartDate,
+      workingTimeEnd: workingTimeEndDate,
+    }).save();
+
     res.status(201).send("User saved successfully!");
   } catch (error) {
     console.error("Error adding user:", error);

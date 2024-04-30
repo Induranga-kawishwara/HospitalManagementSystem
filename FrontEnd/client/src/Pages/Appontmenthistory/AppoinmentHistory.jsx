@@ -93,21 +93,21 @@ function AppoinmentHistory() {
                   <div key={index} style={{ margin: 30 }}>
                     <AppoinmentCard
                       people={{
-                        avatar: "",
+                        avatar: scheduledDoctor.image,
                         qr: "/qr.png",
                         displayName: `${scheduledDoctor.firstName} ${scheduledDoctor.lastName}`,
                         tagline: "",
-                        specialize: ` Specialize - ${pat.specialization}`,
-                        date: `Date - ${new Date(
+                        specialize: pat.specialization,
+                        date: new Date(
                           pat.consultationDateAndTime
-                        ).toLocaleDateString()}`,
-                        time: `Time - ${new Date(
+                        ).toLocaleDateString(),
+                        time: new Date(
                           pat.consultationDateAndTime
                         ).toLocaleTimeString([], {
                           hour: "2-digit",
                           minute: "2-digit",
-                        })}`,
-                        location: `Hospital Location - ${pat.branchName}`,
+                        }),
+                        location: pat.branchName,
                       }}
                       id={pat._id}
                       onDelete={handleDelete}

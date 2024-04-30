@@ -70,12 +70,17 @@ function AppoinmentCard({ id, people, from = "default", onDelete }) {
   return (
     <div className={style1.card_business}>
       <div className={style1.card_header}>
-        <img width={"60mm"} height={"60mm"} alt="avatar" src={people.avatar} />
-        <h1>{people.displayName}</h1>
+        <img
+          width={"100mm"}
+          height={"100mm"}
+          alt="avatar"
+          src={people.avatar}
+        />
+        <h1>{`DR. ${people.displayName}`}</h1>
       </div>
       <div className={style1.card_content}>
         <ul>
-          {people.specialize && <li>{`Specialize -${people.specialize}`}</li>}
+          {people.specialize && <li>{`Specialize - ${people.specialize}`}</li>}
           {people.date && <li>{`Date - ${people.date}`}</li>}
           {people.time && <li>{`Time - ${people.time}`}</li>}
           {people.location && (
