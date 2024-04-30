@@ -36,6 +36,10 @@ const addUser = async (req, res) => {
         .send({ message: "User with given email already exists!" });
     }
 
+    const selectedDays = req.body.selectedDays.reduce((acc, curr) => {
+      return acc.concat(curr);
+    }, []);
+
     const workingTimeStartHour = parseInt(req.body.workingTimeStart);
     const workingTimeStartMinute = parseInt(req.body.workingTimeStartMin);
     const workingTimeEndHour = parseInt(req.body.workingTimeEnd);
@@ -74,7 +78,7 @@ const addUser = async (req, res) => {
         shift: req.body.shift,
         specialization: req.body.specialization,
       },
-      selectedDays: req.body.selectedDays,
+      selectedDays: selectedDays,
       workingTimeStart: workingTimeStartDate,
       workingTimeEnd: workingTimeEndDate,
     }).save();
