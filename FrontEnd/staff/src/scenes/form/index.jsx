@@ -26,6 +26,7 @@ const Farm = () => {
     specialization: "",
     hospitalBranch: "",
     department: "",
+    shift: "",
     selectedDays: [],
     workingTimeStart: "",
     workingTimeEnd: "",
@@ -222,7 +223,7 @@ const Farm = () => {
                 name="address"
                 sx={{ gridColumn: "span 4" }}
               />
-              {values.staffType === "Doctor" && (
+              {values.staffType === "Doctor" ? (
                 <TextField
                   fullWidth
                   variant="filled"
@@ -234,6 +235,20 @@ const Farm = () => {
                   onChange={handleChange}
                   value={values.specialization}
                   name="specialization"
+                  sx={{ gridColumn: "span 4" }}
+                />
+              ) : (
+                <TextField
+                  fullWidth
+                  variant="filled"
+                  type="text"
+                  label="Shift"
+                  error={touched.shift && errors.shift}
+                  helperText={touched.shift && errors.shift}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.shift}
+                  name="shift"
                   sx={{ gridColumn: "span 4" }}
                 />
               )}
@@ -332,8 +347,11 @@ const Farm = () => {
                 sx={{ gridColumn: "span 2" }}
               >
                 {Array.from(Array(60).keys()).map((hour) => (
-                  <MenuItem key={hour} value={hour + 1}>
-                    {hour + 1}
+                  <MenuItem
+                    key={hour}
+                    value={hour < 10 ? `0${hour}` : `${hour}`}
+                  >
+                    {hour < 10 ? `0${hour}` : `${hour}`}
                   </MenuItem>
                 ))}
               </TextField>
@@ -356,8 +374,11 @@ const Farm = () => {
                 sx={{ gridColumn: "span 2" }}
               >
                 {Array.from(Array(60).keys()).map((hour) => (
-                  <MenuItem key={hour} value={hour + 1}>
-                    {hour + 1}
+                  <MenuItem
+                    key={hour}
+                    value={hour < 10 ? `0${hour}` : `${hour}`}
+                  >
+                    {hour < 10 ? `0${hour}` : `${hour}`}
                   </MenuItem>
                 ))}
               </TextField>

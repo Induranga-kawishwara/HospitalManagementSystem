@@ -2,7 +2,6 @@ import { Box, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataTeam } from "../../data/mockData";
-import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import Header from "../../components/Header";
 import Button from "@mui/material/Button";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
@@ -57,28 +56,15 @@ const StaffMembers = () => {
       ),
     },
     {
-      field: "delete", // New field for Delete button
-      headerName: "Delete", // Column header
+      field: "delete",
+      headerName: "Delete",
       renderCell: () => (
-        <Button
-          variant="contained"
-          color="error"
-          onClick={() => handleDeleteButtonClick}
-          // handleDeleteButtonClick function to be defined
-        >
+        <Button variant="contained" color="error" onClick={() => {}}>
           Delete
         </Button>
       ),
     },
   ];
-  // const navigate = useNavigate();
-
-  const handleDeleteButtonClick = (id) => {
-    // Implement the action to be performed when the delete button is clicked, using the id parameter
-  };
-  const handleButtonClick = (id) => {
-    navigate("/blood");
-  };
 
   return (
     <Box m="20px">
@@ -112,7 +98,7 @@ const StaffMembers = () => {
           },
         }}
       >
-        <DataGrid checkboxSelection rows={mockDataTeam} columns={columns} />
+        <DataGrid rows={mockDataTeam} columns={columns} />
       </Box>
     </Box>
   );

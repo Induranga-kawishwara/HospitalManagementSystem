@@ -107,7 +107,6 @@ const Blood = () => {
                 name="bloodType"
                 error={!!touched.bloodType && !!errors.bloodType}
                 helperText={touched.bloodType && errors.bloodType}
-                // InputLabelProps={{ style: { color: "black" } }} // Change color here
                 sx={{ gridColumn: "span 4" }}
               >
                 {bloodTypes.map((option) => (
@@ -127,7 +126,6 @@ const Blood = () => {
                 name="email"
                 error={!!touched.email && !!errors.email}
                 helperText={touched.email && errors.email}
-                // InputLabelProps={{ style: { color: "black" } }} // Change color here
                 sx={{ gridColumn: "span 4" }}
               />
               <TextField
