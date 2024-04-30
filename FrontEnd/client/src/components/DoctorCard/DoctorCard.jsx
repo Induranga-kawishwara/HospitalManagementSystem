@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { faHospital } from "@fortawesome/free-solid-svg-icons";
 import style from "./doctorCard.module.css";
 
 function DoctorCard(props) {
@@ -11,14 +11,10 @@ function DoctorCard(props) {
       <p className={style.dt_card_title}>{props.title}</p>
       <p className={style.dt_card_stars}>
         <FontAwesomeIcon
-          icon={faStar}
+          icon={faHospital}
           style={{ color: "#F7BB50", paddingRight: "6px" }}
         />
-        {props.stars}
-        <span className={style.dt_card_reviews}>
-          {" "}
-          ({props.reviews}+ Reviews)
-        </span>
+        <span className={style.dt_card_branch}>{props.branch}</span>
       </p>
     </div>
   );

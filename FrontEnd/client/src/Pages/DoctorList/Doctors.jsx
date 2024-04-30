@@ -52,8 +52,7 @@ function Doctors() {
             key={index}
             name={`Dr.${doc.firstName} ${doc.lastName}`}
             title={doc.roleDetails.specialization}
-            stars="4.9"
-            reviews="1800"
+            branch={doc.hospitalBranch}
           />
         ))}
       </div>
