@@ -43,7 +43,6 @@ const patientValidation = (data) => {
       .message("Birthday cannot be in the future.")
       .max(fiveYearsAgo)
       .message("You must be at least 5 years old."),
-    typeOfPosition: Joi.string().required().label("Type of Position"),
     phonenumber: JoiPhoneNumber.string()
       .phoneNumber()
       .required()
@@ -68,6 +67,7 @@ const staffValidation = (data) => {
       .required()
       .label("Phone Number"),
     addressOne: Joi.string().required().label("Address one"),
+    typeOfPosition: Joi.string().required().label("Type of Position"),
     addressTwo: Joi.string().required().label("Address two"),
     email: Joi.string().email().required().label("Email"),
   });
