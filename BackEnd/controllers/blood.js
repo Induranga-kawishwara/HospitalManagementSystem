@@ -11,28 +11,26 @@ const getBloodCount = async (req, res) => {
 };
 
 const addBloodDonation = async (req, res) => {
+  console.log("cat");
   try {
     const { firstName, lastName, email, contact, address, bloodType } =
       req.body;
 
-    // Create the donation details object
     const donationDetails = {
       firstName,
       lastName,
       email,
-      contactNum: contact, // Assuming contact is equivalent to contact number
+      contactNum: contact,
       address,
     };
 
     const existingDonation = await BloodModel.findOne({ bloodType });
 
     if (existingDonation) {
-      // If donation for the blood type already exists, update the count and push the new donation details
       existingDonation.bloodCount = parseInt(existingDonation.bloodCount) + 1;
       existingDonation.donate.push(donationDetails);
       await existingDonation.save();
     } else {
-      // If no donation exists for the blood type, create a new entry
       const newDonation = new BloodModel({
         bloodType,
         bloodCount: "1",

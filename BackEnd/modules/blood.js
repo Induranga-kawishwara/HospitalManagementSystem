@@ -13,11 +13,11 @@ const BloodSchema = new Schema({
   },
   donate: [
     {
-      firstname: {
+      firstName: {
         type: String,
         required: true,
       },
-      lastname: {
+      lastName: {
         type: String,
         required: true,
       },
@@ -41,11 +41,11 @@ const BloodSchema = new Schema({
   ],
   requestBlood: [
     {
-      firstname: {
+      firstName: {
         type: String,
         required: true,
       },
-      lastname: {
+      lastName: {
         type: String,
         required: true,
       },
