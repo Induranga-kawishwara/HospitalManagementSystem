@@ -13,6 +13,7 @@ function AppoinmentHistory() {
   const [consultationsList, setConsultations] = useState([]);
   const doctorList = useSelector((state) => state.doctors);
   const dispatch = useDispatch();
+  const [sheduledAppoinment, SetsheduledAppoinment] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,6 +29,10 @@ function AppoinmentHistory() {
           `http://localhost:5000/consultations/${patientId}`
         );
         setConsultations(consultationsResult.data);
+        const doneAppoinments = consultationsResult.data.flatMap((it) =>
+          it.consultations.filter((pat) => pat.status === "scheduled")
+        );
+        SetsheduledAppoinment(doneAppoinments);
       } catch (error) {
         console.error("Failed to fetch data:", error);
       }
@@ -65,7 +70,7 @@ function AppoinmentHistory() {
         marginTop: "120px",
       }}
     >
-      {consultationsList.length === 0 ? (
+      {sheduledAppoinment.length === 0 ? (
         <div className={style.notFoundContainer}>
           <h1 className={style.notFoundText}>No Booked Consultations</h1>
           {/* <img

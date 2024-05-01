@@ -12,6 +12,7 @@ function DoneAppoinment() {
   const [consultationsList, setConsultations] = useState([]);
   const doctorList = useSelector((state) => state.doctors);
   const dispatch = useDispatch();
+  const [doneAppoinment, SetdoneAppoinment] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,6 +28,10 @@ function DoneAppoinment() {
           `http://localhost:5000/consultations/${patientId}`
         );
         setConsultations(consultationsResult.data);
+        const doneAppoinments = consultationsResult.data.flatMap((it) =>
+          it.consultations.filter((pat) => pat.status === "done")
+        );
+        SetdoneAppoinment(doneAppoinments);
       } catch (error) {
         console.error("Failed to fetch data:", error);
       }
@@ -56,8 +61,15 @@ function DoneAppoinment() {
   };
 
   return (
-    <div className={style.container}>
-      {consultationsList.length === 0 ? (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "",
+        justifyContent: "center",
+        marginTop: "120px",
+      }}
+    >
+      {doneAppoinment.length === 0 ? (
         <div className={style.notFoundContainer}>
           <h1 className={style.notFoundText}>No Previous Consultations</h1>
           {/* <img
