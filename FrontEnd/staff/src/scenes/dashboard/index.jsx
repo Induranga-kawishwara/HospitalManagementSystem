@@ -1,8 +1,9 @@
 import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
-import { mockTransactions } from "../../data/mockData";
 import Header from "../../components/Header";
 import StatBox from "../../components/StatBox";
+import { DataGrid } from "@mui/x-data-grid";
+
 import {
   DownloadOutlined,
   LocalHospital,
@@ -14,6 +15,79 @@ import {
 const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  const mockTransactions = [
+    { id: 1, txId: "01e4dsa", user: "johndoe", date: "2021-09-01" },
+    // Add more rows with unique IDs...
+  ];
+
+  const columns = [
+    { field: "id", headerName: "ID" },
+    {
+      field: "name",
+      headerName: "Name",
+      flex: 1,
+      cellClassName: "name-column--cell",
+    },
+    {
+      field: "age",
+      headerName: "Age",
+      type: "number",
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "gender",
+      headerName: "Gender",
+      type: "number",
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "birthday",
+      headerName: "Birth Day",
+      type: "number",
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "phone",
+      headerName: "Phone Number",
+    },
+    {
+      field: "email",
+      headerName: "Email",
+      flex: 1,
+    },
+    {
+      field: "editdetails",
+      headerName: "Edit Details",
+      // renderCell: (params) => (
+      //   <Button
+      //     variant="contained"
+      //     sx={{ backgroundColor: colors.greenAccent[700], color: "#ffffff" }}
+      //     onClick={() => {
+      //       navigate(`/form/${params.row.id}`);
+      //     }}
+      //   >
+      //     Edit Details
+      //   </Button>
+      // ),
+    },
+    {
+      field: "delete",
+      headerName: "Delete",
+      renderCell: (params) => (
+        <Button
+          variant="contained"
+          color="error"
+          // onClick={() => handleDelete(params.row.id)}
+        >
+          Delete
+        </Button>
+      ),
+    },
+  ];
 
   return (
     <Box m="20px">
@@ -119,62 +193,40 @@ const Dashboard = () => {
         </Box>
 
         {/* ROW 2 */}
-        <Box
-          width="312%"
-          gridColumn="span 4"
-          gridRow="auto / span 5"
-          backgroundColor={colors.primary[400]}
-          overflow="auto"
-        >
+        <Box width="312%" gridColumn="span 4">
+          <Header title="Today Appoiments" />
+
           <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            // position="fixed"
-            borderBottom={`4px solid ${colors.primary[500]}`}
-            colors={colors.grey[100]}
-            p="15px"
+            m="40px 0 0 0"
+            height="75vh"
+            sx={{
+              "& .MuiDataGrid-root": {
+                border: "none",
+              },
+              "& .MuiDataGrid-cell": {
+                borderBottom: "none",
+              },
+              "& .name-column--cell": {
+                color: colors.greenAccent[300],
+              },
+              "& .MuiDataGrid-columnHeaders": {
+                backgroundColor: colors.blueAccent[700],
+                borderBottom: "none",
+              },
+              "& .MuiDataGrid-virtualScroller": {
+                backgroundColor: colors.primary[400],
+              },
+              "& .MuiDataGrid-footerContainer": {
+                borderTop: "none",
+                backgroundColor: colors.blueAccent[700],
+              },
+              "& .MuiCheckbox-root": {
+                color: `${colors.greenAccent[200]} !important`,
+              },
+            }}
           >
-            <Typography
-              color={colors.grey[100]}
-              variant="h5"
-              fontWeight="600"
-              // position="fixed"
-            >
-              New appointments
-            </Typography>
+            <DataGrid rows={mockTransactions} columns={columns} />
           </Box>
-          {mockTransactions.map((transaction, i) => (
-            <Box
-              key={`${transaction.txId}-${i}`}
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-              borderBottom={`4px solid ${colors.primary[500]}`}
-              p="15px"
-            >
-              <Box>
-                <Typography
-                  color={colors.greenAccent[500]}
-                  variant="h5"
-                  fontWeight="600"
-                >
-                  {transaction.txId}
-                </Typography>
-                <Typography color={colors.grey[100]}>
-                  {transaction.user}
-                </Typography>
-              </Box>
-              <Box color={colors.grey[100]}>{transaction.date}</Box>
-              <Box
-                backgroundColor={colors.greenAccent[500]}
-                p="5px 10px"
-                borderRadius="4px"
-              >
-                ${transaction.cost}
-              </Box>
-            </Box>
-          ))}
         </Box>
       </Box>
     </Box>
