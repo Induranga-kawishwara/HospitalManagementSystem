@@ -19,12 +19,10 @@ const Dashboard = () => {
   const [staff, setStaff] = useState([]);
   const [patient, setPatient] = useState([]);
   const [blood, setBlood] = useState([]);
-  let totalCount = 0;
+  const [doneAppoinment, SetdoneAppoinment] = useState([]);
+  const [consultationList, setConsultationList] = useState([]);
 
-  const mockTransactions = [
-    { id: 1, txId: "01e4dsa", user: "johndoe", date: "2021-09-01" },
-    // Add more rows with unique IDs...
-  ];
+  let totalCount = 0;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,6 +32,15 @@ const Dashboard = () => {
         const staffResult = await axios.get("http://localhost:5000/users");
         setStaff(staffResult.data);
         const bloodResult = await axios.get("http://localhost:5000/bloodBank");
+        const consultationsResult = await axios.get(
+          `http://localhost:5000/consultations`
+        );
+
+        setConsultationList(consultationsResult.data);
+        const doneAppoinments = consultationsResult.data.flatMap((it) =>
+          it.consultations.filter((pat) => pat.status === "done")
+        );
+        SetdoneAppoinment(doneAppoinments);
 
         setBlood(bloodResult.data);
       } catch (error) {
@@ -45,68 +52,48 @@ const Dashboard = () => {
   }, []);
 
   const columns = [
-    { field: "id", headerName: "ID" },
+    { field: "no", headerName: "No" },
     {
-      field: "name",
-      headerName: "Name",
+      field: "patient_name",
+      headerName: "Patient Name",
       flex: 1,
       cellClassName: "name-column--cell",
     },
     {
-      field: "age",
-      headerName: "Age",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
+      field: "date",
+      headerName: "Date",
+      flex: 1,
     },
     {
-      field: "gender",
-      headerName: "Gender",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
+      field: "time",
+      headerName: "Time",
+      flex: 1,
     },
     {
-      field: "birthday",
-      headerName: "Birth Day",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
+      field: "doctor",
+      headerName: "Doctor Name",
+      flex: 1,
     },
     {
       field: "phone",
       headerName: "Phone Number",
-    },
-    {
-      field: "email",
-      headerName: "Email",
       flex: 1,
     },
     {
-      field: "editdetails",
-      headerName: "Edit Details",
-      // renderCell: (params) => (
-      //   <Button
-      //     variant="contained"
-      //     sx={{ backgroundColor: colors.greenAccent[700], color: "#ffffff" }}
-      //     onClick={() => {
-      //       navigate(`/form/${params.row.id}`);
-      //     }}
-      //   >
-      //     Edit Details
-      //   </Button>
-      // ),
+      field: "branch",
+      headerName: "Branch Name",
+      flex: 1,
     },
     {
-      field: "delete",
-      headerName: "Delete",
+      field: "cancel",
+      headerName: "Cancel",
       renderCell: (params) => (
         <Button
           variant="contained"
           color="error"
           // onClick={() => handleDelete(params.row.id)}
         >
-          Delete
+          Cancel
         </Button>
       ),
     },
@@ -116,6 +103,30 @@ const Dashboard = () => {
   blood.forEach((item) => {
     totalCount += parseInt(item.bloodCount);
   });
+
+  const today = new Date().toISOString().split("T")[0];
+  const rows = consultationList.flatMap((it, index) =>
+    it.consultations.map((pat) => {
+      const doctor = staff.find((doctor) => doctor._id === it.doctorId);
+      const selepat = patient.find((pati) => pati._id === pat.patientId);
+      if (
+        pat.status === "scheduled" &&
+        pat.consultationDateAndTime.includes(today)
+      ) {
+        return {
+          id: pat._id || "",
+          no: index + 1,
+          patient_name: `${selepat.firstName || ""} ${selepat.lastName || ""}`,
+          date: pat.consultationDateAndTime,
+          time: pat.consultationDateAndTime,
+          doctor: `${doctor.firstName || ""} ${doctor.lastName || ""}`,
+          phone: pat.contactNum || "",
+          branch: pat.branchName || "",
+        };
+      }
+      return null;
+    })
+  );
 
   return (
     <Box m="20px">
@@ -171,8 +182,8 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="431,225"
-            subtitle="Appoiments"
+            title={doneAppoinment.length}
+            subtitle="Done Appoiments"
             icon={
               <PointOfSale
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
@@ -249,7 +260,7 @@ const Dashboard = () => {
               },
             }}
           >
-            <DataGrid rows={mockTransactions} columns={columns} />
+            <DataGrid rows={rows} columns={columns} />
           </Box>
         </Box>
       </Box>

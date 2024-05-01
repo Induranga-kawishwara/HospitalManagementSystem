@@ -44,6 +44,7 @@ const ManageBloodBank = () => {
       type: "number",
       headerAlign: "left",
       align: "left",
+      flex: 1,
     },
     {
       field: "bloodCount",
@@ -53,6 +54,7 @@ const ManageBloodBank = () => {
     {
       field: "donater",
       headerName: "Donors",
+      flex: 1,
       renderCell: (params) => (
         <Button
           variant="contained"
@@ -68,6 +70,7 @@ const ManageBloodBank = () => {
     {
       field: "delete",
       headerName: "Delete",
+      flex: 1,
       renderCell: (params) => (
         <Button
           variant="contained"
