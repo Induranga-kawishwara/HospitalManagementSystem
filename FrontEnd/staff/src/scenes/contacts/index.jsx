@@ -1,7 +1,6 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { mockDataTeam } from "../../data/mockData";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Header from "../../components/Header";
@@ -46,9 +45,7 @@ const StaffMembers = () => {
   const handleDelete = async (id) => {
     console.log(id);
     try {
-      // Send a delete request to your backend API to delete the doctor with the specified ID
       await axios.delete(`http://localhost:5000/bloodBank/${id}`);
-      // After successful deletion, fetch the updated list of doctors
       const bloodResult = await axios.get("http://localhost:5000/bloodBank");
       setBlood(bloodResult.data);
     } catch (error) {
@@ -58,12 +55,6 @@ const StaffMembers = () => {
 
   const columns = [
     { field: "no", headerName: "No" },
-    // {
-    //   field: "name",
-    //   headerName: "Name",
-    //   flex: 1,
-    //   cellClassName: "name-column--cell",
-    // },
     {
       field: "bloodtype",
       headerName: "Blood Type",
@@ -71,15 +62,6 @@ const StaffMembers = () => {
       headerAlign: "left",
       align: "left",
     },
-    // {
-    //   field: "phone",
-    //   headerName: "Phone Number",
-    // },
-    // {
-    //   field: "email",
-    //   headerName: "Email",
-    //   flex: 1,
-    // },
     {
       field: "bloodCount",
       headerName: "Blood Count",
@@ -118,11 +100,7 @@ const StaffMembers = () => {
   const rows = bloods.map((patient, index) => ({
     id: patient._id,
     no: index + 1,
-    // name: `${patient.firstName} ${patient.lastName}`,
     bloodtype: patient.bloodType,
-    // email: patient.email,
-    // age: calculateAge(patient.date),
-    // phone: patient.phonenumber,
     bloodCount: patient.bloodCount,
   }));
 
