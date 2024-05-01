@@ -47,11 +47,12 @@ const addBloodDonation = async (req, res) => {
 };
 
 const updateBloodDonation = async (req, res) => {
+  const bloodType = req.params.bloodId;
   const bloodDonationID = req.params.id;
   try {
     const updatedBloodDonation = await BloodModel.findByIdAndUpdate(
-      bloodDonationID,
-      req.body,
+      bloodType,
+      { $pull: { donate: { _id: bloodDonationID } } },
       { new: true }
     );
     if (!updatedBloodDonation) {

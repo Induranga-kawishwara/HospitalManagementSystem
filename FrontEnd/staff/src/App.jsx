@@ -33,7 +33,7 @@ function App() {
               <Route path="/patients" element={<Patients />} />
               <Route path="/bloodinformation" element={<Contacts />} />
               <Route path="/form/:id?" element={<Form />} />
-              <Route path="/bloodType/:id" element={<BloodType />} />
+              <Route path="/bloodType/:BloodID" element={<BloodType />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/blood" element={<Blood />} />

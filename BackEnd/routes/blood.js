@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.get("/", getBloodCount);
 router.post("/", addBloodDonation);
-router.put("/:id", updateBloodDonation);
+router.put("/:bloodId/:id", updateBloodDonation);
 router.delete("/:id", deleteBloodDonation);
 
 export default router;

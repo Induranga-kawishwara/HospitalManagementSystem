@@ -86,8 +86,8 @@ const StaffMembers = () => {
       flex: 1,
     },
     {
-      field: "editdetails",
-      headerName: "Edit Details",
+      field: "donater",
+      headerName: "Donors",
       renderCell: (params) => (
         <Button
           variant="contained"
@@ -96,7 +96,7 @@ const StaffMembers = () => {
             navigate(`/bloodType/${params.row.id}`);
           }}
         >
-          Edit Details
+          View
         </Button>
       ),
     },
