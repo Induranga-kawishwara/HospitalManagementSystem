@@ -51,6 +51,22 @@ const Dashboard = () => {
     fetchData();
   }, []);
 
+  const handleDelete = async (id) => {
+    console.log(id);
+    try {
+      // Send a delete request to your backend API to delete the doctor with the specified ID
+      await axios.delete(`http://localhost:5000/consultations/${id}`);
+      // After successful deletion, fetch the updated list of doctors
+      const consultationsResult = await axios.get(
+        `http://localhost:5000/consultations`
+      );
+
+      setConsultationList(consultationsResult.data);
+    } catch (error) {
+      console.error("Failed to delete doctor:", error);
+    }
+  };
+
   const columns = [
     { field: "no", headerName: "No" },
     {
@@ -91,7 +107,7 @@ const Dashboard = () => {
         <Button
           variant="contained"
           color="error"
-          // onClick={() => handleDelete(params.row.id)}
+          onClick={() => handleDelete(params.row.id)}
         >
           Cancel
         </Button>
@@ -99,7 +115,6 @@ const Dashboard = () => {
     },
   ];
 
-  // Iterate over each object and sum up the blood counts
   blood.forEach((item) => {
     totalCount += parseInt(item.bloodCount);
   });

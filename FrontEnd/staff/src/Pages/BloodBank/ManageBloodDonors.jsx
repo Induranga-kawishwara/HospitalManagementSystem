@@ -69,6 +69,7 @@ const ManageBloodDonors = () => {
     {
       field: "phone",
       headerName: "Phone Number",
+      flex: 1,
     },
     {
       field: "email",
