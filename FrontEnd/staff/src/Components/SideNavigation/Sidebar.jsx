@@ -202,7 +202,7 @@ const Sidebar = () => {
             <Typography
               variant="h6"
               color={colors.grey[300]}
-              sx={{ m: "100%" }}
+              sx={{ m: "200%" }}
             />
           </Box>
         </Menu>
