@@ -1,4 +1,5 @@
 import ConsultationModel from "../modules/consultation.js";
+import staffMember from "../modules/staffMember.js";
 
 const getConsultations = async (req, res) => {
   try {
@@ -38,69 +39,88 @@ const getConsultations = async (req, res) => {
 
 const newConsultation = async (req, res) => {
   try {
-    const date = new Date(req.body.consultationDate);
+    const {
+      doctorId,
+      patientId,
+      consultationDate,
+      specialization,
+      branch,
+      PhoneNo,
+    } = req.body;
 
-    const time = "09:00:00";
-    const [hours, minutes, seconds] = time.split(":").map(Number);
+    const doctor = await staffMember.findById(doctorId);
+    if (!doctor) {
+      return res.status(404).send("Doctor not found");
+    }
 
-    date.setUTCHours(hours);
-    date.setUTCMinutes(minutes);
-    date.setUTCSeconds(seconds);
-
+    // Check if the consultation date is in the past
     const now = new Date();
-    if (date < now) {
+    if (new Date(consultationDate) < now) {
       return res.status(400).send("Consultation date cannot be in the past.");
     }
 
-    let consultation = await ConsultationModel.findOne({
-      doctorId: req.body.doctorId,
-    });
-
-    if (consultation) {
-      const existingEntry = consultation.consultations.find(
-        (entry) =>
-          entry.patientId === req.body.patientId &&
-          entry.consultationDateAndTime.getTime() === date.getTime()
-      );
-
-      if (!existingEntry) {
-        consultation.consultations.push({
-          patientId: req.body.patientId,
-          specialization: req.body.specialization,
-          branchName: req.body.branch,
-          contactNum: req.body.PhoneNo,
-          consultationDateAndTime: date,
-        });
-
-        await consultation.save();
-        return res.status(200).send("Consultation saved successfully!");
-      } else {
-        return res
-          .status(400)
-          .send(
-            "Consultation already booked for the patient on the given date."
-          );
-      }
+    // Check if the consultation date falls within the doctor's working days
+    const consultationDay = new Date(consultationDate).toLocaleDateString(
+      "en-US",
+      { weekday: "long" }
+    );
+    if (!doctor.selectedDays.includes(consultationDay)) {
+      return res
+        .status(400)
+        .send("Consultation date is not within doctor's working days.");
     }
 
-    consultation = new ConsultationModel({
-      doctorId: req.body.doctorId,
-      consultations: [
-        {
-          patientId: req.body.patientId,
-          specialization: req.body.specialization,
-          branchName: req.body.branch,
-          contactNum: req.body.PhoneNo,
-          consultationDateAndTime: date,
-        },
-      ],
+    // Calculate consultation time based on the doctor's working hours
+    const workingTimeStart = new Date(doctor.workingTimeStart);
+    const workingTimeEnd = new Date(doctor.workingTimeEnd);
+    const consultationTime = calculateConsultationTime(
+      workingTimeStart,
+      workingTimeEnd
+    );
+
+    // Check if consultation time conflicts with existing appointments
+    const existingConsultations = await ConsultationModel.findOne({
+      doctorId,
+      "consultations.consultationDateAndTime": consultationTime,
     });
-    await consultation.save();
+
+    if (existingConsultations) {
+      return res
+        .status(400)
+        .send("Consultation time conflicts with existing appointment");
+    }
+
+    // Create a new consultation entry
+    const consultation = await ConsultationModel.findOneAndUpdate(
+      { doctorId },
+      {
+        $push: {
+          consultations: {
+            patientId,
+            specialization,
+            branchName: branch,
+            contactNum: PhoneNo,
+            consultationDateAndTime: consultationTime,
+          },
+        },
+      },
+      { new: true, upsert: true }
+    );
+
     res.status(201).send("Consultation saved successfully!");
   } catch (error) {
     console.error("Error adding consultation:", error);
     res.status(500).send("Error adding consultation");
   }
+};
+
+// Function to calculate consultation time within working hours
+const calculateConsultationTime = (startTime, endTime) => {
+  const consultationTime = new Date();
+  consultationTime.setHours(startTime.getHours());
+  consultationTime.setMinutes(startTime.getMinutes());
+  consultationTime.setSeconds(0);
+  return consultationTime;
 };
 
 const deleteConsultation = async (req, res) => {
