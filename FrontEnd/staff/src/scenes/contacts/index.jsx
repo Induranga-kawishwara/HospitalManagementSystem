@@ -2,17 +2,62 @@ import { Box, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataTeam } from "../../data/mockData";
-import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
-import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
-import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import Header from "../../components/Header";
 import Button from "@mui/material/Button";
+import { useEffect, useState } from "react";
 
 const StaffMembers = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [patient, setPatient] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const patientResult = await axios.get("http://localhost:5000/patients");
+        setPatient(patientResult.data);
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const calculateAge = (dateOfBirth) => {
+    const today = new Date();
+    const birthDate = new Date(dateOfBirth);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+
+    return age;
+  };
+
+  const handleDelete = async (id) => {
+    console.log(id);
+    try {
+      // Send a delete request to your backend API to delete the doctor with the specified ID
+      await axios.delete(`http://localhost:5000/patients/${id}`);
+      // After successful deletion, fetch the updated list of doctors
+      const patientResult = await axios.get("http://localhost:5000/patients");
+      setPatient(patientResult.data);
+    } catch (error) {
+      console.error("Failed to delete doctor:", error);
+    }
+  };
+
   const columns = [
-    { field: "id", headerName: "ID" },
+    { field: "no", headerName: "No" },
     {
       field: "name",
       headerName: "Name",
@@ -20,29 +65,8 @@ const StaffMembers = () => {
       cellClassName: "name-column--cell",
     },
     {
-      field: "age",
-      headerName: "Age",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
-    },
-    {
       field: "bloodtype",
       headerName: "Blood Type",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
-    },
-    {
-      field: "gender",
-      headerName: "Gender",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
-    },
-    {
-      field: "birthday",
-      headerName: "Birth Day",
       type: "number",
       headerAlign: "left",
       align: "left",
@@ -59,24 +83,26 @@ const StaffMembers = () => {
     {
       field: "editdetails",
       headerName: "Edit Details",
-      renderCell: () => (
+      renderCell: (params) => (
         <Button
           variant="contained"
           sx={{ backgroundColor: colors.greenAccent[700], color: "#ffffff" }}
-          onClick={() => handleButtonClick} // handleButtonClick function to be defined
+          onClick={() => {
+            navigate(`/form/${params.row.id}`);
+          }}
         >
           Edit Details
         </Button>
       ),
     },
     {
-      field: "delete", // New field for Delete button
-      headerName: "Delete", // Column header
-      renderCell: () => (
+      field: "delete",
+      headerName: "Delete",
+      renderCell: (params) => (
         <Button
           variant="contained"
           color="error"
-          onClick={() => handleDeleteButtonClick} // handleDeleteButtonClick function to be defined
+          onClick={() => handleDelete(params.row.id)}
         >
           Delete
         </Button>
@@ -84,12 +110,15 @@ const StaffMembers = () => {
     },
   ];
 
-  const handleDeleteButtonClick = (id) => {
-    // Implement the action to be performed when the delete button is clicked, using the id parameter
-  };
-  const handleButtonClick = (id) => {
-    // Implement the action to be performed when the button is clicked, using the id parameter
-  };
+  const rows = patient.map((patient, index) => ({
+    id: patient._id,
+    no: index + 1,
+    name: `${patient.firstName} ${patient.lastName}`,
+    bloodtype: patient.gender,
+    email: patient.email,
+    age: calculateAge(patient.date),
+    phone: patient.phonenumber,
+  }));
 
   return (
     <Box m="20px">
@@ -123,7 +152,7 @@ const StaffMembers = () => {
           },
         }}
       >
-        <DataGrid rows={mockDataTeam} columns={columns} />
+        <DataGrid rows={rows} columns={columns} />
       </Box>
     </Box>
   );

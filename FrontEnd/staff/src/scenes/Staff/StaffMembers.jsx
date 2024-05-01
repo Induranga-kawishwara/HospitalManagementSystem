@@ -79,6 +79,12 @@ const StaffMembers = () => {
       flex: 1,
     },
     {
+      field: "gender",
+      headerName: "Gender",
+      headerAlign: "left",
+      align: "left",
+    },
+    {
       field: "position",
       headerName: "Position",
       flex: 1,
@@ -119,6 +125,7 @@ const StaffMembers = () => {
     name: `${doctor.firstName} ${doctor.lastName}`,
     email: doctor.email,
     age: calculateAge(doctor.date),
+    gender: doctor.gender,
     phone: doctor.phoneNum,
     position: doctor.staffType,
   }));

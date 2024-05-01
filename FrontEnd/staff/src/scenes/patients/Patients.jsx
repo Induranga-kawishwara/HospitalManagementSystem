@@ -2,15 +2,61 @@ import { Box, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataTeam } from "../../data/mockData";
+import axios from "axios";
 import Header from "../../components/Header";
 import Button from "@mui/material/Button";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const Patients = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [patient, setPatient] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const patientResult = await axios.get("http://localhost:5000/patients");
+        setPatient(patientResult.data);
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const calculateAge = (dateOfBirth) => {
+    const today = new Date();
+    const birthDate = new Date(dateOfBirth);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+
+    return age;
+  };
+
+  const handleDelete = async (id) => {
+    console.log(id);
+    try {
+      // Send a delete request to your backend API to delete the doctor with the specified ID
+      await axios.delete(`http://localhost:5000/patients/${id}`);
+      // After successful deletion, fetch the updated list of doctors
+      const patientResult = await axios.get("http://localhost:5000/patients");
+      setPatient(patientResult.data);
+    } catch (error) {
+      console.error("Failed to delete doctor:", error);
+    }
+  };
   const columns = [
-    { field: "id", headerName: "ID" },
+    { field: "no", headerName: "No" },
     {
       field: "name",
       headerName: "Name",
@@ -20,6 +66,20 @@ const Patients = () => {
     {
       field: "age",
       headerName: "Age",
+      type: "number",
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "gender",
+      headerName: "Gender",
+      type: "number",
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "birthday",
+      headerName: "Birth Day",
       type: "number",
       headerAlign: "left",
       align: "left",
@@ -36,38 +96,47 @@ const Patients = () => {
     {
       field: "editdetails",
       headerName: "Edit Details",
-      renderCell: () => (
+      renderCell: (params) => (
         <Button
           variant="contained"
           sx={{ backgroundColor: colors.greenAccent[700], color: "#ffffff" }}
-          onClick={() => handleButtonClick} // handleButtonClick function to be defined
+          onClick={() => {
+            navigate(`/form/${params.row.id}`);
+          }}
         >
           Edit Details
         </Button>
       ),
     },
     {
-      field: "delete", // New field for Delete button
-      headerName: "Delete", // Column header
-      renderCell: () => (
+      field: "delete",
+      headerName: "Delete",
+      renderCell: (params) => (
         <Button
           variant="contained"
           color="error"
-          onClick={() => handleDeleteButtonClick} // handleDeleteButtonClick function to be defined
+          onClick={() => handleDelete(params.row.id)}
         >
           Delete
         </Button>
       ),
     },
   ];
-  const navigate = useNavigate();
+  const calculateDate = (birthday) => {
+    const date = new Date(birthday);
+    return date.toISOString().split("T")[0];
+  };
 
-  const handleDeleteButtonClick = (id) => {
-    // Implement the action to be performed when the delete button is clicked, using the id parameter
-  };
-  const handleButtonClick = (id) => {
-    navigate("/addpatients");
-  };
+  const rows = patient.map((patient, index) => ({
+    id: patient._id,
+    no: index + 1,
+    name: `${patient.firstName} ${patient.lastName}`,
+    age: calculateAge(patient.birthday),
+    gender: patient.gender,
+    birthday: calculateDate(patient.birthday),
+    email: patient.email,
+    phone: patient.phonenumber,
+  }));
 
   return (
     <Box m="20px">
@@ -101,7 +170,7 @@ const Patients = () => {
           },
         }}
       >
-        <DataGrid rows={mockDataTeam} columns={columns} />
+        <DataGrid rows={rows} columns={columns} />
       </Box>
     </Box>
   );
