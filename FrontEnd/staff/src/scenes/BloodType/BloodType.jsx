@@ -2,30 +2,34 @@ import { Box, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataTeam } from "../../data/mockData";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Header from "../../components/Header";
 import Button from "@mui/material/Button";
 import { useEffect, useState } from "react";
 
-const StaffMembers = () => {
+const BloodType = () => {
+  const { id } = useParams();
+  console.log(id);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [bloods, setBlood] = useState([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const bloodResult = await axios.get("http://localhost:5000/bloodBank");
-        setBlood(bloodResult.data);
-      } catch (error) {
-        console.error("Failed to fetch data:", error);
-      }
-    };
+  //   useEffect(() => {
+  //     const fetchData = async () => {
+  //       try {
+  //         const bloodResult = await axios.get(
+  //           `http://localhost:5000/bloodBank/${id}`
+  //         );
+  //         setBlood(bloodResult.data);
+  //       } catch (error) {
+  //         console.error("Failed to fetch data:", error);
+  //       }
+  //     };
 
-    fetchData();
-  }, []);
+  //     fetchData();
+  //   }, [id]); // Add id to dependency array
 
   const calculateAge = (dateOfBirth) => {
     const today = new Date();
@@ -93,7 +97,7 @@ const StaffMembers = () => {
           variant="contained"
           sx={{ backgroundColor: colors.greenAccent[700], color: "#ffffff" }}
           onClick={() => {
-            navigate(`/bloodType/${params.row.id}`);
+            navigate(`/form/${params.row.id}`);
           }}
         >
           Edit Details
@@ -128,7 +132,7 @@ const StaffMembers = () => {
 
   return (
     <Box m="20px">
-      <Header title="Blood Bank" subtitle="Managing Blood Bank" />
+      <Header title={`Blood Type: ${bloods.id}`} subtitle="Donation List" />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -164,4 +168,4 @@ const StaffMembers = () => {
   );
 };
 
-export default StaffMembers;
+export default BloodType;

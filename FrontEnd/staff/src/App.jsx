@@ -13,6 +13,7 @@ import Blood from "./scenes/blood/blood_1";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 import Calendar from "./scenes/calendar/calendar";
+import BloodType from "./scenes/BloodType/BloodType";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -32,6 +33,7 @@ function App() {
               <Route path="/patients" element={<Patients />} />
               <Route path="/bloodinformation" element={<Contacts />} />
               <Route path="/form/:id?" element={<Form />} />
+              <Route path="/bloodType/:id" element={<BloodType />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/blood" element={<Blood />} />
