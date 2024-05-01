@@ -1,23 +1,66 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Box, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { mockDataTeam } from "../../data/mockData";
 import Header from "../../components/Header";
 import Button from "@mui/material/Button";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const StaffMembers = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const navigate = useNavigate();
+  const [staff, setStaff] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const staffResult = await axios.get("http://localhost:5000/users");
+        setStaff(staffResult.data);
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const calculateAge = (dateOfBirth) => {
+    const today = new Date();
+    const birthDate = new Date(dateOfBirth);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+
+    return age;
+  };
+
+  const handleDelete = async (id) => {
+    console.log(id);
+    try {
+      // Send a delete request to your backend API to delete the doctor with the specified ID
+      await axios.delete(`http://localhost:5000/users/${id}`);
+      // After successful deletion, fetch the updated list of doctors
+      const staffResult = await axios.get("http://localhost:5000/users");
+      setStaff(staffResult.data);
+    } catch (error) {
+      console.error("Failed to delete doctor:", error);
+    }
+  };
 
   const columns = [
-    { field: "id", headerName: "ID" },
+    { field: "no", headerName: "NO" },
     {
       field: "name",
       headerName: "Name",
       flex: 1,
-      cellClassName: "name-column--cell",
     },
     {
       field: "age",
@@ -36,20 +79,20 @@ const StaffMembers = () => {
       flex: 1,
     },
     {
-      field: "position", // New field for Position or Rank
-      headerName: "Position", // Column header
-      flex: 1, // Flex size
+      field: "position",
+      headerName: "Position",
+      flex: 1,
     },
     {
       field: "editdetails",
       headerName: "Edit Details",
-      renderCell: () => (
+      renderCell: (params) => (
         <Button
           variant="contained"
           sx={{ backgroundColor: colors.greenAccent[700], color: "#ffffff" }}
           onClick={() => {
-            navigate("/form");
-          }} // handleButtonClick function to be defined
+            navigate(`/form/${params.row.id}`);
+          }}
         >
           Edit Details
         </Button>
@@ -58,13 +101,27 @@ const StaffMembers = () => {
     {
       field: "delete",
       headerName: "Delete",
-      renderCell: () => (
-        <Button variant="contained" color="error" onClick={() => {}}>
+      renderCell: (params) => (
+        <Button
+          variant="contained"
+          color="error"
+          onClick={() => handleDelete(params.row.id)}
+        >
           Delete
         </Button>
       ),
     },
   ];
+
+  const rows = staff.map((doctor, index) => ({
+    id: doctor._id,
+    no: index + 1,
+    name: `${doctor.firstName} ${doctor.lastName}`,
+    email: doctor.email,
+    age: calculateAge(doctor.date),
+    phone: doctor.phoneNum,
+    position: doctor.staffType,
+  }));
 
   return (
     <Box m="20px">
@@ -98,7 +155,7 @@ const StaffMembers = () => {
           },
         }}
       >
-        <DataGrid rows={mockDataTeam} columns={columns} />
+        <DataGrid rows={rows} columns={columns} />
       </Box>
     </Box>
   );

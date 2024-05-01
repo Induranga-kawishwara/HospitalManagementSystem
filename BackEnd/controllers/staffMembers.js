@@ -94,7 +94,7 @@ const deleteUser = async (req, res) => {
   const userID = req.params.id;
   console.log(userID);
   try {
-    const deleteUser = await StaffMemberModel.findById(userID);
+    const deleteUser = await StaffMemberModel.findByIdAndDelete(userID);
 
     if (!deleteUser) {
       return res.status(404).send("User not found");
