@@ -1,19 +1,19 @@
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import Topbar from "./scenes/global/Topbar";
-import Sidebar from "./scenes/global/Sidebar";
-import Dashboard from "./scenes/dashboard";
-import StaffMembers from "./scenes/Staff/StaffMembers";
-import Patients from "./scenes/patients/Patients";
-import Contacts from "./scenes/contacts";
-import Form from "./scenes/form";
-import Patientsadd from "./scenes/Patientsadd/patientsadd";
-import FAQ from "./scenes/faq";
-import Blood from "./scenes/blood/blood_1";
+import Topbar from "./Components/SideNavigation/Topbar";
+import Sidebar from "./Components/SideNavigation/Sidebar";
+import Dashboard from "./Pages/Dashboard/Dashboard";
+import AddStaffMembers from "./Pages/StaffMembers/AddStaffMembers";
+import ManagePatients from "./Pages/Patients/ManagePatients";
+import ManageBloodBank from "./Pages/BloodBank/ManageBloodBank";
+import ManageStaffMemers from "./Pages/StaffMembers/ManageStaffMemers";
+import AddPatients from "./Pages/Patients/AddPatients";
+import FAQ from "./Pages/faq";
+import AddBloodDonate from "./Pages/BloodBank/AddBloodDonate";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
-import Calendar from "./scenes/calendar/calendar";
-import BloodType from "./scenes/BloodType/BloodType";
+import CalenderTasks from "./Pages/CalenderTasks/CalenderTasks";
+import ManageBloodDonors from "./Pages/BloodBank/ManageBloodDonors";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -29,15 +29,18 @@ function App() {
             <Topbar setIsSidebar={setIsSidebar} />
             <Routes>
               <Route path="/" element={<Dashboard />} />
-              <Route path="/team" element={<StaffMembers />} />
-              <Route path="/patients" element={<Patients />} />
-              <Route path="/bloodinformation" element={<Contacts />} />
-              <Route path="/form/:id?" element={<Form />} />
-              <Route path="/bloodType/:BloodID" element={<BloodType />} />
+              <Route path="/form/:id?" element={<AddStaffMembers />} />
+              <Route path="/patients" element={<ManagePatients />} />
+              <Route path="/bloodinformation" element={<ManageBloodBank />} />
+              <Route path="/team" element={<ManageStaffMemers />} />
+              <Route
+                path="/bloodType/:BloodID"
+                element={<ManageBloodDonors />}
+              />
               <Route path="/faq" element={<FAQ />} />
-              <Route path="/calendar" element={<Calendar />} />
-              <Route path="/blood" element={<Blood />} />
-              <Route path="/addpatients" element={<Patientsadd />} />
+              <Route path="/calendar" element={<CalenderTasks />} />
+              <Route path="/blood" element={<AddBloodDonate />} />
+              <Route path="/addpatients" element={<AddPatients />} />
             </Routes>
           </main>
         </div>

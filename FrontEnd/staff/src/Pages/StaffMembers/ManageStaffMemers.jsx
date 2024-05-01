@@ -1,24 +1,23 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Box, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { mockDataTeam } from "../../data/mockData";
-import axios from "axios";
-import Header from "../../components/Header";
+import Header from "../../Components/Header/Header";
 import Button from "@mui/material/Button";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const Patients = () => {
+const ManageStaffMemers = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [patient, setPatient] = useState([]);
   const navigate = useNavigate();
+  const [staff, setStaff] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const patientResult = await axios.get("http://localhost:5000/patients");
-        setPatient(patientResult.data);
+        const staffResult = await axios.get("http://localhost:5000/users");
+        setStaff(staffResult.data);
       } catch (error) {
         console.error("Failed to fetch data:", error);
       }
@@ -47,39 +46,25 @@ const Patients = () => {
     console.log(id);
     try {
       // Send a delete request to your backend API to delete the doctor with the specified ID
-      await axios.delete(`http://localhost:5000/patients/${id}`);
+      await axios.delete(`http://localhost:5000/users/${id}`);
       // After successful deletion, fetch the updated list of doctors
-      const patientResult = await axios.get("http://localhost:5000/patients");
-      setPatient(patientResult.data);
+      const staffResult = await axios.get("http://localhost:5000/users");
+      setStaff(staffResult.data);
     } catch (error) {
       console.error("Failed to delete doctor:", error);
     }
   };
+
   const columns = [
-    { field: "no", headerName: "No" },
+    { field: "no", headerName: "NO" },
     {
       field: "name",
       headerName: "Name",
       flex: 1,
-      cellClassName: "name-column--cell",
     },
     {
       field: "age",
       headerName: "Age",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
-    },
-    {
-      field: "gender",
-      headerName: "Gender",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
-    },
-    {
-      field: "birthday",
-      headerName: "Birth Day",
       type: "number",
       headerAlign: "left",
       align: "left",
@@ -91,6 +76,17 @@ const Patients = () => {
     {
       field: "email",
       headerName: "Email",
+      flex: 1,
+    },
+    {
+      field: "gender",
+      headerName: "Gender",
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "position",
+      headerName: "Position",
       flex: 1,
     },
     {
@@ -122,25 +118,21 @@ const Patients = () => {
       ),
     },
   ];
-  const calculateDate = (birthday) => {
-    const date = new Date(birthday);
-    return date.toISOString().split("T")[0];
-  };
 
-  const rows = patient.map((patient, index) => ({
-    id: patient._id,
+  const rows = staff.map((doctor, index) => ({
+    id: doctor._id,
     no: index + 1,
-    name: `${patient.firstName} ${patient.lastName}`,
-    age: calculateAge(patient.birthday),
-    gender: patient.gender,
-    birthday: calculateDate(patient.birthday),
-    email: patient.email,
-    phone: patient.phonenumber,
+    name: `${doctor.firstName} ${doctor.lastName}`,
+    email: doctor.email,
+    age: calculateAge(doctor.date),
+    gender: doctor.gender,
+    phone: doctor.phoneNum,
+    position: doctor.staffType,
   }));
 
   return (
     <Box m="20px">
-      <Header title="PATIENTS" subtitle="Managing the Patients" />
+      <Header title="STAFF" subtitle="Managing the Staff Members" />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -176,4 +168,4 @@ const Patients = () => {
   );
 };
 
-export default Patients;
+export default ManageStaffMemers;

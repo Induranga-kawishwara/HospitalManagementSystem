@@ -3,7 +3,7 @@ import { Box, Button, TextField, Input } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import Header from "../../components/Header";
+import Header from "../../Components/Header/Header";
 import {
   FormControl,
   MenuItem,
@@ -18,7 +18,7 @@ import axios from "axios";
 // Initialize Firebase app
 initializeApp(firebaseConfig.firebaseConfig);
 
-const Farm = () => {
+const AddStaffMembers = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const initialValues = {
     firstName: "",
@@ -513,4 +513,4 @@ const Farm = () => {
   );
 };
 
-export default Farm;
+export default AddStaffMembers;

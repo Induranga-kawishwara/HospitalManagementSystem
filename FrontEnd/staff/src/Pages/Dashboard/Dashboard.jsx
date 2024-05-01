@@ -1,7 +1,7 @@
 import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
-import Header from "../../components/Header";
-import StatBox from "../../components/StatBox";
+import Header from "../../Components/Header/Header";
+import StatBox from "../../Components/StatBox/StatBox";
 import { DataGrid } from "@mui/x-data-grid";
 
 import {

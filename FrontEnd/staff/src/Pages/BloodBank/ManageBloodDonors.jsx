@@ -1,30 +1,35 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import Header from "../../components/Header";
+import Header from "../../Components/Header/Header";
 import Button from "@mui/material/Button";
 import { useEffect, useState } from "react";
 
-const StaffMembers = () => {
+const ManageBloodDonors = () => {
+  const { BloodID } = useParams();
+  console.log(BloodID);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [bloods, setBlood] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const bloodResult = await axios.get("http://localhost:5000/bloodBank");
-        setBlood(bloodResult.data);
+        const bloodResult = await axios.get(`http://localhost:5000/bloodBank`);
+        const filteredBlood = bloodResult.data.filter(
+          (item) => item._id === BloodID
+        );
+        console.log(filteredBlood);
+        setBlood(filteredBlood);
       } catch (error) {
         console.error("Failed to fetch data:", error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [BloodID]);
 
   const calculateAge = (dateOfBirth) => {
     const today = new Date();
@@ -43,9 +48,10 @@ const StaffMembers = () => {
   };
 
   const handleDelete = async (id) => {
-    console.log(id);
     try {
-      await axios.delete(`http://localhost:5000/bloodBank/${id}`);
+      // Send a put request to your backend API to delete the doctor with the specified ID
+      await axios.put(`http://localhost:5000/bloodBank/${BloodID}/${id}`);
+      // After successful deletion, fetch the updated list of doctors
       const bloodResult = await axios.get("http://localhost:5000/bloodBank");
       setBlood(bloodResult.data);
     } catch (error) {
@@ -56,31 +62,24 @@ const StaffMembers = () => {
   const columns = [
     { field: "no", headerName: "No" },
     {
-      field: "bloodtype",
-      headerName: "Blood Type",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
+      field: "name",
+      headerName: "Name",
+      flex: 1,
+      cellClassName: "name-column--cell",
     },
     {
-      field: "bloodCount",
-      headerName: "Blood Count",
+      field: "phone",
+      headerName: "Phone Number",
+    },
+    {
+      field: "email",
+      headerName: "Email",
       flex: 1,
     },
     {
-      field: "donater",
-      headerName: "Donors",
-      renderCell: (params) => (
-        <Button
-          variant="contained"
-          sx={{ backgroundColor: colors.greenAccent[700], color: "#ffffff" }}
-          onClick={() => {
-            navigate(`/bloodType/${params.row.id}`);
-          }}
-        >
-          View
-        </Button>
-      ),
+      field: "address",
+      headerName: "Address",
+      flex: 1,
     },
     {
       field: "delete",
@@ -97,16 +96,24 @@ const StaffMembers = () => {
     },
   ];
 
-  const rows = bloods.map((patient, index) => ({
-    id: patient._id,
-    no: index + 1,
-    bloodtype: patient.bloodType,
-    bloodCount: patient.bloodCount,
-  }));
+  const rows =
+    bloods.length > 0
+      ? bloods[0].donate.map((donater, index) => ({
+          id: donater._id,
+          no: index + 1,
+          name: `${donater.firstName} ${donater.lastName}`,
+          address: donater.address,
+          email: donater.email,
+          phone: donater.contactNum,
+        }))
+      : [];
 
   return (
     <Box m="20px">
-      <Header title="Blood Bank" subtitle="Managing Blood Bank" />
+      <Header
+        title={`Blood Type: ${bloods[0]?.bloodType}`}
+        subtitle="Donation List"
+      />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -142,4 +149,4 @@ const StaffMembers = () => {
   );
 };
 
-export default StaffMembers;
+export default ManageBloodDonors;

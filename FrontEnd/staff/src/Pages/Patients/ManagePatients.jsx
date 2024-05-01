@@ -1,36 +1,30 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { mockDataTeam } from "../../data/mockData";
-import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import Header from "../../components/Header";
+import Header from "../../Components/Header/Header";
 import Button from "@mui/material/Button";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-const BloodType = () => {
-  const { BloodID } = useParams();
-  console.log(BloodID);
+const ManagePatients = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [bloods, setBlood] = useState([]);
+  const [patient, setPatient] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const bloodResult = await axios.get(`http://localhost:5000/bloodBank`);
-        const filteredBlood = bloodResult.data.filter(
-          (item) => item._id === BloodID
-        );
-        console.log(filteredBlood);
-        setBlood(filteredBlood);
+        const patientResult = await axios.get("http://localhost:5000/patients");
+        setPatient(patientResult.data);
       } catch (error) {
         console.error("Failed to fetch data:", error);
       }
     };
 
     fetchData();
-  }, [BloodID]);
+  }, []);
 
   const calculateAge = (dateOfBirth) => {
     const today = new Date();
@@ -49,17 +43,17 @@ const BloodType = () => {
   };
 
   const handleDelete = async (id) => {
+    console.log(id);
     try {
-      // Send a put request to your backend API to delete the doctor with the specified ID
-      await axios.put(`http://localhost:5000/bloodBank/${BloodID}/${id}`);
+      // Send a delete request to your backend API to delete the doctor with the specified ID
+      await axios.delete(`http://localhost:5000/patients/${id}`);
       // After successful deletion, fetch the updated list of doctors
-      const bloodResult = await axios.get("http://localhost:5000/bloodBank");
-      setBlood(bloodResult.data);
+      const patientResult = await axios.get("http://localhost:5000/patients");
+      setPatient(patientResult.data);
     } catch (error) {
       console.error("Failed to delete doctor:", error);
     }
   };
-
   const columns = [
     { field: "no", headerName: "No" },
     {
@@ -67,6 +61,27 @@ const BloodType = () => {
       headerName: "Name",
       flex: 1,
       cellClassName: "name-column--cell",
+    },
+    {
+      field: "age",
+      headerName: "Age",
+      type: "number",
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "gender",
+      headerName: "Gender",
+      type: "number",
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "birthday",
+      headerName: "Birth Day",
+      type: "number",
+      headerAlign: "left",
+      align: "left",
     },
     {
       field: "phone",
@@ -78,9 +93,19 @@ const BloodType = () => {
       flex: 1,
     },
     {
-      field: "address",
-      headerName: "Address",
-      flex: 1,
+      field: "editdetails",
+      headerName: "Edit Details",
+      renderCell: (params) => (
+        <Button
+          variant="contained"
+          sx={{ backgroundColor: colors.greenAccent[700], color: "#ffffff" }}
+          onClick={() => {
+            navigate(`/form/${params.row.id}`);
+          }}
+        >
+          Edit Details
+        </Button>
+      ),
     },
     {
       field: "delete",
@@ -96,25 +121,25 @@ const BloodType = () => {
       ),
     },
   ];
+  const calculateDate = (birthday) => {
+    const date = new Date(birthday);
+    return date.toISOString().split("T")[0];
+  };
 
-  const rows =
-    bloods.length > 0
-      ? bloods[0].donate.map((donater, index) => ({
-          id: donater._id,
-          no: index + 1,
-          name: `${donater.firstName} ${donater.lastName}`,
-          address: donater.address,
-          email: donater.email,
-          phone: donater.contactNum,
-        }))
-      : [];
+  const rows = patient.map((patient, index) => ({
+    id: patient._id,
+    no: index + 1,
+    name: `${patient.firstName} ${patient.lastName}`,
+    age: calculateAge(patient.birthday),
+    gender: patient.gender,
+    birthday: calculateDate(patient.birthday),
+    email: patient.email,
+    phone: patient.phonenumber,
+  }));
 
   return (
     <Box m="20px">
-      <Header
-        title={`Blood Type: ${bloods[0]?.bloodType}`}
-        subtitle="Donation List"
-      />
+      <Header title="PATIENTS" subtitle="Managing the Patients" />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -150,4 +175,4 @@ const BloodType = () => {
   );
 };
 
-export default BloodType;
+export default ManagePatients;

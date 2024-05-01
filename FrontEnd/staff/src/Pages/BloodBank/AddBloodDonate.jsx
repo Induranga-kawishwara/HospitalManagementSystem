@@ -1,43 +1,36 @@
-import { Box, Button, TextField } from "@mui/material";
+import React from "react";
+import { Box, Button, TextField, MenuItem } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import Header from "../../components/Header";
-import { MenuItem } from "@mui/material";
+import Header from "../../Components/Header/Header";
 import axios from "axios";
 
-const PatientsAdd = () => {
-  const isNonMobile = useMediaQuery("(min-width:600px)");
-
+const AddBloodDonate = () => {
   const initialValues = {
     firstName: "",
     lastName: "",
-    gender: "",
-    birthday: "",
-    phonenumber: "",
-    address: "",
-    city: "",
     email: "",
-    password: "",
+    contact: "",
+    address: "",
+    bloodType: "",
   };
 
-  const handleSubmit = async (values, actions) => {
+  const isNonMobile = useMediaQuery("(min-width:600px)");
+
+  const handleFormSubmit = async (values, actions) => {
     try {
       console.log(values);
-      const updatedValues = { ...values, password: `${values.firstName}@1A` };
 
       const response = await axios.post(
-        "http://localhost:5000/patients",
-        updatedValues
+        "http://localhost:5000/bloodBank",
+        values
       );
-      alert(
-        `${response.data.message}  tempory Password :-${values.firstName}@1A`
-      );
-      console.log(updatedValues);
+      alert(response.data);
       actions.resetForm();
     } catch (error) {
       console.error("Error adding StaffMember:", error);
-      alert(error.response.data.message);
+      alert(error.response.data);
     }
   };
 
@@ -48,8 +41,7 @@ const PatientsAdd = () => {
       .string()
       .email("Invalid email format")
       .required("Email is required"),
-    birthday: yup.date().required("Date of birth is required"),
-    phonenumber: yup
+    contact: yup
       .string()
       .matches(
         /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/,
@@ -57,15 +49,20 @@ const PatientsAdd = () => {
       )
       .required("Contact number is required"),
     address: yup.string().required("Address line is required"),
-    city: yup.string().required("City is required"),
-    gender: yup.string().required("Gender is required"),
+    bloodType: yup.string().required("bloodType is required"),
   });
+
+  const bloodTypes = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 
   return (
     <Box m="20px">
-      <Header title="CREATE USER" subtitle="Create a New User Profile" />
+      <Header
+        title="ADD A NEW BLOOD DONOR"
+        subtitle="Register as a Blood Donor and Save Lives"
+      />
+
       <Formik
-        onSubmit={handleSubmit}
+        onSubmit={handleFormSubmit}
         initialValues={initialValues}
         validationSchema={validationSchema}
       >
@@ -112,37 +109,25 @@ const PatientsAdd = () => {
                 helperText={touched.lastName && errors.lastName}
                 sx={{ gridColumn: "span 2" }}
               />
-
-              <TextField
-                fullWidth
-                variant="filled"
-                type="date" // Change type to "date"
-                label="Date Of Birth" // Change label to appropriate label
-                name="birthday" // Change name to appropriate name
-                sx={{ gridColumn: "span 4" }}
-                error={!!touched.birthday && !!errors.birthday}
-                helperText={touched.birthday && errors.birthday}
-                onBlur={handleBlur}
-                onChange={handleChange}
-              />
               <TextField
                 select
                 fullWidth
                 variant="filled"
-                label="Gender"
-                value={values.gender}
+                label="Blood Type"
+                value={values.bloodType}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                name="gender"
-                error={!!touched.gender && !!errors.gender}
-                helperText={touched.gender && errors.gender}
+                name="bloodType"
+                error={!!touched.bloodType && !!errors.bloodType}
+                helperText={touched.bloodType && errors.bloodType}
                 sx={{ gridColumn: "span 4" }}
               >
-                <MenuItem value="male">Male</MenuItem>
-                <MenuItem value="female">Female</MenuItem>
-                <MenuItem value="other">Other</MenuItem>
+                {bloodTypes.map((option) => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
               </TextField>
-
               <TextField
                 fullWidth
                 variant="filled"
@@ -163,54 +148,37 @@ const PatientsAdd = () => {
                 label="Contact Number"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.phonenumber}
-                name="phonenumber"
-                error={!!touched.phonenumber && !!errors.phonenumber}
-                helperText={touched.phonenumber && errors.phonenumber}
+                value={values.contact}
+                name="contact"
+                error={!!touched.contact && !!errors.contact}
+                helperText={touched.contact && errors.contact}
+                // InputLabelProps={{ style: { color: "black" } }} // Change color here
                 sx={{ gridColumn: "span 4" }}
               />
               <TextField
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Address"
+                label="Full Address"
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.address}
                 name="address"
                 error={!!touched.address && !!errors.address}
                 helperText={touched.address && errors.address}
-                sx={{ gridColumn: "span 4" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="City"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.city}
-                name="city"
-                error={!!touched.city && !!errors.city}
-                helperText={touched.city && errors.city}
+                // InputLabelProps={{ style: { color: "black" } }} // Change color here
                 sx={{ gridColumn: "span 4" }}
               />
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
               <Button type="submit" color="secondary" variant="contained">
-                Create New Patients
+                ADD A DONOR
               </Button>
             </Box>
-            {/* <Box display="flex" justifyContent="end" mt="20px">
-              <Button type="submit" color="secondary" variant="contained">
-                Edit And Save
-              </Button>
-            </Box> */}
           </form>
         )}
       </Formik>
     </Box>
   );
 };
-
-export default PatientsAdd;
+export default AddBloodDonate;
