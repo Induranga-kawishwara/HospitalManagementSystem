@@ -125,15 +125,24 @@ const Dashboard = () => {
       const doctor = staff.find((doctor) => doctor._id === it.doctorId);
       const selepat = patient.find((pati) => pati._id === pat.patientId);
       if (
+        selepat &&
         pat.status === "scheduled" &&
         pat.consultationDateAndTime.includes(today)
       ) {
+        const [datePart, timePartWithOffset] =
+          pat.consultationDateAndTime.split("T");
+        const [timePart] = timePartWithOffset.split(".");
+
+        const [hours, minutes] = timePart.split(":");
+        const formattedTime = `${hours}:${minutes}`;
+
+        console.log("Time:", formattedTime);
         return {
           id: pat._id || "",
           no: index + 1,
           patient_name: `${selepat.firstName || ""} ${selepat.lastName || ""}`,
-          date: pat.consultationDateAndTime,
-          time: pat.consultationDateAndTime,
+          date: datePart,
+          time: formattedTime,
           doctor: `${doctor.firstName || ""} ${doctor.lastName || ""}`,
           phone: pat.contactNum || "",
           branch: pat.branchName || "",
@@ -275,7 +284,7 @@ const Dashboard = () => {
               },
             }}
           >
-            <DataGrid rows={rows} columns={columns} />
+            <DataGrid rows={rows[0] !== null ? rows : []} columns={columns} />
           </Box>
         </Box>
       </Box>
