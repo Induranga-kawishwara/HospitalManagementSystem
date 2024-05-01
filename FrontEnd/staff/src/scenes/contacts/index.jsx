@@ -11,14 +11,14 @@ import { useEffect, useState } from "react";
 const StaffMembers = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [patient, setPatient] = useState([]);
+  const [bloods, setBlood] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const patientResult = await axios.get("http://localhost:5000/patients");
-        setPatient(patientResult.data);
+        const bloodResult = await axios.get("http://localhost:5000/bloodBank");
+        setBlood(bloodResult.data);
       } catch (error) {
         console.error("Failed to fetch data:", error);
       }
@@ -47,10 +47,10 @@ const StaffMembers = () => {
     console.log(id);
     try {
       // Send a delete request to your backend API to delete the doctor with the specified ID
-      await axios.delete(`http://localhost:5000/patients/${id}`);
+      await axios.delete(`http://localhost:5000/bloodBank/${id}`);
       // After successful deletion, fetch the updated list of doctors
-      const patientResult = await axios.get("http://localhost:5000/patients");
-      setPatient(patientResult.data);
+      const bloodResult = await axios.get("http://localhost:5000/bloodBank");
+      setBlood(bloodResult.data);
     } catch (error) {
       console.error("Failed to delete doctor:", error);
     }
@@ -58,12 +58,12 @@ const StaffMembers = () => {
 
   const columns = [
     { field: "no", headerName: "No" },
-    {
-      field: "name",
-      headerName: "Name",
-      flex: 1,
-      cellClassName: "name-column--cell",
-    },
+    // {
+    //   field: "name",
+    //   headerName: "Name",
+    //   flex: 1,
+    //   cellClassName: "name-column--cell",
+    // },
     {
       field: "bloodtype",
       headerName: "Blood Type",
@@ -71,13 +71,18 @@ const StaffMembers = () => {
       headerAlign: "left",
       align: "left",
     },
+    // {
+    //   field: "phone",
+    //   headerName: "Phone Number",
+    // },
+    // {
+    //   field: "email",
+    //   headerName: "Email",
+    //   flex: 1,
+    // },
     {
-      field: "phone",
-      headerName: "Phone Number",
-    },
-    {
-      field: "email",
-      headerName: "Email",
+      field: "bloodCount",
+      headerName: "Blood Count",
       flex: 1,
     },
     {
@@ -110,14 +115,15 @@ const StaffMembers = () => {
     },
   ];
 
-  const rows = patient.map((patient, index) => ({
+  const rows = bloods.map((patient, index) => ({
     id: patient._id,
     no: index + 1,
-    name: `${patient.firstName} ${patient.lastName}`,
-    bloodtype: patient.gender,
-    email: patient.email,
-    age: calculateAge(patient.date),
-    phone: patient.phonenumber,
+    // name: `${patient.firstName} ${patient.lastName}`,
+    bloodtype: patient.bloodType,
+    // email: patient.email,
+    // age: calculateAge(patient.date),
+    // phone: patient.phonenumber,
+    bloodCount: patient.bloodCount,
   }));
 
   return (
