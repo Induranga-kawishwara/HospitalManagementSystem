@@ -3,9 +3,10 @@ import { tokens } from "../../theme";
 import Header from "../../Components/Header/Header";
 import StatBox from "../../Components/StatBox/StatBox";
 import { DataGrid } from "@mui/x-data-grid";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 import {
-  DownloadOutlined,
   LocalHospital,
   PointOfSale,
   PersonAdd,
@@ -15,11 +16,33 @@ import {
 const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [staff, setStaff] = useState([]);
+  const [patient, setPatient] = useState([]);
+  const [blood, setBlood] = useState([]);
+  let totalCount = 0;
 
   const mockTransactions = [
     { id: 1, txId: "01e4dsa", user: "johndoe", date: "2021-09-01" },
     // Add more rows with unique IDs...
   ];
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const patientResult = await axios.get("http://localhost:5000/patients");
+        setPatient(patientResult.data);
+        const staffResult = await axios.get("http://localhost:5000/users");
+        setStaff(staffResult.data);
+        const bloodResult = await axios.get("http://localhost:5000/bloodBank");
+
+        setBlood(bloodResult.data);
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const columns = [
     { field: "id", headerName: "ID" },
@@ -89,6 +112,11 @@ const Dashboard = () => {
     },
   ];
 
+  // Iterate over each object and sum up the blood counts
+  blood.forEach((item) => {
+    totalCount += parseInt(item.bloodCount);
+  });
+
   return (
     <Box m="20px">
       {/* HEADER */}
@@ -126,9 +154,8 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="12,361"
+            title={staff.length}
             subtitle="Staff Members"
-            progress="0.75"
             icon={
               <LocalHospital
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
@@ -145,9 +172,7 @@ const Dashboard = () => {
         >
           <StatBox
             title="431,225"
-            subtitle="Sales Obtained"
-            progress="0.50"
-            increase="+21%"
+            subtitle="Appoiments"
             icon={
               <PointOfSale
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
@@ -163,9 +188,8 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="32,441"
+            title={patient.length}
             subtitle="Patients"
-            progress="0.30"
             icon={
               <PersonAdd
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
@@ -181,7 +205,7 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="1,325,134"
+            title={totalCount}
             subtitle="Blood Count"
             progress="0.80"
             icon={
