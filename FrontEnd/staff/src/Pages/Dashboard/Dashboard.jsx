@@ -22,32 +22,31 @@ const Dashboard = () => {
   const [doneAppoinment, SetdoneAppoinment] = useState([]);
   const [consultationList, setConsultationList] = useState([]);
 
-  let totalCount = 0;
+  const fetchData = async () => {
+    try {
+      const [patientResult, staffResult, bloodResult, consultationsResult] =
+        await Promise.all([
+          axios.get("http://localhost:5000/patients"),
+          axios.get("http://localhost:5000/users"),
+          axios.get("http://localhost:5000/bloodBank"),
+          axios.get("http://localhost:5000/consultations"),
+        ]);
+
+      setPatient(patientResult.data);
+      setStaff(staffResult.data);
+      setBlood(bloodResult.data);
+      setConsultationList(consultationsResult.data);
+
+      const doneAppoinments = consultationsResult.data.flatMap((it) =>
+        it.consultations.filter((pat) => pat.status === "done")
+      );
+      SetdoneAppoinment(doneAppoinments);
+    } catch (error) {
+      console.error("Failed to fetch data:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const patientResult = await axios.get("http://localhost:5000/patients");
-        setPatient(patientResult.data);
-        const staffResult = await axios.get("http://localhost:5000/users");
-        setStaff(staffResult.data);
-        const bloodResult = await axios.get("http://localhost:5000/bloodBank");
-        const consultationsResult = await axios.get(
-          `http://localhost:5000/consultations`
-        );
-
-        setConsultationList(consultationsResult.data);
-        const doneAppoinments = consultationsResult.data.flatMap((it) =>
-          it.consultations.filter((pat) => pat.status === "done")
-        );
-        SetdoneAppoinment(doneAppoinments);
-
-        setBlood(bloodResult.data);
-      } catch (error) {
-        console.error("Failed to fetch data:", error);
-      }
-    };
-
     fetchData();
   }, []);
 
@@ -62,6 +61,26 @@ const Dashboard = () => {
       );
 
       setConsultationList(consultationsResult.data);
+    } catch (error) {
+      console.error("Failed to delete doctor:", error);
+    }
+  };
+
+  const handleDone = async (id) => {
+    console.log(id);
+    try {
+      // Send a delete request to your backend API to delete the doctor with the specified ID
+      await axios.put(`http://localhost:5000/consultations/${id}`);
+      // After successful deletion, fetch the updated list of doctors
+      const consultationsResult = await axios.get(
+        `http://localhost:5000/consultations`
+      );
+
+      setConsultationList(consultationsResult.data);
+      const doneAppoinments = consultationsResult.data.flatMap((it) =>
+        it.consultations.filter((pat) => pat.status === "done")
+      );
+      SetdoneAppoinment(doneAppoinments);
     } catch (error) {
       console.error("Failed to delete doctor:", error);
     }
@@ -101,6 +120,19 @@ const Dashboard = () => {
       flex: 1,
     },
     {
+      field: "done",
+      headerName: "Done",
+      renderCell: (params) => (
+        <Button
+          variant="contained"
+          sx={{ backgroundColor: colors.greenAccent[700], color: "#ffffff" }}
+          onClick={() => handleDone(params.row.id)}
+        >
+          Done
+        </Button>
+      ),
+    },
+    {
       field: "cancel",
       headerName: "Cancel",
       renderCell: (params) => (
@@ -115,9 +147,10 @@ const Dashboard = () => {
     },
   ];
 
-  blood.forEach((item) => {
-    totalCount += parseInt(item.bloodCount);
-  });
+  const totalCount = blood.reduce(
+    (accumulator, item) => accumulator + parseInt(item.bloodCount),
+    0
+  );
 
   let rr = 0;
   const today = new Date().toISOString().split("T")[0];

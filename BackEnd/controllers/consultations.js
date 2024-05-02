@@ -158,6 +158,27 @@ const newConsultation = async (req, res) => {
   }
 };
 
+const updateDoneConsultation = async (req, res) => {
+  const consultationID = req.params.id;
+  try {
+    const consultationToUpdate = await ConsultationModel.findOneAndUpdate(
+      { "consultations._id": consultationID },
+      {
+        $set: { "consultations.$.status": "done" },
+      },
+      { new: true }
+    );
+
+    if (!consultationToUpdate) {
+      return res.status(404).send("Consultation not found");
+    }
+    res.status(200).send("Consultation status updated successfully to 'done'");
+  } catch (error) {
+    console.error("Error updating consultation status:", error);
+    res.status(500).send("Error updating consultation status");
+  }
+};
+
 const deleteConsultation = async (req, res) => {
   const consultationID = req.params.id;
   try {
@@ -177,4 +198,9 @@ const deleteConsultation = async (req, res) => {
   }
 };
 
-export { getConsultations, newConsultation, deleteConsultation };
+export {
+  getConsultations,
+  newConsultation,
+  deleteConsultation,
+  updateDoneConsultation,
+};
