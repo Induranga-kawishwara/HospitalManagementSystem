@@ -104,10 +104,10 @@ function AppoinmentHistory() {
                         tagline: "",
                         specialize: pat.specialization,
                         date: new Date(
-                          pat.consultationDateAndTime
+                          pat.consultationStartTime
                         ).toLocaleDateString(),
                         time: new Date(
-                          pat.consultationDateAndTime
+                          pat.consultationStartTime
                         ).toLocaleTimeString([], {
                           hour: "2-digit",
                           minute: "2-digit",

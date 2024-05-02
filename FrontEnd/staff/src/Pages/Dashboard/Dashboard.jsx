@@ -119,38 +119,43 @@ const Dashboard = () => {
     totalCount += parseInt(item.bloodCount);
   });
 
+  let rr = 0;
   const today = new Date().toISOString().split("T")[0];
-  const rows = consultationList.flatMap((it, index) =>
-    it.consultations.map((pat) => {
-      const doctor = staff.find((doctor) => doctor._id === it.doctorId);
-      const selepat = patient.find((pati) => pati._id === pat.patientId);
-      if (
-        selepat &&
-        pat.status === "scheduled" &&
-        pat.consultationDateAndTime.includes(today)
-      ) {
-        const [datePart, timePartWithOffset] =
-          pat.consultationDateAndTime.split("T");
-        const [timePart] = timePartWithOffset.split(".");
+  const rows = consultationList
+    .flatMap((it) =>
+      it.consultations.map((pat) => {
+        const doctor = staff.find((doctor) => doctor._id === it.doctorId);
+        const selepat = patient.find((pati) => pati._id === pat.patientId);
+        if (
+          selepat &&
+          pat.status === "scheduled" &&
+          pat.consultationStartTime.includes(today)
+        ) {
+          const [datePart, timePartWithOffset] =
+            pat.consultationStartTime.split("T");
+          const [timePart] = timePartWithOffset.split(".");
 
-        const [hours, minutes] = timePart.split(":");
-        const formattedTime = `${hours}:${minutes}`;
+          const [hours, minutes] = timePart.split(":");
+          const formattedTime = `${hours}:${minutes}`;
+          rr++;
+          return {
+            id: pat._id || "",
+            no: rr,
+            patient_name: `${selepat.firstName || ""} ${
+              selepat.lastName || ""
+            }`,
+            date: datePart,
+            time: formattedTime,
+            doctor: `${doctor.firstName || ""} ${doctor.lastName || ""}`,
+            phone: pat.contactNum || "",
+            branch: pat.branchName || "",
+          };
+        }
+      })
+    )
+    .filter((row) => row !== undefined);
 
-        console.log("Time:", formattedTime);
-        return {
-          id: pat._id || "",
-          no: index + 1,
-          patient_name: `${selepat.firstName || ""} ${selepat.lastName || ""}`,
-          date: datePart,
-          time: formattedTime,
-          doctor: `${doctor.firstName || ""} ${doctor.lastName || ""}`,
-          phone: pat.contactNum || "",
-          branch: pat.branchName || "",
-        };
-      }
-      return null;
-    })
-  );
+  console.log(rows);
 
   return (
     <Box m="60px">
@@ -284,7 +289,7 @@ const Dashboard = () => {
               },
             }}
           >
-            <DataGrid rows={rows[0] !== null ? rows : []} columns={columns} />
+            <DataGrid rows={rows} columns={columns} />
           </Box>
         </Box>
       </Box>

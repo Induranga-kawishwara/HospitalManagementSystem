@@ -26,7 +26,11 @@ const ConsultationSchema = new Schema({
         type: String,
         required: true,
       },
-      consultationDateAndTime: {
+      consultationStartTime: {
+        type: Date,
+        required: true,
+      },
+      consultationEndTime: {
         type: Date,
         required: true,
       },
@@ -46,7 +50,7 @@ ConsultationSchema.pre("save", function (next) {
   const now = new Date();
   if (this.consultations) {
     this.consultations.forEach((consultation) => {
-      if (consultation.consultationDateAndTime <= now) {
+      if (consultation.consultationEndTime <= now) {
         consultation.status = "done";
       }
     });
