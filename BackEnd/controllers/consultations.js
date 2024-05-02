@@ -1,5 +1,6 @@
 import ConsultationModel from "../modules/consultation.js";
 import staffMember from "../modules/staffMember.js";
+import { isValid } from "date-fns";
 
 const getConsultations = async (req, res) => {
   try {
@@ -53,13 +54,24 @@ const newConsultation = async (req, res) => {
       return res.status(404).send("Doctor not found");
     }
 
-    // Check if the consultation date is in the past
-    const now = new Date();
-    if (new Date(consultationDate) < now) {
-      return res.status(400).send("Consultation date cannot be in the past.");
+    // Check if the doctor already has an appointment with the patient on the same day
+    const existingConsultation = await ConsultationModel.findOne({
+      doctorId,
+      "consultations.patientId": patientId,
+      "consultations.consultationStartTime": {
+        $gte: new Date(consultationDate),
+        $lt: new Date(new Date(consultationDate).setHours(23, 59, 59, 999)), // Less than the end of the day
+      },
+    });
+    if (existingConsultation) {
+      return res
+        .status(400)
+        .send(
+          "Patient already has an appointment with this doctor on the same day"
+        );
     }
 
-    // Check if the consultation date falls within the doctor's working days
+    // Check if the consultation date is within the doctor's working days
     const consultationDay = new Date(consultationDate).toLocaleDateString(
       "en-US",
       { weekday: "long" }
@@ -67,30 +79,61 @@ const newConsultation = async (req, res) => {
     if (!doctor.selectedDays.includes(consultationDay)) {
       return res
         .status(400)
-        .send("Consultation date is not within doctor's working days.");
+        .send("Consultation date is not within doctor's working days");
     }
 
-    // Calculate consultation time based on the doctor's working hours
-    const workingTimeStart = new Date(doctor.workingTimeStart);
-    const workingTimeEnd = new Date(doctor.workingTimeEnd);
-    const consultationTime = calculateConsultationTime(
-      workingTimeStart,
-      workingTimeEnd
-    );
+    // Check if the consultation time falls within the doctor's working hours
+    const [workingStartHour, workingStartMinute] = doctor.workingTimeStart
+      .split(":")
+      .map(Number);
+    const [workingEndHour, workingEndMinute] = doctor.workingTimeEnd
+      .split(":")
+      .map(Number);
 
-    // Check if consultation time conflicts with existing appointments
-    const existingConsultations = await ConsultationModel.findOne({
+    const workingStartTime = new Date(consultationDate);
+    workingStartTime.setHours(workingStartHour, workingStartMinute, 0, 0);
+
+    const workingEndTime = new Date(consultationDate);
+    workingEndTime.setHours(workingEndHour, workingEndMinute, 0, 0);
+
+    // Find the end time of the last consultation for the same doctor on the same day
+    const lastConsultation = await ConsultationModel.findOne({
       doctorId,
-      "consultations.consultationDateAndTime": consultationTime,
-    });
+      "consultations.consultationEndTime": {
+        $gte: new Date(consultationDate),
+        $lt: new Date(new Date(consultationDate).setHours(23, 59, 59, 999)), // End of the day
+      },
+    })
+      .sort({ "consultations.consultationEndTime": -1 })
+      .limit(1)
+      .select("consultations.consultationEndTime");
 
-    if (existingConsultations) {
+    let consultationStartTime;
+    if (lastConsultation) {
+      // Calculate consultation start time for the next consultation with a 15-minute gap
+      consultationStartTime = new Date(
+        lastConsultation.consultations[0].consultationEndTime
+      );
+      consultationStartTime.setMinutes(consultationStartTime.getMinutes() + 15);
+    } else {
+      // If no previous consultations, start from the doctor's working time start
+      consultationStartTime = new Date(workingStartTime);
+    }
+
+    // Calculate consultation end time by adding 15 minutes to the start time
+    const consultationEndTime = new Date(consultationStartTime);
+    consultationEndTime.setMinutes(consultationEndTime.getMinutes() + 15);
+
+    if (consultationEndTime > workingEndTime) {
       return res
         .status(400)
-        .send("Consultation time conflicts with existing appointment");
+        .send("Consultation time exceeds doctor's working hours");
     }
 
-    // Create a new consultation entry
+    if (!isValid(consultationStartTime) || !isValid(consultationEndTime)) {
+      return res.status(400).send("Invalid consultation start or end time");
+    }
+
     const consultation = await ConsultationModel.findOneAndUpdate(
       { doctorId },
       {
@@ -100,7 +143,8 @@ const newConsultation = async (req, res) => {
             specialization,
             branchName: branch,
             contactNum: PhoneNo,
-            consultationDateAndTime: consultationTime,
+            consultationStartTime,
+            consultationEndTime,
           },
         },
       },
@@ -112,15 +156,6 @@ const newConsultation = async (req, res) => {
     console.error("Error adding consultation:", error);
     res.status(500).send("Error adding consultation");
   }
-};
-
-// Function to calculate consultation time within working hours
-const calculateConsultationTime = (startTime, endTime) => {
-  const consultationTime = new Date();
-  consultationTime.setHours(startTime.getHours());
-  consultationTime.setMinutes(startTime.getMinutes());
-  consultationTime.setSeconds(0);
-  return consultationTime;
 };
 
 const deleteConsultation = async (req, res) => {

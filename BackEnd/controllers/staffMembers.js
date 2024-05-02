@@ -25,15 +25,13 @@ const addUser = async (req, res) => {
   try {
     const { error } = staffValidation();
     if (error) {
-      return res.status(400).send({ message: error.details[0].message });
+      return res.status(400).send(error.details[0].message);
     }
 
     const user = await StaffMemberModel.findOne({ email: req.body.email });
 
     if (user) {
-      return res
-        .status(409)
-        .send({ message: "User with given email already exists!" });
+      return res.status(409).send("User with given email already exists!");
     }
 
     const selectedDays = req.body.selectedDays.reduce((acc, curr) => {
@@ -45,22 +43,32 @@ const addUser = async (req, res) => {
     const workingTimeEndHour = parseInt(req.body.workingTimeEnd);
     const workingTimeEndMinute = parseInt(req.body.workingTimeEndMin);
 
-    const currentDate = new Date();
-    const workingTimeStartDate = new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth(),
-      currentDate.getDate(),
-      workingTimeStartHour,
-      workingTimeStartMinute
-    );
+    // Format start time
+    const formattedStartTime = `${workingTimeStartHour
+      .toString()
+      .padStart(2, "0")}:${workingTimeStartMinute.toString().padStart(2, "0")}`;
 
-    const workingTimeEndDate = new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth(),
-      currentDate.getDate(),
-      workingTimeEndHour,
-      workingTimeEndMinute
-    );
+    // Format end time
+    const formattedEndTime = `${workingTimeEndHour
+      .toString()
+      .padStart(2, "0")}:${workingTimeEndMinute.toString().padStart(2, "0")}`;
+
+    // const currentDate = new Date();
+    // const workingTimeStartDate = new Date(
+    //   currentDate.getFullYear(),
+    //   currentDate.getMonth(),
+    //   currentDate.getDate(),
+    //   workingTimeStartHour,
+    //   workingTimeStartMinute
+    // );
+
+    // const workingTimeEndDate = new Date(
+    //   currentDate.getFullYear(),
+    //   currentDate.getMonth(),
+    //   currentDate.getDate(),
+    //   workingTimeEndHour,
+    //   workingTimeEndMinute
+    // );
 
     await new StaffMemberModel({
       firstName: req.body.firstName,
@@ -79,8 +87,8 @@ const addUser = async (req, res) => {
         specialization: req.body.specialization,
       },
       selectedDays: selectedDays,
-      workingTimeStart: workingTimeStartDate,
-      workingTimeEnd: workingTimeEndDate,
+      workingTimeStart: formattedStartTime,
+      workingTimeEnd: formattedEndTime,
     }).save();
 
     res.status(201).send("User saved successfully!");

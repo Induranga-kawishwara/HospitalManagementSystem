@@ -46,14 +46,14 @@ const ConsultationSchema = new Schema({
   ],
 });
 
-ConsultationSchema.pre("save", function (next) {
+ConsultationSchema.pre("validate", async function (next) {
   const now = new Date();
-  if (this.consultations) {
-    this.consultations.forEach((consultation) => {
+  if (this.consultations && this.consultations.length > 0) {
+    for (const consultation of this.consultations) {
       if (consultation.consultationEndTime <= now) {
         consultation.status = "done";
       }
-    });
+    }
   }
   next();
 });
