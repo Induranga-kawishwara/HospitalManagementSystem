@@ -1,4 +1,4 @@
-import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
+import { Box, Button, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 import Header from "../../Components/Header/Header";
 import StatBox from "../../Components/StatBox/StatBox";
@@ -53,9 +53,7 @@ const Dashboard = () => {
   const handleDelete = async (id) => {
     console.log(id);
     try {
-      // Send a delete request to your backend API to delete the doctor with the specified ID
       await axios.delete(`http://localhost:5000/consultations/${id}`);
-      // After successful deletion, fetch the updated list of doctors
       const consultationsResult = await axios.get(
         `http://localhost:5000/consultations`
       );
@@ -69,9 +67,7 @@ const Dashboard = () => {
   const handleDone = async (id) => {
     console.log(id);
     try {
-      // Send a delete request to your backend API to delete the doctor with the specified ID
       await axios.put(`http://localhost:5000/consultations/${id}`);
-      // After successful deletion, fetch the updated list of doctors
       const consultationsResult = await axios.get(
         `http://localhost:5000/consultations`
       );

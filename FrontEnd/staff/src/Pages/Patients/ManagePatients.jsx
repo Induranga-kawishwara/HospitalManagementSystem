@@ -42,11 +42,10 @@ const ManagePatients = () => {
   };
 
   const handleDelete = async (id) => {
-    console.log(id);
     try {
-      // Send a delete request to your backend API to delete the doctor with the specified ID
       await axios.delete(`http://localhost:5000/patients/${id}`);
-      // After successful deletion, fetch the updated list of doctors
+      await axios.delete(`http://localhost:5000/auth/${id}`);
+
       const patientResult = await axios.get("http://localhost:5000/patients");
       setPatient(patientResult.data);
     } catch (error) {

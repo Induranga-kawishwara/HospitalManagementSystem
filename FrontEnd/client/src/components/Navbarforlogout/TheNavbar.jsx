@@ -5,18 +5,34 @@ import { Link as RouterLink } from "react-router-dom";
 import classes from "./TheNavbar.module.css";
 import Logo from "../../assets/Logo/Logo.png";
 import "./navcs1.css";
+import axios from "axios";
 
 const TheNavbar = () => {
-  const [isNavOpen, setIsNavOpen] = useState(false); // State to control visibility of the navigation bar
+  const [isNavOpen, setIsNavOpen] = useState(false);
 
-  const handleChatBtnClick = () => {
+  const handleChatBtnClick = async () => {
+    const userDataString = localStorage.getItem("user");
+    console.log(userDataString);
+    if (userDataString) {
+      try {
+        const userData = JSON.parse(userDataString);
+        console.log(userData.id);
+        await axios.delete(`http://localhost:5000/auth/${userData.id}`);
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        window.location.reload();
+      } catch (error) {
+        console.error("Failed to delete tokens:", error);
+      }
+    }
+
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     window.location.reload();
   };
 
   const handleNavItemClicked = () => {
-    setIsNavOpen(false); // Hide the navigation bar when a navigation item is clicked
+    setIsNavOpen(false);
   };
 
   return (
