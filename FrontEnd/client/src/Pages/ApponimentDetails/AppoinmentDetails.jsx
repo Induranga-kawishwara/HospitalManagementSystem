@@ -125,7 +125,13 @@ function AppointmentDetails() {
       return;
     }
     try {
-      const res = await axios.post("http://localhost:5000/consultations", data);
+      const res = await axios.post(
+        "http://localhost:5000/consultations",
+        data,
+        {
+          headers: { authorization: localStorage.getItem("token") },
+        }
+      );
       setData((data) => ({
         ...data,
         PhoneNo: userdata.phonenumber || "",
@@ -134,7 +140,7 @@ function AppointmentDetails() {
         branch: "",
         consultationDate: "",
       }));
-      alert(res.data);
+      alert(res.data.messages);
     } catch (error) {
       alert(error.response.data);
     }

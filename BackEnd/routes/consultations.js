@@ -9,7 +9,7 @@ import { verifyToken } from "../jwt/jwt.js";
 
 const router = express.Router();
 
-router.get("/", verifyToken, getConsultations);
+router.get("/", getConsultations);
 router.get("/:id", verifyToken, getConsultations);
 router.put("/:id", verifyToken, updateDoneConsultation);
 router.post("/", verifyToken, newConsultation);

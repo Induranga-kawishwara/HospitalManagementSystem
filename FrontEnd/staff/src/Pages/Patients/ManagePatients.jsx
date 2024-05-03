@@ -1,9 +1,9 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 import axios from "axios";
 import Table from "../../Components/Table/Table";
 import Button from "@mui/material/Button";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const ManagePatients = () => {
