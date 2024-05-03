@@ -151,10 +151,12 @@ const Dashboard = () => {
             phone: pat.contactNum || "",
             branch: pat.branchName || "",
           };
+        } else {
+          return null;
         }
       })
     )
-    .filter((row) => row !== undefined);
+    .filter((row) => row !== null);
 
   console.log(rows);
 
