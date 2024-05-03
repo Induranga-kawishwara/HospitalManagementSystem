@@ -26,7 +26,10 @@ function AppoinmentHistory() {
         }
 
         const consultationsResult = await axios.get(
-          `http://localhost:5000/consultations/${patientId}`
+          `http://localhost:5000/consultations/${patientId},`,
+          {
+            headers: { authorization: localStorage.getItem("token") },
+          }
         );
         setConsultations(consultationsResult.data);
         const doneAppoinments = consultationsResult.data.flatMap((it) =>
@@ -44,7 +47,10 @@ function AppoinmentHistory() {
   const handleDelete = async (id) => {
     try {
       const result = await axios.delete(
-        `http://localhost:5000/consultations/${id}`
+        `http://localhost:5000/consultations/${id}`,
+        {
+          headers: { authorization: localStorage.getItem("token") },
+        }
       );
 
       const updatedConsultations = consultationsList.map((it) => {
@@ -58,6 +64,10 @@ function AppoinmentHistory() {
       alert(result.data);
     } catch (error) {
       console.error("Failed to delete consultation:", error);
+      if (error.response && error.response.status === 401) {
+        // Refresh the page
+        window.location.reload();
+      }
     }
   };
 

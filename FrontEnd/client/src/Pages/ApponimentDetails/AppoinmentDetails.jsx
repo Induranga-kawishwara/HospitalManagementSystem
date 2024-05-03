@@ -27,10 +27,16 @@ function AppointmentDetails() {
     const fetchData = async () => {
       if (!doctors || doctors.length === 0) {
         try {
-          const result = await axios.get("http://localhost:5000/users/Doctor");
+          const result = await axios.get("http://localhost:5000/users/Doctor", {
+            headers: { authorization: localStorage.getItem("token") },
+          });
           dispatch(setDoctors(result.data));
         } catch (error) {
           console.error("Failed to fetch data:", error);
+          if (error.response && error.response.status === 401) {
+            // Refresh the page
+            window.location.reload();
+          }
         }
       }
     };

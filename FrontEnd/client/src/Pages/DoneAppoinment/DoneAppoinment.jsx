@@ -43,7 +43,10 @@ function DoneAppoinment() {
   const handleDelete = async (id) => {
     try {
       const result = await axios.delete(
-        `http://localhost:5000/consultations/${id}`
+        `http://localhost:5000/consultations/${id}`,
+        {
+          headers: { authorization: localStorage.getItem("token") },
+        }
       );
 
       const updatedConsultations = consultationsList.map((it) => {
@@ -57,6 +60,10 @@ function DoneAppoinment() {
       alert(result.data);
     } catch (error) {
       console.error("Failed to delete consultation:", error);
+      if (error.response && error.response.status === 401) {
+        // Refresh the page
+        window.location.reload();
+      }
     }
   };
 
