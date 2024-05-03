@@ -42,12 +42,4 @@ const PatientSchema = new Schema({
   },
 });
 
-PatientSchema.methods.generateAuthToken = function () {
-  const token = jwt.sign({ _id: this._id }, process.env.JWTPRIVATEKEY, {
-    expiresIn: "7d",
-  });
-  return token;
-};
-
-// export default PatientSchema;
 export default model("Patients", PatientSchema);

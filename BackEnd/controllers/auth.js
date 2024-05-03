@@ -1,11 +1,11 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import Joi from "joi";
-import dotenv from "dotenv"; // Import dotenv
+import dotenv from "dotenv";
 import { generateAuthToken } from "../jwt/jwt.js";
 import AuthPatientModel from "../modules/patient.js";
 
-dotenv.config(); // Load environment variables from .env file
+dotenv.config();
 
 const authuser = async (req, res) => {
   try {
@@ -41,9 +41,8 @@ const authuser = async (req, res) => {
 };
 
 const verifyToken = (req, res) => {
-  console.log("hh");
   const token = req.params.token;
-  const secretKey = process.env.JWTPRIVATEKEY; // Get private key from environment variables
+  const secretKey = process.env.JWTPRIVATEKEY;
 
   if (token) {
     jwt.verify(token, secretKey, (err) => {
