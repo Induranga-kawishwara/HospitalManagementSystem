@@ -1,7 +1,11 @@
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import Joi from "joi";
+import dotenv from "dotenv"; // Import dotenv
 import { generateAuthToken } from "../jwt/jwt.js";
 import AuthPatientModel from "../modules/patient.js";
+
+dotenv.config(); // Load environment variables from .env file
 
 const authuser = async (req, res) => {
   try {
@@ -36,6 +40,23 @@ const authuser = async (req, res) => {
   }
 };
 
+const verifyToken = (req, res) => {
+  console.log("hh");
+  const token = req.params.token;
+  const secretKey = process.env.JWTPRIVATEKEY; // Get private key from environment variables
+
+  if (token) {
+    jwt.verify(token, secretKey, (err) => {
+      if (err) {
+        return res.sendStatus(403);
+      }
+      return res.status(200).send(true);
+    });
+  } else {
+    res.sendStatus(401);
+  }
+};
+
 const validate = (data) => {
   const schema = Joi.object({
     email: Joi.string().email().required().label("Email"),
@@ -44,4 +65,4 @@ const validate = (data) => {
   return schema.validate(data);
 };
 
-export { authuser };
+export { authuser, verifyToken };
