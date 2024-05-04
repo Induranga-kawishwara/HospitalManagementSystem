@@ -102,8 +102,19 @@ const staffValidation = (data) => {
       .items(Joi.string())
       .required()
       .label("Selected Days"),
-    workingTimeStart: Joi.number().required().label("Working Time Start"),
-    workingTimeEnd: Joi.number().required().label("Working Time End"),
+    workingTimeStart: Joi.number()
+      .required()
+      .less(Joi.ref("workingTimeEnd"))
+      .label("Working Time Start")
+      .messages({
+        "number.base": "{#label} must be a number",
+        "any.required": "{#label} is required.",
+        "number.less": "{#label} must be before Working Time End",
+      }),
+    workingTimeEnd: Joi.number().required().label("Working Time End").messages({
+      "number.base": "{#label} must be a number",
+      "any.required": "{#label} is required.",
+    }),
     workingTimeStartMin: Joi.string()
       .required()
       .label("Working Time Start Min"),
