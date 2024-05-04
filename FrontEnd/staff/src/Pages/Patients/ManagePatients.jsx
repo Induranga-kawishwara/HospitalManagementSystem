@@ -98,7 +98,7 @@ const ManagePatients = () => {
           variant="contained"
           sx={{ backgroundColor: colors.greenAccent[700], color: "#ffffff" }}
           onClick={() => {
-            navigate(`/editform/${params.row.id}`);
+            navigate(`/editpatients/${params.row.id}`);
           }}
         >
           Edit Details

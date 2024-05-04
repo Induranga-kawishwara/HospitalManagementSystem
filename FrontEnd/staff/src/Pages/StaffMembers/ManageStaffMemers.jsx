@@ -96,7 +96,7 @@ const ManageStaffMemers = () => {
           variant="contained"
           sx={{ backgroundColor: colors.greenAccent[700], color: "#ffffff" }}
           onClick={() => {
-            navigate(`/form/${params.row.id}`);
+            navigate(`/editform/${params.row.id}`);
           }}
         >
           Edit Details
