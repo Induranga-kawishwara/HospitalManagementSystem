@@ -17,6 +17,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 import CalenderTasks from "./Pages/CalenderTasks/CalenderTasks";
 import ManageBloodDonors from "./Pages/BloodBank/ManageBloodDonors";
+import BloodReq from "./Pages/BloodBank/ReqBlood";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -49,6 +50,7 @@ function App() {
               />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/calendar" element={<CalenderTasks />} />
+              <Route path="/bloodreq" element={<BloodReq />} />
               <Route path="/blood" element={<AddBloodDonate />} />
               <Route path="/addpatients" element={<AddPatients />} />
               <Route path="/editpatients" element={<EditPatients />} />
