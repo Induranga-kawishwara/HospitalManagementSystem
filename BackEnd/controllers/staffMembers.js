@@ -23,7 +23,7 @@ const getStaff = async (req, res) => {
 
 const addUser = async (req, res) => {
   try {
-    const { error } = staffValidation();
+    const { error } = staffValidation(req.body);
     if (error) {
       return res.status(400).send(error.details[0].message);
     }

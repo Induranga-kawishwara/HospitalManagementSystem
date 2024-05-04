@@ -35,8 +35,6 @@ const Dashboard = () => {
         const consultationsResult = await axios.get(
           `http://localhost:5000/consultations`
         );
-        console.log(consultationsResult.data);
-
         setConsultationList(consultationsResult.data);
         const doneAppoinments = consultationsResult.data.flatMap((it) =>
           it.consultations.filter((pat) => pat.status === "done")
@@ -53,7 +51,6 @@ const Dashboard = () => {
   }, []);
 
   const handleDelete = async (id) => {
-    console.log(id);
     try {
       // Send a delete request to your backend API to delete the doctor with the specified ID
       await axios.delete(`http://localhost:5000/consultations/${id}`);
@@ -63,6 +60,26 @@ const Dashboard = () => {
       );
 
       setConsultationList(consultationsResult.data);
+    } catch (error) {
+      console.error("Failed to delete doctor:", error);
+    }
+  };
+
+  const handleDone = async (id) => {
+    console.log(id);
+    try {
+      // Send a delete request to your backend API to delete the doctor with the specified ID
+      await axios.put(`http://localhost:5000/consultations/${id}`);
+      // After successful deletion, fetch the updated list of doctors
+      const consultationsResult = await axios.get(
+        `http://localhost:5000/consultations`
+      );
+
+      setConsultationList(consultationsResult.data);
+      const doneAppoinments = consultationsResult.data.flatMap((it) =>
+        it.consultations.filter((pat) => pat.status === "done")
+      );
+      SetdoneAppoinment(doneAppoinments);
     } catch (error) {
       console.error("Failed to delete doctor:", error);
     }
@@ -100,6 +117,19 @@ const Dashboard = () => {
       field: "branch",
       headerName: "Branch Name",
       flex: 1,
+    },
+    {
+      field: "done",
+      headerName: "Done",
+      renderCell: (params) => (
+        <Button
+          variant="contained"
+          sx={{ backgroundColor: colors.greenAccent[700], color: "#ffffff" }}
+          onClick={() => handleDone(params.row.id)}
+        >
+          Done
+        </Button>
+      ),
     },
     {
       field: "cancel",
@@ -157,8 +187,6 @@ const Dashboard = () => {
       })
     )
     .filter((row) => row !== null);
-
-  console.log(rows);
 
   return (
     <Box m="60px">

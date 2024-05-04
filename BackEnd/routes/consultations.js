@@ -11,8 +11,8 @@ const router = express.Router();
 
 router.get("/", getConsultations);
 router.get("/:id", verifyToken, getConsultations);
-router.put("/:id", verifyToken, updateDoneConsultation);
+router.put("/:id", updateDoneConsultation);
 router.post("/", verifyToken, newConsultation);
-router.delete("/:id", verifyToken, deleteConsultation);
+router.delete("/:id", deleteConsultation);
 
 export default router;

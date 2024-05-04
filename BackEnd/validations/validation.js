@@ -10,6 +10,12 @@ const fiveYearsAgo = new Date(
   today.getDate()
 );
 
+const TwentyfiveYearsAgo = new Date(
+  today.getFullYear() - 25,
+  today.getMonth(),
+  today.getDate()
+);
+
 const complexityOptions = {
   min: 8,
   max: 30,
@@ -58,18 +64,51 @@ const patientValidation = (data) => {
 
 const staffValidation = (data) => {
   const schema = Joi.object({
-    staffID: Joi.string().required().label("StaffID"),
     firstName: Joi.string().required().label("First Name"),
     lastName: Joi.string().required().label("Last Name"),
-    gender: Joi.string().required().label("Gender"),
-    phoneNum: JoiPhoneNumber.string()
-      .phoneNumber()
+    gender: Joi.string()
+      .valid("Male", "Female", "Other")
       .required()
-      .label("Phone Number"),
-    addressOne: Joi.string().required().label("Address one"),
-    typeOfPosition: Joi.string().required().label("Type of Position"),
-    addressTwo: Joi.string().required().label("Address two"),
-    email: Joi.string().email().required().label("Email"),
+      .label("Gender"),
+    date: Joi.date()
+      .required()
+      .max("now")
+      .message("Birthday cannot be in the future.")
+      .max(TwentyfiveYearsAgo)
+      .message("You must be at least 25 years old."),
+    staffType: Joi.string()
+      .valid("Doctor", "Nurse", "Cleaner", "Administrative", "Other")
+      .required()
+      .label("Type of Position"),
+    phoneNum: JoiPhoneNumber.string()
+      .phoneNumber({ defaultCountry: "US", format: "international" })
+      .required()
+      .label("Phone Number")
+      .messages({
+        "string.phoneNumber": "{#label} must be a valid phone number",
+        "any.required": "{#label} is required.",
+      }),
+    address: Joi.string().required().label("Address"),
+    image: Joi.string().required().label("Image"),
+    email: Joi.string().email().required().label("Email").messages({
+      "string.email": "Please provide a valid email address for {#label}",
+      "any.required": "{#label} is required.",
+    }),
+    hospitalBranch: Joi.array()
+      .items(Joi.string())
+      .required()
+      .label("Hospital Branch"),
+    roleDetails: Joi.object({
+      department: Joi.string().label("Department"),
+      shift: Joi.string().label("Shift"),
+      specialization: Joi.string().label("Specialization"),
+    }).label("Role Details"),
+    selectedDays: Joi.array()
+      .items(Joi.string())
+      .required()
+      .label("Selected Days"),
+    workingTimeStart: Joi.string().required().label("Working Time Start"),
+    workingTimeEnd: Joi.string().required().label("Working Time End"),
   });
   return schema.validate(data);
 };

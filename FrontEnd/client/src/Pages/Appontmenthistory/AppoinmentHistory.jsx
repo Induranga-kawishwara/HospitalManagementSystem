@@ -47,10 +47,11 @@ function AppoinmentHistory() {
   const handleDelete = async (id) => {
     try {
       const result = await axios.delete(
-        `http://localhost:5000/consultations/${id}`,
-        {
-          headers: { authorization: localStorage.getItem("token") },
-        }
+        `http://localhost:5000/consultations/${id}`
+        // ,
+        // {
+        //   headers: { authorization: localStorage.getItem("token") },
+        // }
       );
 
       const updatedConsultations = consultationsList.map((it) => {
