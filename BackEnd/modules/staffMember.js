@@ -25,7 +25,7 @@ const StaffSchema = new Schema(
       required: true,
       enum: ["Doctor", "Nurse", "Cleaner", "Administrative", "Other"],
     },
-    phoneNum: {
+    contact: {
       type: String,
       required: true,
     },
@@ -56,11 +56,11 @@ const StaffSchema = new Schema(
       required: true,
     },
     workingTimeStart: {
-      type: String,
+      type: Number,
       required: true,
     },
     workingTimeEnd: {
-      type: String,
+      type: Number,
       required: true,
     },
   },

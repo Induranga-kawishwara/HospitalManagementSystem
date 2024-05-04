@@ -67,7 +67,7 @@ const staffValidation = (data) => {
     firstName: Joi.string().required().label("First Name"),
     lastName: Joi.string().required().label("Last Name"),
     gender: Joi.string()
-      .valid("Male", "Female", "Other")
+      .valid("male", "female", "other")
       .required()
       .label("Gender"),
     date: Joi.date()
@@ -80,12 +80,12 @@ const staffValidation = (data) => {
       .valid("Doctor", "Nurse", "Cleaner", "Administrative", "Other")
       .required()
       .label("Type of Position"),
-    phoneNum: JoiPhoneNumber.string()
-      .phoneNumber({ defaultCountry: "US", format: "international" })
+    contact: Joi.string()
+      .pattern(/^[0-9]{10}$/) // Matches exactly 10 digits
       .required()
       .label("Phone Number")
       .messages({
-        "string.phoneNumber": "{#label} must be a valid phone number",
+        "string.pattern.base": "{#label} must be a 10-digit number",
         "any.required": "{#label} is required.",
       }),
     address: Joi.string().required().label("Address"),
@@ -94,21 +94,20 @@ const staffValidation = (data) => {
       "string.email": "Please provide a valid email address for {#label}",
       "any.required": "{#label} is required.",
     }),
-    hospitalBranch: Joi.array()
-      .items(Joi.string())
-      .required()
-      .label("Hospital Branch"),
-    roleDetails: Joi.object({
-      department: Joi.string().label("Department"),
-      shift: Joi.string().label("Shift"),
-      specialization: Joi.string().label("Specialization"),
-    }).label("Role Details"),
+    hospitalBranch: Joi.string().required().label("Hospital Branch"),
+    department: Joi.string().label("Department"),
+    shift: Joi.string().allow("", null).label("Shift"), // Allow empty string or null
+    specialization: Joi.string().allow("", null).label("Specialization"),
     selectedDays: Joi.array()
       .items(Joi.string())
       .required()
       .label("Selected Days"),
-    workingTimeStart: Joi.string().required().label("Working Time Start"),
-    workingTimeEnd: Joi.string().required().label("Working Time End"),
+    workingTimeStart: Joi.number().required().label("Working Time Start"),
+    workingTimeEnd: Joi.number().required().label("Working Time End"),
+    workingTimeStartMin: Joi.string()
+      .required()
+      .label("Working Time Start Min"),
+    workingTimeEndMin: Joi.string().required().label("Working Time Start End"),
   });
   return schema.validate(data);
 };
