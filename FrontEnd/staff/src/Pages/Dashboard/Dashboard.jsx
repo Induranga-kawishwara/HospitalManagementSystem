@@ -5,6 +5,7 @@ import StatBox from "../../Components/StatBox/StatBox";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 import {
   LocalHospital,
@@ -195,17 +196,19 @@ const Dashboard = () => {
         <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
 
         <Box>
-          <Button
-            sx={{
-              backgroundColor: colors.blueAccent[700],
-              color: colors.grey[100],
-              fontSize: "14px",
-              fontWeight: "bold",
-              padding: "10px 20px",
-            }}
-          >
-            Logout
-          </Button>
+          <Link to="/login">
+            <Button
+              sx={{
+                backgroundColor: colors.blueAccent[700],
+                color: colors.grey[100],
+                fontSize: "14px",
+                fontWeight: "bold",
+                padding: "10px 20px",
+              }}
+            >
+              Logout
+            </Button>
+          </Link>
         </Box>
       </Box>
 
