@@ -12,33 +12,42 @@ const getBloodRequestCount = async (req, res) => {
 
 const addBloodRequest = async (req, res) => {
   try {
-    const { firstName, lastName, email, contact, address, bloodType } =
-      req.body;
-
-    const donationDetails = {
+    const {
       firstName,
       lastName,
       email,
-      contactNum: contact,
+      contact,
       address,
-    };
+      bloodType,
+      requestedBloodCount,
+    } = req.body;
 
     const existingDonation = await BloodModel.findOne({ bloodType });
 
-    if (existingDonation) {
-      existingDonation.bloodCount = parseInt(existingDonation.bloodCount) + 1;
-      existingDonation.donate.push(donationDetails);
+    if (
+      existingDonation &&
+      existingDonation.bloodCount >= requestedBloodCount
+    ) {
+      existingDonation.bloodCount -= requestedBloodCount;
+      const donationDetails = {
+        firstName,
+        lastName,
+        email,
+        contactNum: contact,
+        address,
+        requestedBloodCount,
+      };
+      existingDonation.requestBlood.push(donationDetails);
       await existingDonation.save();
-    } else {
-      const newDonation = new BloodModel({
-        bloodType,
-        bloodCount: "1",
-        donate: [donationDetails],
-      });
-      await newDonation.save();
-    }
 
-    res.status(201).send("Blood donation added successfully!");
+      res.status(201).send("Blood Request added successfully!");
+    } else {
+      res
+        .status(400)
+        .send(
+          "Not enough blood available in the blood bank for the requested blood type and count!"
+        );
+    }
   } catch (error) {
     console.error("Error adding blood donation:", error);
     res.status(500).send("Error adding blood donation");
