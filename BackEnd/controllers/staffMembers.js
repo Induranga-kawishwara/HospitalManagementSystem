@@ -96,6 +96,11 @@ const updateUser = async (req, res) => {
       return res.status(404).send("User not found!");
     }
 
+    const workingTimeStartHour = parseInt(req.body.workingTimeStart);
+    const workingTimeStartMinute = parseInt(req.body.workingTimeStartMin);
+    const workingTimeEndHour = parseInt(req.body.workingTimeEnd);
+    const workingTimeEndMinute = parseInt(req.body.workingTimeEndMin);
+
     // Format start time
     const formattedStartTime = `${workingTimeStartHour
       .toString()

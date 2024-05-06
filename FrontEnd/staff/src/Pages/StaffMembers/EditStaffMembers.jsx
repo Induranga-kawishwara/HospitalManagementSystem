@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Box, Button, TextField, Input } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../Components/Header/Header";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import {
   FormControl,
@@ -20,7 +20,7 @@ initializeApp(firebaseConfig.firebaseConfig);
 
 const AddStaffMembers = () => {
   const { id } = useParams();
-  console.log(id);
+  const navigate = useNavigate();
   const [img, setImg] = useState(null);
 
   const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -35,7 +35,7 @@ const AddStaffMembers = () => {
     gender: "",
     staffType: "",
     specialization: "",
-    hospitalBranch: [],
+    hospitalBranch: "",
     department: "",
     shift: "",
     selectedDays: [],
@@ -138,12 +138,12 @@ const AddStaffMembers = () => {
 
       const updatedValues = { ...initialValues, image: downloadURL };
 
-      const response = await axios.post(
-        "http://localhost:5000/users",
+      const response = await axios.put(
+        `http://localhost:5000/users/${id}`,
         updatedValues
       );
       alert(response.data);
-      console.log(updatedValues);
+      navigate("/team");
     } catch (error) {
       console.error("Error adding StaffMember:", error);
       alert(error.response.data);

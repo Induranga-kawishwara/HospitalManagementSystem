@@ -36,7 +36,7 @@ const AddStaffMembers = () => {
     gender: "",
     staffType: "",
     specialization: "",
-    hospitalBranch: [],
+    hospitalBranch: "",
     department: "",
     shift: "",
     selectedDays: [],
