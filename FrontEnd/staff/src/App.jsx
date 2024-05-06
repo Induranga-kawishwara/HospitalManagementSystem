@@ -53,8 +53,7 @@ function App() {
               <Route path="/bloodreq" element={<BloodReq />} />
               <Route path="/blood" element={<AddBloodDonate />} />
               <Route path="/addpatients" element={<AddPatients />} />
-              <Route path="/editpatients" element={<EditPatients />} />
-              {/* Render Login component without the sidebar */}
+              <Route path="/editpatients/:id" element={<EditPatients />} />
               <Route path="/login" element={<Login />} />
             </Routes>
           </main>

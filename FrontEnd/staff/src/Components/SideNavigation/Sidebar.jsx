@@ -9,9 +9,6 @@ import {
   HomeOutlined,
   LocalHospital,
   PeopleOutlined,
-  ContactsOutlined,
-  ReceiptOutlined,
-  PersonOutlined,
   CalendarTodayOutlined,
   HelpOutlineOutlined,
   MenuOutlined,
@@ -97,7 +94,7 @@ const Sidebar = () => {
                   alt="profile-user"
                   width="100px"
                   height="100px"
-                  src={`https://images.unsplash.com/photo-1552058544-f2b08422138a?q=80&w=1998&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D`}
+                  src={`https://img.freepik.com/premium-vector/human-cycle-logo-people-sentries-logo-people-circle-arrow-logo_327835-2397.jpg`}
                   style={{ cursor: "pointer", borderRadius: "50%" }}
                 />
               </Box>
@@ -108,10 +105,7 @@ const Sidebar = () => {
                   fontWeight="bold"
                   sx={{ m: "10px" }}
                 >
-                  Pasidu
-                </Typography>
-                <Typography variant="h5" color={colors.greenAccent[500]}>
-                  Staff
+                  ADMIN
                 </Typography>
               </Box>
             </Box>

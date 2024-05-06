@@ -30,7 +30,7 @@ const AddStaffMembers = () => {
     email: "",
     contact: "",
     address: "",
-    image: null,
+    image: "null",
     date: "",
     gender: "",
     staffType: "",
@@ -70,7 +70,7 @@ const AddStaffMembers = () => {
             gender: filteredStaff.gender,
             staffType: filteredStaff.staffType,
             specialization: filteredStaff.roleDetails.specialization,
-            hospitalBranch: filteredStaff.hospitalBranch,
+            hospitalBranch: filteredStaff.hospitalBranch[0],
             department: filteredStaff.roleDetails.department,
             shift: filteredStaff.roleDetails.shift,
             selectedDays: filteredStaff.selectedDays,
@@ -84,6 +84,7 @@ const AddStaffMembers = () => {
             workingTimeEndMin: filteredStaff.workingTimeEnd.split(":")[1],
           };
           setImg(filteredStaff.image);
+          console.log(filteredStaff.image);
           setInitialValues(updatedInitialValues);
         } else {
           console.log("Staff member not found");
@@ -134,9 +135,12 @@ const AddStaffMembers = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const downloadURL = await uploadImageToFirebase(initialValues.image);
+      let updatedValues = { ...initialValues };
 
-      const updatedValues = { ...initialValues, image: downloadURL };
+      if (typeof initialValues.image !== "string") {
+        const downloadURL = await uploadImageToFirebase(initialValues.image);
+        updatedValues = { ...initialValues, image: downloadURL };
+      }
 
       const response = await axios.put(
         `http://localhost:5000/users/${id}`,

@@ -22,7 +22,6 @@ initializeApp(firebaseConfig.firebaseConfig);
 
 const AddStaffMembers = () => {
   const { id } = useParams();
-  console.log(id);
 
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const initialValues = {
