@@ -58,10 +58,7 @@ const AddBloodDonate = () => {
 
   return (
     <Box m="20px">
-      <Header
-        title="Request Blood"
-        // subtitle="Register as a Blood Donor and Save Lives"
-      />
+      <Header title="Request Blood" />
 
       <Formik
         onSubmit={handleFormSubmit}
