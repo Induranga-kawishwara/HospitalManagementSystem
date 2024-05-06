@@ -4,7 +4,6 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../Components/Header/Header";
-import { useParams } from "react-router-dom";
 
 import {
   FormControl,
@@ -21,8 +20,6 @@ import axios from "axios";
 initializeApp(firebaseConfig.firebaseConfig);
 
 const AddStaffMembers = () => {
-  const { id } = useParams();
-
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const initialValues = {
     firstName: "",
