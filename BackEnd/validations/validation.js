@@ -38,8 +38,8 @@ const passwordSchema = Joi.string()
     return value;
   }, "complexity");
 
-const patientValidation = (data) => {
-  const schema = Joi.object({
+const patientValidation = (data, isUpdating = false) => {
+  const commonSchema = {
     firstName: Joi.string().required().label("First Name"),
     lastName: Joi.string().required().label("Last Name"),
     gender: Joi.string().required().label("Gender"),
@@ -56,8 +56,11 @@ const patientValidation = (data) => {
     address: Joi.string().required().label("Address"),
     city: Joi.string().required().label("City"),
     email: Joi.string().email().required().label("Email"),
-    password: passwordSchema,
-  });
+  };
+
+  const schema = isUpdating
+    ? Joi.object(commonSchema)
+    : Joi.object({ ...commonSchema, password: passwordSchema });
 
   return schema.validate(data);
 };

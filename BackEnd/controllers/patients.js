@@ -14,6 +14,51 @@ const getPatient = async (req, res) => {
   }
 };
 
+const updatePatient = async (req, res) => {
+  console.log(req.body);
+  try {
+    const { error } = patientValidation(req.body, true);
+    if (error) {
+      return res.status(400).send({ message: error.details[0].message });
+    }
+
+    const userId = req.params.id;
+
+    const user = await PatientModel.findById(userId);
+    if (!user) {
+      return res.status(404).send({ message: "User not found!" });
+    }
+
+    // Check if the email is being updated and if it already exists
+    if (req.body.email && req.body.email !== user.email) {
+      const existingUser = await PatientModel.findOne({
+        email: req.body.email,
+      });
+      if (existingUser) {
+        return res.status(409).send({ message: "Email already exists!" });
+      }
+    }
+
+    // Update user data
+    user.firstName = req.body.firstName;
+    user.lastName = req.body.lastName;
+    user.gender = req.body.gender;
+    user.birthday = req.body.birthday;
+    user.phonenumber = req.body.phonenumber;
+    user.address = req.body.address;
+    user.city = req.body.city;
+    user.email = req.body.email;
+
+    // Save the updated user
+    await user.save();
+
+    res.status(200).send({ message: "User updated successfully!" });
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).send({ message: "Error updating user" });
+  }
+};
+
 const addPatient = async (req, res) => {
   try {
     const { error } = patientValidation(req.body);
@@ -53,4 +98,4 @@ const deletePatient = async (req, res) => {
   }
 };
 
-export { getPatient, addPatient, deletePatient };
+export { getPatient, addPatient, deletePatient, updatePatient };

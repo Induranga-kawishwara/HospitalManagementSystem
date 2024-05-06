@@ -92,6 +92,17 @@ const updateUser = async (req, res) => {
 
     const user = await StaffMemberModel.findById(userId);
 
+    if (req.body.email && req.body.email !== user.email) {
+      const existingUser = await StaffMemberModel.findOne({
+        email: req.body.email,
+      });
+      if (existingUser) {
+        return res
+          .status(409)
+          .send({ message: "User with given email already exists!" });
+      }
+    }
+
     if (!user) {
       return res.status(404).send("User not found!");
     }

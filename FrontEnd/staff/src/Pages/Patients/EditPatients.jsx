@@ -5,11 +5,16 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../Components/Header/Header";
 import { MenuItem } from "@mui/material";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 const AddPatients = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
+  const navigate = useNavigate();
 
-  const initialValues = {
+  const { id } = useParams();
+
+  const [initialValues, setInitialValues] = useState({
     firstName: "",
     lastName: "",
     gender: "",
@@ -18,197 +23,174 @@ const AddPatients = () => {
     address: "",
     city: "",
     email: "",
-    password: "",
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const patientResult = await axios.get("http://localhost:5000/patients");
+        const filteredStaff = patientResult.data.find(
+          (staff) => staff._id === id
+        );
+
+        if (filteredStaff) {
+          const updatedInitialValues = {
+            ...initialValues,
+            firstName: filteredStaff.firstName,
+            lastName: filteredStaff.lastName,
+            email: filteredStaff.email,
+            phonenumber: filteredStaff.phonenumber,
+            address: filteredStaff.address,
+            birthday: filteredStaff.birthday
+              ? new Date(filteredStaff.birthday).toISOString().split("T")[0]
+              : "",
+            gender: filteredStaff.gender,
+            city: filteredStaff.city,
+          };
+          setInitialValues(updatedInitialValues);
+        } else {
+          console.log("Staff member not found");
+        }
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleChange = ({ target }) => {
+    if (!target) return;
+
+    const { name, value } = target;
+    if (!name) return;
+    setInitialValues({ ...initialValues, [name]: value });
   };
 
-  const handleSubmit = async (values, actions) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-      console.log(values);
-      const updatedValues = { ...values, password: `${values.firstName}@1A` };
-
-      const response = await axios.post(
-        "http://localhost:5000/patients",
-        updatedValues
+      const response = await axios.put(
+        `http://localhost:5000/patients/${id}`,
+        initialValues
       );
-      alert(
-        `${response.data.message}  tempory Password :-${values.firstName}@1A`
-      );
-      console.log(updatedValues);
-      actions.resetForm();
+      alert(response.data.message);
+      navigate("/patients");
     } catch (error) {
       console.error("Error adding StaffMember:", error);
       alert(error.response.data.message);
     }
   };
 
-  const validationSchema = yup.object().shape({
-    firstName: yup.string().required("First name is required"),
-    lastName: yup.string().required("Last name is required"),
-    email: yup
-      .string()
-      .email("Invalid email format")
-      .required("Email is required"),
-    birthday: yup.date().required("Date of birth is required"),
-    phonenumber: yup
-      .string()
-      .matches(
-        /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/,
-        "Invalid phone number"
-      )
-      .required("Contact number is required"),
-    address: yup.string().required("Address line is required"),
-    city: yup.string().required("City is required"),
-    gender: yup.string().required("Gender is required"),
-  });
-
   return (
     <Box m="20px">
-      <Header title="CREATE USER" subtitle="Create a New User Profile" />
-      <Formik
-        onSubmit={handleSubmit}
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-      >
-        {({
-          values,
-          errors,
-          touched,
-          handleBlur,
-          handleChange,
-          handleSubmit,
-        }) => (
-          <form onSubmit={handleSubmit}>
-            <Box
-              display="grid"
-              gap="30px"
-              gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-              sx={{
-                "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
-              }}
-            >
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="First Name"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.firstName}
-                name="firstName"
-                error={!!touched.firstName && !!errors.firstName}
-                helperText={touched.firstName && errors.firstName}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Last Name"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.lastName}
-                name="lastName"
-                error={!!touched.lastName && !!errors.lastName}
-                helperText={touched.lastName && errors.lastName}
-                sx={{ gridColumn: "span 2" }}
-              />
+      <Header title="EDIT USER" subtitle="Edit User Profile" />
+      <form onSubmit={handleSubmit}>
+        <Box
+          display="grid"
+          gap="30px"
+          gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+          sx={{
+            "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
+          }}
+        >
+          <TextField
+            fullWidth
+            variant="filled"
+            type="text"
+            label="First Name"
+            onChange={handleChange}
+            value={initialValues.firstName}
+            name="firstName"
+            sx={{ gridColumn: "span 2" }}
+          />
+          <TextField
+            fullWidth
+            variant="filled"
+            type="text"
+            label="Last Name"
+            onChange={handleChange}
+            value={initialValues.lastName}
+            name="lastName"
+            sx={{ gridColumn: "span 2" }}
+          />
 
-              <TextField
-                fullWidth
-                variant="filled"
-                type="date" // Change type to "date"
-                label="Date Of Birth" // Change label to appropriate label
-                name="birthday" // Change name to appropriate name
-                sx={{ gridColumn: "span 4" }}
-                error={!!touched.birthday && !!errors.birthday}
-                helperText={touched.birthday && errors.birthday}
-                onBlur={handleBlur}
-                onChange={handleChange}
-              />
-              <TextField
-                select
-                fullWidth
-                variant="filled"
-                label="Gender"
-                value={values.gender}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                name="gender"
-                error={!!touched.gender && !!errors.gender}
-                helperText={touched.gender && errors.gender}
-                sx={{ gridColumn: "span 4" }}
-              >
-                <MenuItem value="male">Male</MenuItem>
-                <MenuItem value="female">Female</MenuItem>
-                <MenuItem value="other">Other</MenuItem>
-              </TextField>
+          <TextField
+            fullWidth
+            variant="filled"
+            type="date"
+            label="Date Of Birth"
+            name="birthday"
+            value={initialValues.birthday}
+            sx={{ gridColumn: "span 4" }}
+            onChange={handleChange}
+          />
 
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Email"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.email}
-                name="email"
-                error={!!touched.email && !!errors.email}
-                helperText={touched.email && errors.email}
-                sx={{ gridColumn: "span 4" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Contact Number"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.phonenumber}
-                name="phonenumber"
-                error={!!touched.phonenumber && !!errors.phonenumber}
-                helperText={touched.phonenumber && errors.phonenumber}
-                sx={{ gridColumn: "span 4" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Address"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.address}
-                name="address"
-                error={!!touched.address && !!errors.address}
-                helperText={touched.address && errors.address}
-                sx={{ gridColumn: "span 4" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="City"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.city}
-                name="city"
-                error={!!touched.city && !!errors.city}
-                helperText={touched.city && errors.city}
-                sx={{ gridColumn: "span 4" }}
-              />
-            </Box>
-            <Box display="flex" justifyContent="end" mt="20px">
-              <Button type="submit" color="secondary" variant="contained">
-                Edit and Save Patients
-              </Button>
-            </Box>
-            {/* <Box display="flex" justifyContent="end" mt="20px">
-              <Button type="submit" color="secondary" variant="contained">
-                Edit And Save
-              </Button>
-            </Box> */}
-          </form>
-        )}
-      </Formik>
+          <TextField
+            select
+            fullWidth
+            variant="filled"
+            label="Gender"
+            value={initialValues.gender}
+            name="gender"
+            sx={{ gridColumn: "span 4" }}
+            onChange={handleChange}
+          >
+            <MenuItem value="male">Male</MenuItem>
+            <MenuItem value="female">Female</MenuItem>
+            <MenuItem value="other">Other</MenuItem>
+          </TextField>
+
+          <TextField
+            fullWidth
+            variant="filled"
+            type="text"
+            label="Email"
+            value={initialValues.email}
+            name="email"
+            sx={{ gridColumn: "span 4" }}
+            onChange={handleChange}
+          />
+
+          <TextField
+            fullWidth
+            variant="filled"
+            type="text"
+            label="Contact Number"
+            value={initialValues.phonenumber}
+            name="phonenumber"
+            sx={{ gridColumn: "span 4" }}
+            onChange={handleChange}
+          />
+
+          <TextField
+            fullWidth
+            variant="filled"
+            type="text"
+            label="Address"
+            value={initialValues.address}
+            name="address"
+            sx={{ gridColumn: "span 4" }}
+            onChange={handleChange}
+          />
+
+          <TextField
+            fullWidth
+            variant="filled"
+            type="text"
+            label="City"
+            value={initialValues.city}
+            name="city"
+            sx={{ gridColumn: "span 4" }}
+            onChange={handleChange}
+          />
+        </Box>
+        <Box display="flex" justifyContent="end" mt="20px">
+          <Button type="submit" color="secondary" variant="contained">
+            Edit and Save Patients
+          </Button>
+        </Box>
+      </form>
     </Box>
   );
 };
