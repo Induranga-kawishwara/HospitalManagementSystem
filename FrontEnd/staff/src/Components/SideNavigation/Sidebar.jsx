@@ -12,6 +12,7 @@ import {
   CalendarTodayOutlined,
   HelpOutlineOutlined,
   MenuOutlined,
+  DataSaverOn,
 } from "@mui/icons-material";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
@@ -148,13 +149,6 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-            <Item
-              title="Blood Request"
-              to="/bloodreq"
-              icon={<BloodtypeIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
 
             <Typography
               variant="h6"
@@ -182,6 +176,13 @@ const Sidebar = () => {
               title="Add Blood Bank"
               to="/blood"
               icon={<BloodtypeIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Blood Request"
+              to="/bloodreq"
+              icon={<DataSaverOn />}
               selected={selected}
               setSelected={setSelected}
             />

@@ -1,6 +1,6 @@
 import BloodModel from "../modules/blood.js";
 
-const getBloodCount = async (req, res) => {
+const getBloodRequestCount = async (req, res) => {
   try {
     const bloodRecords = await BloodModel.find();
     res.status(200).json(bloodRecords);
@@ -10,7 +10,7 @@ const getBloodCount = async (req, res) => {
   }
 };
 
-const addBloodDonation = async (req, res) => {
+const addBloodRequest = async (req, res) => {
   try {
     const { firstName, lastName, email, contact, address, bloodType } =
       req.body;
@@ -45,7 +45,7 @@ const addBloodDonation = async (req, res) => {
   }
 };
 
-const updateBloodDonation = async (req, res) => {
+const updateBloodRequest = async (req, res) => {
   const bloodType = req.params.bloodId;
   const bloodDonationID = req.params.id;
   try {
@@ -64,7 +64,7 @@ const updateBloodDonation = async (req, res) => {
   }
 };
 
-const deleteBloodDonation = async (req, res) => {
+const deleteBloodRequest = async (req, res) => {
   const bloodDonationID = req.params.id;
   try {
     const deletedBloodDonation = await BloodModel.findByIdAndDelete(
@@ -81,8 +81,8 @@ const deleteBloodDonation = async (req, res) => {
 };
 
 export {
-  getBloodCount,
-  addBloodDonation,
-  updateBloodDonation,
-  deleteBloodDonation,
+  getBloodRequestCount,
+  addBloodRequest,
+  updateBloodRequest,
+  deleteBloodRequest,
 };

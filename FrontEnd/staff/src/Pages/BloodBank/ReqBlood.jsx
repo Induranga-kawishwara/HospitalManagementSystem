@@ -5,8 +5,6 @@ import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../Components/Header/Header";
 import axios from "axios";
-import firebase from "firebase/app";
-import "firebase/storage";
 
 const AddBloodDonate = () => {
   const initialValues = {
@@ -16,6 +14,7 @@ const AddBloodDonate = () => {
     contact: "",
     address: "",
     bloodType: "",
+    requestedBloodCount: "",
   };
 
   const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -25,7 +24,7 @@ const AddBloodDonate = () => {
       console.log(values);
 
       const response = await axios.post(
-        "http://localhost:5000/bloodBank",
+        "http://localhost:5000/bloodReq",
         values
       );
       alert(response.data);
@@ -52,6 +51,7 @@ const AddBloodDonate = () => {
       .required("Contact number is required"),
     address: yup.string().required("Address line is required"),
     bloodType: yup.string().required("bloodType is required"),
+    requestedBloodCount: yup.number.required("Count is required"),
   });
 
   const bloodTypes = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
@@ -150,8 +150,14 @@ const AddBloodDonate = () => {
                 label="Count Of Blood"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.contact}
-                name="Count"
+                value={values.requestedBloodCount}
+                error={
+                  !!touched.requestedBloodCount && !!errors.requestedBloodCount
+                }
+                helperText={
+                  touched.requestedBloodCount && errors.requestedBloodCount
+                }
+                name="requestedBloodCount"
                 sx={{ gridColumn: "span 4" }}
               />
             </Box>

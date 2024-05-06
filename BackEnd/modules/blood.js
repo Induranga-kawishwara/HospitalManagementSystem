@@ -62,7 +62,7 @@ const BloodSchema = new Schema({
         required: true,
       },
       requestedBloodCount: {
-        type: String,
+        type: Number,
         required: true,
       },
       submittedAt: {

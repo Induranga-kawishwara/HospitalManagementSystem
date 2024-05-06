@@ -15,7 +15,6 @@ const getPatient = async (req, res) => {
 };
 
 const updatePatient = async (req, res) => {
-  console.log(req.body);
   try {
     const { error } = patientValidation(req.body, true);
     if (error) {
