@@ -81,6 +81,62 @@ const addUser = async (req, res) => {
   }
 };
 
+const updateUser = async (req, res) => {
+  try {
+    const { error } = staffValidation(req.body);
+    if (error) {
+      return res.status(400).send(error.details[0].message);
+    }
+
+    const userId = req.params.id;
+
+    const user = await StaffMemberModel.findById(userId);
+
+    if (!user) {
+      return res.status(404).send("User not found!");
+    }
+
+    // Format start time
+    const formattedStartTime = `${workingTimeStartHour
+      .toString()
+      .padStart(2, "0")}:${workingTimeStartMinute.toString().padStart(2, "0")}`;
+
+    // Format end time
+    const formattedEndTime = `${workingTimeEndHour
+      .toString()
+      .padStart(2, "0")}:${workingTimeEndMinute.toString().padStart(2, "0")}`;
+
+    user.firstName = req.body.firstName;
+    user.lastName = req.body.lastName;
+    user.gender = req.body.gender;
+    user.date = req.body.date;
+    user.staffType = req.body.staffType;
+    user.contact = req.body.contact;
+    user.address = req.body.address;
+    user.image = req.body.image;
+    user.email = req.body.email;
+    user.hospitalBranch = req.body.hospitalBranch;
+    user.roleDetails = {
+      department: req.body.department,
+      shift: req.body.shift,
+      specialization: req.body.specialization,
+    };
+    user.selectedDays = req.body.selectedDays.reduce(
+      (acc, curr) => acc.concat(curr),
+      []
+    );
+    user.workingTimeStart = formattedStartTime;
+    user.workingTimeEnd = formattedEndTime;
+
+    await user.save();
+
+    res.status(200).send("User updated successfully!");
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).send("Error updating user");
+  }
+};
+
 const deleteUser = async (req, res) => {
   const userID = req.params.id;
   console.log(userID);
@@ -97,4 +153,4 @@ const deleteUser = async (req, res) => {
   }
 };
 
-export { getStaff, addUser, deleteUser };
+export { getStaff, addUser, deleteUser, updateUser };

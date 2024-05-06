@@ -125,7 +125,7 @@ const ManageStaffMemers = () => {
     email: doctor.email,
     age: calculateAge(doctor.date),
     gender: doctor.gender,
-    phone: doctor.phoneNum,
+    phone: doctor.contact,
     position: doctor.staffType,
   }));
 

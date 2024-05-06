@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, TextField, Input } from "@mui/material";
-import { Formik } from "formik";
-import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../Components/Header/Header";
 import { useParams } from "react-router-dom";
@@ -55,7 +53,6 @@ const AddStaffMembers = () => {
         const filteredStaff = staffResult.data.find(
           (staff) => staff._id === id
         );
-        console.log(filteredStaff);
 
         // Check if staff member is found
         if (filteredStaff) {
@@ -64,22 +61,27 @@ const AddStaffMembers = () => {
             firstName: filteredStaff.firstName,
             lastName: filteredStaff.lastName,
             email: filteredStaff.email,
-            contact: filteredStaff.phoneNum,
+            contact: filteredStaff.contact,
             address: filteredStaff.address,
             image: filteredStaff.image,
             date: filteredStaff.date
               ? new Date(filteredStaff.date).toISOString().split("T")[0]
               : "",
+            gender: filteredStaff.gender,
             staffType: filteredStaff.staffType,
             specialization: filteredStaff.roleDetails.specialization,
             hospitalBranch: filteredStaff.hospitalBranch,
             department: filteredStaff.roleDetails.department,
             shift: filteredStaff.roleDetails.shift,
             selectedDays: filteredStaff.selectedDays,
-            workingTimeStart: filteredStaff.workingTimeStart,
-            workingTimeEnd: filteredStaff.workingTimeEnd,
-            workingTimeStartMin: filteredStaff.workingTimeStartMin,
-            workingTimeEndMin: filteredStaff.workingTimeEndMin,
+            workingTimeStart: parseInt(
+              filteredStaff.workingTimeStart.split(":")[0]
+            ),
+            workingTimeEnd: parseInt(
+              filteredStaff.workingTimeEnd.split(":")[0]
+            ),
+            workingTimeStartMin: filteredStaff.workingTimeStart.split(":")[1],
+            workingTimeEndMin: filteredStaff.workingTimeEnd.split(":")[1],
           };
           setImg(filteredStaff.image);
           setInitialValues(updatedInitialValues);
@@ -93,9 +95,22 @@ const AddStaffMembers = () => {
 
     fetchData();
   }, []);
-  const handleChange = (e) => {
+
+  const handleChange = ({ target }) => {
+    if (!target) return;
+
+    const { name, value } = target;
+    if (!name) return;
+    setInitialValues({ ...initialValues, [name]: value });
+  };
+
+  const handeleIMage = (e) => {
     const imageFile = e.target.files[0];
     // setFile(imageFile);
+    setInitialValues({
+      ...initialValues,
+      image: imageFile,
+    });
     setImg(URL.createObjectURL(imageFile));
   };
 
@@ -116,12 +131,12 @@ const AddStaffMembers = () => {
     }
   };
 
-  const handleSubmit = async (values, actions) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-      console.log(values.image);
-      const downloadURL = await uploadImageToFirebase(values.image);
+      const downloadURL = await uploadImageToFirebase(initialValues.image);
 
-      const updatedValues = { ...values, image: downloadURL };
+      const updatedValues = { ...initialValues, image: downloadURL };
 
       const response = await axios.post(
         "http://localhost:5000/users",
@@ -129,17 +144,18 @@ const AddStaffMembers = () => {
       );
       alert(response.data);
       console.log(updatedValues);
-      actions.resetForm();
     } catch (error) {
       console.error("Error adding StaffMember:", error);
       alert(error.response.data);
     }
   };
-  console.log(initialValues);
 
   return (
     <Box m="20px">
-      <Header title="CREATE USER" subtitle="Create a New User Profile" />
+      <Header
+        title="EDIT STAFF MEMBER"
+        subtitle="Edit the Staff Member Profile"
+      />
       <form onSubmit={handleSubmit}>
         <Box
           display="grid"
@@ -179,10 +195,18 @@ const AddStaffMembers = () => {
               label="Upload Image Of Employee"
               name="image"
               accept=".jpeg, .png, .jpg"
-              onChange={handleChange}
+              onChange={handeleIMage}
               sx={{ gridColumn: "span 4" }}
             />
-            <img src={img} />
+            <img
+              src={img}
+              style={{
+                maxWidth: "100%",
+                maxHeight: "100%",
+                width: "auto",
+                height: "auto",
+              }}
+            />
           </div>
 
           <TextField
