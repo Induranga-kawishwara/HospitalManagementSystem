@@ -39,8 +39,8 @@ function App() {
             {showSidebar && <Topbar setIsSidebar={setIsSidebar} />}
             <Routes>
               <Route path="/" element={<Dashboard />} />
-              <Route path="/form/:id?" element={<AddStaffMembers />} />
-              <Route path="/editform" element={<EditStaffMembers />} />
+              <Route path="/form" element={<AddStaffMembers />} />
+              <Route path="/editform/:id" element={<EditStaffMembers />} />
               <Route path="/patients" element={<ManagePatients />} />
               <Route path="/bloodinformation" element={<ManageBloodBank />} />
               <Route path="/team" element={<ManageStaffMemers />} />

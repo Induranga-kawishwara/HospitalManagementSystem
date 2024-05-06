@@ -53,30 +53,13 @@ const addUser = async (req, res) => {
       .toString()
       .padStart(2, "0")}:${workingTimeEndMinute.toString().padStart(2, "0")}`;
 
-    // const currentDate = new Date();
-    // const workingTimeStartDate = new Date(
-    //   currentDate.getFullYear(),
-    //   currentDate.getMonth(),
-    //   currentDate.getDate(),
-    //   workingTimeStartHour,
-    //   workingTimeStartMinute
-    // );
-
-    // const workingTimeEndDate = new Date(
-    //   currentDate.getFullYear(),
-    //   currentDate.getMonth(),
-    //   currentDate.getDate(),
-    //   workingTimeEndHour,
-    //   workingTimeEndMinute
-    // );
-
     await new StaffMemberModel({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       gender: req.body.gender,
       date: req.body.date,
       staffType: req.body.staffType,
-      phoneNum: req.body.contact,
+      contact: req.body.contact,
       address: req.body.address,
       image: req.body.image,
       email: req.body.email,

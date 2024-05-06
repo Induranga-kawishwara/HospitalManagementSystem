@@ -26,12 +26,10 @@ function AppoinmentHistory() {
         }
 
         const consultationsResult = await axios.get(
-          `http://localhost:5000/consultations/${patientId},`,
-          {
-            headers: { authorization: localStorage.getItem("token") },
-          }
+          `http://localhost:5000/consultations/${patientId}`
         );
         setConsultations(consultationsResult.data);
+
         const doneAppoinments = consultationsResult.data.flatMap((it) =>
           it.consultations.filter((pat) => pat.status === "scheduled")
         );

@@ -56,11 +56,11 @@ const StaffSchema = new Schema(
       required: true,
     },
     workingTimeStart: {
-      type: Number,
+      type: String,
       required: true,
     },
     workingTimeEnd: {
-      type: Number,
+      type: String,
       required: true,
     },
   },

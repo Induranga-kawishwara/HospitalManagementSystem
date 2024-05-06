@@ -140,7 +140,7 @@ function AppointmentDetails() {
         branch: "",
         consultationDate: "",
       }));
-      alert(res.data.messages);
+      alert(res.data);
     } catch (error) {
       alert(error.response.data);
     }
