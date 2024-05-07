@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import Topbar from "./Components/SideNavigation/Topbar";
 import Sidebar from "./Components/SideNavigation/Sidebar";
 import Dashboard from "./Pages/Dashboard/Dashboard";
@@ -28,6 +28,13 @@ function App() {
   // Determine whether to show the sidebar based on the current route
   const showSidebar = location.pathname !== "/login";
 
+  const token = localStorage.getItem("token");
+
+  // Function to check if the user is authenticated
+  const isAuthenticated = () => {
+    return !!token; // Returns true if token exists, false otherwise
+  };
+
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
@@ -39,25 +46,130 @@ function App() {
             {/* Conditionally render the Topbar only if sidebar is shown */}
             {showSidebar && <Topbar setIsSidebar={setIsSidebar} />}
             <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/form" element={<AddStaffMembers />} />
-              <Route path="/editform/:id" element={<EditStaffMembers />} />
-              <Route path="/patients" element={<ManagePatients />} />
-              <Route path="/bloodinformation" element={<ManageBloodBank />} />
-              <Route path="/team" element={<ManageStaffMemers />} />
+              <Route
+                path="/"
+                element={
+                  isAuthenticated() ? <Dashboard /> : <Navigate to="/login" />
+                }
+              />
+              <Route
+                path="/form"
+                element={
+                  isAuthenticated() ? (
+                    <AddStaffMembers />
+                  ) : (
+                    <Navigate to="/login" />
+                  )
+                }
+              />
+              <Route
+                path="/editform/:id"
+                element={
+                  isAuthenticated() ? (
+                    <EditStaffMembers />
+                  ) : (
+                    <Navigate to="/login" />
+                  )
+                }
+              />
+              <Route
+                path="/patients"
+                element={
+                  isAuthenticated() ? (
+                    <ManagePatients />
+                  ) : (
+                    <Navigate to="/login" />
+                  )
+                }
+              />
+              <Route
+                path="/bloodinformation"
+                element={
+                  isAuthenticated() ? (
+                    <ManageBloodBank />
+                  ) : (
+                    <Navigate to="/login" />
+                  )
+                }
+              />
+              <Route
+                path="/team"
+                element={
+                  isAuthenticated() ? (
+                    <ManageStaffMemers />
+                  ) : (
+                    <Navigate to="/login" />
+                  )
+                }
+              />
               <Route
                 path="/bloodType/:BloodID"
-                element={<ManageBloodDonors />}
+                element={
+                  isAuthenticated() ? (
+                    <ManageBloodDonors />
+                  ) : (
+                    <Navigate to="/login" />
+                  )
+                }
               />
               <Route path="/faq" element={<FAQ />} />
-              <Route path="/calendar" element={<CalenderTasks />} />
-              <Route path="/bloodreq" element={<BloodReq />} />
-              <Route path="/blood" element={<AddBloodDonate />} />
-              <Route path="/addpatients" element={<AddPatients />} />
-              <Route path="/editpatients/:id" element={<EditPatients />} />
-              <Route path="/manageBloodRequ" element={<ManageBloodReq />} />
+              <Route
+                path="/calendar"
+                element={
+                  isAuthenticated() ? (
+                    <CalenderTasks />
+                  ) : (
+                    <Navigate to="/login" />
+                  )
+                }
+              />
+              <Route
+                path="/bloodreq"
+                element={
+                  isAuthenticated() ? <BloodReq /> : <Navigate to="/login" />
+                }
+              />
+              <Route
+                path="/blood"
+                element={
+                  isAuthenticated() ? (
+                    <AddBloodDonate />
+                  ) : (
+                    <Navigate to="/login" />
+                  )
+                }
+              />
+              <Route
+                path="/addpatients"
+                element={
+                  isAuthenticated() ? <AddPatients /> : <Navigate to="/login" />
+                }
+              />
+              <Route
+                path="/editpatients/:id"
+                element={
+                  isAuthenticated() ? (
+                    <EditPatients />
+                  ) : (
+                    <Navigate to="/login" />
+                  )
+                }
+              />
+              <Route
+                path="/manageBloodRequ"
+                element={
+                  isAuthenticated() ? (
+                    <ManageBloodReq />
+                  ) : (
+                    <Navigate to="/login" />
+                  )
+                }
+              />
 
-              <Route path="/login" element={<Login />} />
+              <Route
+                path="/login"
+                element={isAuthenticated() ? <Navigate to="/" /> : <Login />}
+              />
             </Routes>
           </main>
         </div>
