@@ -14,7 +14,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/adminAuth", data);
+      await axios.post("http://localhost:5000/adminAuth", data);
       window.location = "/";
     } catch (error) {
       if (
