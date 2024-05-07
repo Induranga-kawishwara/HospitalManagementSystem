@@ -13,6 +13,7 @@ import consultationRouter from "./routes/consultations.js";
 import review from "./routes/review.js";
 import BloodBank from "./routes/blood.js";
 import BloodRequest from "./routes/requestBlood.js";
+import AdminAuth from "./routes/adminAuth.js";
 
 const app = express();
 const PORT = 5000;
@@ -38,6 +39,7 @@ app.use("/auth", authRouter);
 app.use("/reviews", review);
 app.use("/bloodBank", BloodBank);
 app.use("/bloodReqest", BloodRequest);
+app.use("/adminAuth", AdminAuth);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

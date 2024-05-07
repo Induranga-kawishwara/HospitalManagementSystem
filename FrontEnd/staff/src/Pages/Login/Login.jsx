@@ -14,9 +14,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/auth", data);
-      localStorage.setItem("token", res.data.data);
-      localStorage.setItem("user", JSON.stringify(res.data.user));
+      const res = await axios.post("http://localhost:5000/adminAuth", data);
       window.location = "/";
     } catch (error) {
       if (
@@ -55,13 +53,11 @@ const Login = () => {
             />
             {error && <div className={styles.error_msg}>{error}</div>}
 
-            {/* <Link to="/docsearch"> */}
             <Link to="/">
               <button type="submit" className={styles.green_btn}>
                 Login
               </button>
             </Link>
-            {/* </Link> */}
           </form>
         </div>
       </div>
