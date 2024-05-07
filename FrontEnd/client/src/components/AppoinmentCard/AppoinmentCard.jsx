@@ -46,7 +46,7 @@ function AppoinmentCard({ id, people, from = "default", onDelete }) {
     };
 
     fetchData();
-  }, [customerReviews, id, dispatch]);
+  }, [id, dispatch]);
 
   const handleFeedClick = async () => {
     try {
