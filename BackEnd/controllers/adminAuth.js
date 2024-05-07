@@ -39,9 +39,7 @@ const authAdmin = async (req, res) => {
     if (req.body.password !== user.password) {
       return res.status(401).send({ message: "Invalid  Password" });
     }
-    res
-      .status(200)
-      .send({ data: token, user: userData, message: "logged in successfully" });
+    res.status(200).send({ message: "logged in successfully" });
   } catch (error) {
     console.log(error);
     res.status(500).send({ message: "Internal Server Error" });

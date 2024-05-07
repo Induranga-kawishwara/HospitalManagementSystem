@@ -53,11 +53,9 @@ const Login = () => {
             />
             {error && <div className={styles.error_msg}>{error}</div>}
 
-            <Link to="/">
-              <button type="submit" className={styles.green_btn}>
-                Login
-              </button>
-            </Link>
+            <button type="submit" className={styles.green_btn}>
+              Login
+            </button>
           </form>
         </div>
       </div>
