@@ -6,31 +6,30 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../Components/Header/Header";
 import axios from "axios";
 
-const AddBloodDonate = () => {
+const ReqBlood = () => {
   const initialValues = {
     firstName: "",
     lastName: "",
-    email: "",
     contact: "",
-    address: "",
     bloodType: "",
     requestedBloodCount: "",
+    hospitalBranch: "",
   };
 
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   const handleFormSubmit = async (values, actions) => {
+    console.log("Submitting form with values:", values);
     try {
-      console.log(values);
-
       const response = await axios.post(
-        "http://localhost:5000/bloodReq",
+        "http://localhost:5000/bloodReqest",
         values
       );
+      console.log("Response:", response.data);
       alert(response.data);
       actions.resetForm();
     } catch (error) {
-      console.error("Error adding StaffMember:", error);
+      console.error("Error submitting form:", error);
       alert(error.response.data);
     }
   };
@@ -38,10 +37,6 @@ const AddBloodDonate = () => {
   const validationSchema = yup.object().shape({
     firstName: yup.string().required("First name is required"),
     lastName: yup.string().required("Last name is required"),
-    email: yup
-      .string()
-      .email("Invalid email format")
-      .required("Email is required"),
     contact: yup
       .string()
       .matches(
@@ -49,7 +44,7 @@ const AddBloodDonate = () => {
         "Invalid phone number"
       )
       .required("Contact number is required"),
-    address: yup.string().required("Address line is required"),
+    hospitalBranch: yup.string().required("Hospital branch is required"),
     bloodType: yup.string().required("Blood type is required"),
     requestedBloodCount: yup.number().required("Count is required"),
   });
@@ -121,6 +116,23 @@ const AddBloodDonate = () => {
                 helperText={touched.contact && errors.contact}
                 sx={{ gridColumn: "span 4" }}
               />
+              <TextField
+                select
+                fullWidth
+                variant="filled"
+                label="Hospital Branch"
+                value={values.hospitalBranch}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                name="hospitalBranch"
+                error={!!touched.hospitalBranch && !!errors.hospitalBranch}
+                helperText={touched.hospitalBranch && errors.hospitalBranch}
+                sx={{ gridColumn: "span 4" }}
+              >
+                <MenuItem value="Malabe">Malabe</MenuItem>
+                <MenuItem value="Kottawa">Kottawa</MenuItem>
+                <MenuItem value="other">Other</MenuItem>
+              </TextField>
 
               <TextField
                 select
@@ -145,6 +157,7 @@ const AddBloodDonate = () => {
               <TextField
                 fullWidth
                 variant="filled"
+                name="requestedBloodCount"
                 type="text"
                 label="Count Of Blood"
                 onBlur={handleBlur}
@@ -156,7 +169,6 @@ const AddBloodDonate = () => {
                 helperText={
                   touched.requestedBloodCount && errors.requestedBloodCount
                 }
-                name="requestedBloodCount"
                 sx={{ gridColumn: "span 4" }}
               />
             </Box>
@@ -171,4 +183,4 @@ const AddBloodDonate = () => {
     </Box>
   );
 };
-export default AddBloodDonate;
+export default ReqBlood;

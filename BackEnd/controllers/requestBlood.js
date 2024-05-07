@@ -15,11 +15,11 @@ const addBloodRequest = async (req, res) => {
     const {
       firstName,
       lastName,
-      email,
       contact,
       address,
       bloodType,
       requestedBloodCount,
+      hospitalBranch,
     } = req.body;
 
     const existingDonation = await BloodModel.findOne({ bloodType });
@@ -32,10 +32,10 @@ const addBloodRequest = async (req, res) => {
       const donationDetails = {
         firstName,
         lastName,
-        email,
         contactNum: contact,
         address,
         requestedBloodCount,
+        HospitalBranch: hospitalBranch,
       };
       existingDonation.requestBlood.push(donationDetails);
       await existingDonation.save();

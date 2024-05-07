@@ -49,10 +49,6 @@ const BloodSchema = new Schema({
         type: String,
         required: true,
       },
-      email: {
-        type: String,
-        required: true,
-      },
       contactNum: {
         type: String,
         required: true,

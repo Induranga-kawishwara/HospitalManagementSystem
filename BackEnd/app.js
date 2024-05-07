@@ -37,7 +37,7 @@ app.use("/consultations", consultationRouter);
 app.use("/auth", authRouter);
 app.use("/reviews", review);
 app.use("/bloodBank", BloodBank);
-app.use("/bloodReq", BloodRequest);
+app.use("/bloodReqest", BloodRequest);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
