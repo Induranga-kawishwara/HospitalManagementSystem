@@ -1,8 +1,9 @@
 import express from "express";
-import { authAdmin } from "../controllers/adminAuth.js";
+import { authAdmin, addAdmin } from "../controllers/adminAuth.js";
 
 const router = express.Router();
 
 router.post("/", authAdmin);
+router.post("/add", addAdmin);
 
 export default router;
