@@ -1,10 +1,10 @@
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Route,
   Routes,
   Navigate,
 } from "react-router-dom";
-import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Home from "./Pages/Main";
 import Doclist from "./Pages/DoctorList/Doclist";
@@ -18,7 +18,9 @@ import AppointmentHistory from "./Pages/Appontmenthistory/AppoinmentHistory.jsx"
 import DoneAppoi from "./Pages/DoneAppoinment/DoneAppoinment.jsx";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    return localStorage.getItem("isLoggedIn") === "true";
+  });
 
   useEffect(() => {
     const checkLoginStatus = async () => {

@@ -17,7 +17,7 @@ const Login = () => {
       const res = await axios.post("http://localhost:5000/auth", data);
       localStorage.setItem("token", res.data.data);
       localStorage.setItem("user", JSON.stringify(res.data.user));
-      window.location = "/";
+      window.location = "/docsearch";
     } catch (error) {
       if (
         error.response &&
