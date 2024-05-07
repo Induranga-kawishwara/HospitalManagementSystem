@@ -55,8 +55,7 @@ const AddPatients = () => {
     };
 
     fetchData();
-  }, []);
-
+  }, [id]); // Include id if it's expected to change and affect the effect
   const handleChange = ({ target }) => {
     if (!target) return;
 

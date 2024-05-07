@@ -50,8 +50,8 @@ const AddBloodDonate = () => {
       )
       .required("Contact number is required"),
     address: yup.string().required("Address line is required"),
-    bloodType: yup.string().required("bloodType is required"),
-    requestedBloodCount: yup.number.required("Count is required"),
+    bloodType: yup.string().required("Blood type is required"),
+    requestedBloodCount: yup.number().required("Count is required"),
   });
 
   const bloodTypes = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
@@ -119,7 +119,6 @@ const AddBloodDonate = () => {
                 name="contact"
                 error={!!touched.contact && !!errors.contact}
                 helperText={touched.contact && errors.contact}
-                // InputLabelProps={{ style: { color: "black" } }} // Change color here
                 sx={{ gridColumn: "span 4" }}
               />
 

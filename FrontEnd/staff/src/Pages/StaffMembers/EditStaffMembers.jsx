@@ -54,7 +54,6 @@ const AddStaffMembers = () => {
           (staff) => staff._id === id
         );
 
-        // Check if staff member is found
         if (filteredStaff) {
           const updatedInitialValues = {
             ...initialValues,
@@ -84,7 +83,6 @@ const AddStaffMembers = () => {
             workingTimeEndMin: filteredStaff.workingTimeEnd.split(":")[1],
           };
           setImg(filteredStaff.image);
-          console.log(filteredStaff.image);
           setInitialValues(updatedInitialValues);
         } else {
           console.log("Staff member not found");
@@ -95,7 +93,7 @@ const AddStaffMembers = () => {
     };
 
     fetchData();
-  }, []);
+  }, [id]);
 
   const handleChange = ({ target }) => {
     if (!target) return;
@@ -124,7 +122,6 @@ const AddStaffMembers = () => {
       await uploadBytes(storageRef, file);
       console.log("Image uploaded successfully!");
       const downloadURL = await getDownloadURL(storageRef);
-      console.log("Download URL:", downloadURL);
       return downloadURL;
     } catch (error) {
       console.error("Error uploading image:", error);
@@ -204,6 +201,7 @@ const AddStaffMembers = () => {
             />
             <img
               src={img}
+              alt=""
               style={{
                 maxWidth: "100%",
                 maxHeight: "100%",
@@ -247,6 +245,7 @@ const AddStaffMembers = () => {
             value={initialValues.staffType}
             onChange={handleChange}
             name="staffType"
+            disabled
             sx={{ gridColumn: "span 4" }}
           >
             <MenuItem value="Doctor">Doctor</MenuItem>

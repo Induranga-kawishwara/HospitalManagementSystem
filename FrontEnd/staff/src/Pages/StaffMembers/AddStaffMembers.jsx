@@ -161,26 +161,29 @@ const AddStaffMembers = () => {
                 sx={{ gridColumn: "span 2" }}
               />
 
-              <Input
-                fullWidth
-                variant="filled"
-                type="file"
-                label="Upload Image Of Employee"
-                name="image"
-                onChange={(e) => {
-                  const fileName = e.target.files[0];
-                  handleChange({
-                    target: {
-                      name: "image",
-                      value: fileName,
-                    },
-                  });
-                }}
-                error={touched.image && errors.image}
-                helperText={touched.image && errors.image}
-                onBlur={handleBlur}
-                sx={{ gridColumn: "span 4" }}
-              />
+              <div>
+                <Input
+                  fullWidth
+                  variant="filled"
+                  type="file"
+                  label="Upload Image Of Employee"
+                  name="image"
+                  onChange={(e) => {
+                    const fileName = e.target.files[0];
+                    handleChange({
+                      target: {
+                        name: "image",
+                        value: fileName,
+                      },
+                    });
+                  }}
+                  onBlur={handleBlur}
+                  sx={{ gridColumn: "span 4" }}
+                />
+                {touched.image && errors.image && (
+                  <div style={{ color: "red" }}>{errors.image}</div>
+                )}
+              </div>
 
               <TextField
                 fullWidth
