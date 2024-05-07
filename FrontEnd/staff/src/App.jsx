@@ -18,6 +18,7 @@ import { ColorModeContext, useMode } from "./theme";
 import CalenderTasks from "./Pages/CalenderTasks/CalenderTasks";
 import ManageBloodDonors from "./Pages/BloodBank/ManageBloodDonors";
 import BloodReq from "./Pages/BloodBank/ReqBlood";
+import ManageBloodReq from "./Pages/BloodBank/ManageBloodReq";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -54,6 +55,8 @@ function App() {
               <Route path="/blood" element={<AddBloodDonate />} />
               <Route path="/addpatients" element={<AddPatients />} />
               <Route path="/editpatients/:id" element={<EditPatients />} />
+              <Route path="/manageBloodRequ" element={<ManageBloodReq />} />
+
               <Route path="/login" element={<Login />} />
             </Routes>
           </main>

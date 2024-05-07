@@ -1,15 +1,5 @@
 import BloodModel from "../modules/blood.js";
 
-const getBloodRequestCount = async (req, res) => {
-  try {
-    const bloodRecords = await BloodModel.find();
-    res.status(200).json(bloodRecords);
-  } catch (error) {
-    console.error("Error getting blood records:", error);
-    res.status(500).send("Error getting blood records");
-  }
-};
-
 const addBloodRequest = async (req, res) => {
   try {
     const {
@@ -54,44 +44,29 @@ const addBloodRequest = async (req, res) => {
   }
 };
 
-const updateBloodRequest = async (req, res) => {
-  const bloodType = req.params.bloodId;
-  const bloodDonationID = req.params.id;
-  try {
-    const updatedBloodDonation = await BloodModel.findByIdAndUpdate(
-      bloodType,
-      { $pull: { donate: { _id: bloodDonationID } } },
-      { new: true }
-    );
-    if (!updatedBloodDonation) {
-      return res.status(404).send("Blood donation not found");
-    }
-    res.status(200).send("Blood donation updated successfully!");
-  } catch (error) {
-    console.error("Error updating blood donation:", error);
-    res.status(500).send("Error updating blood donation");
-  }
-};
-
 const deleteBloodRequest = async (req, res) => {
-  const bloodDonationID = req.params.id;
+  const { bloodType, requestId } = req.params;
   try {
-    const deletedBloodDonation = await BloodModel.findByIdAndDelete(
-      bloodDonationID
-    );
-    if (!deletedBloodDonation) {
+    const bloodDonation = await BloodModel.findOne({ bloodType });
+    if (!bloodDonation) {
       return res.status(404).send("Blood donation not found");
     }
-    res.status(200).send("Blood donation deleted successfully");
+
+    const bloodRequest = bloodDonation.requestBlood.find(
+      (request) => request._id.toString() === requestId
+    );
+    if (!bloodRequest) {
+      return res.status(404).send("Blood request not found");
+    }
+
+    bloodDonation.requestBlood.pull({ _id: requestId });
+    await bloodDonation.save();
+
+    res.status(200).send("Blood request deleted successfully");
   } catch (error) {
-    console.error("Error deleting blood donation:", error);
-    res.status(500).send("Error deleting blood donation");
+    console.error("Error deleting blood request:", error);
+    res.status(500).send("Error deleting blood request");
   }
 };
 
-export {
-  getBloodRequestCount,
-  addBloodRequest,
-  updateBloodRequest,
-  deleteBloodRequest,
-};
+export { addBloodRequest, deleteBloodRequest };

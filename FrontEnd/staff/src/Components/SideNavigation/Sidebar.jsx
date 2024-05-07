@@ -141,10 +141,19 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
+
             <Item
               title="Blood Bank Information"
               to="/bloodinformation"
               icon={<BloodtypeIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+
+            <Item
+              title="Blood Request Info"
+              to="/manageBloodRequ"
+              icon={<DataSaverOn />}
               selected={selected}
               setSelected={setSelected}
             />
