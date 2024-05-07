@@ -51,6 +51,11 @@ const Dashboard = () => {
     fetchData();
   }, []);
 
+  const handleChatBtnClick = async () => {
+    localStorage.removeItem("token");
+    window.location.reload();
+  };
+
   const handleDelete = async (id) => {
     try {
       // Send a delete request to your backend API to delete the doctor with the specified ID
@@ -196,19 +201,18 @@ const Dashboard = () => {
         <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
 
         <Box>
-          <Link to="/login">
-            <Button
-              sx={{
-                backgroundColor: colors.blueAccent[700],
-                color: colors.grey[100],
-                fontSize: "14px",
-                fontWeight: "bold",
-                padding: "10px 20px",
-              }}
-            >
-              Logout
-            </Button>
-          </Link>
+          <Button
+            onClick={handleChatBtnClick}
+            sx={{
+              backgroundColor: colors.blueAccent[700],
+              color: colors.grey[100],
+              fontSize: "14px",
+              fontWeight: "bold",
+              padding: "10px 20px",
+            }}
+          >
+            Logout
+          </Button>
         </Box>
       </Box>
 
