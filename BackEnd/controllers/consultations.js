@@ -54,6 +54,10 @@ const newConsultation = async (req, res) => {
       return res.status(404).send("Doctor not found");
     }
 
+    if (new Date(consultationDate) <= new Date()) {
+      return res.status(400).send("Consultation date must be in the future");
+    }
+
     // Check if the doctor already has an appointment with the patient on the same day
     const existingConsultation = await ConsultationModel.findOne({
       doctorId,
@@ -151,7 +155,16 @@ const newConsultation = async (req, res) => {
       { new: true, upsert: true }
     );
 
-    res.status(201).send("Consultation saved successfully!");
+    res.status(201).send({
+      message: "Consultation saved successfully!",
+      data: {
+        doctorName: `${doctor.firstName} ${doctor.lastName} `,
+        specialization,
+        branchName: branch,
+        contactNum: PhoneNo,
+        consultationStartTime,
+      },
+    });
   } catch (error) {
     console.error("Error adding consultation:", error);
     res.status(500).send("Error adding consultation");
