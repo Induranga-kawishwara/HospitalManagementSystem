@@ -60,6 +60,11 @@ function AppoinmentHistory() {
       });
 
       setConsultations(updatedConsultations);
+
+      const doneAppoinments = updatedConsultations.data.flatMap((it) =>
+        it.consultations.filter((pat) => pat.status === "scheduled")
+      );
+      SetsheduledAppoinment(doneAppoinments);
       alert(result.data);
     } catch (error) {
       console.error("Failed to delete consultation:", error);
