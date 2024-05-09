@@ -5,15 +5,12 @@ import BookAppointment from "./BookAppointment/BookAppointment";
 import Reviews from "./Reviews/Reviews";
 import Doctors from "./DoctorList/Doctors";
 import Slide from "../components/ImageSlider/ImageSlider";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 function Main() {
-  const [currentSection, setCurrentSection] = useState(null);
-
   useEffect(() => {
     const handleScrollToSection = () => {
       const path = window.location.hash.substring(1);
-      setCurrentSection(path);
       const targetSection = document.getElementById(path);
       if (targetSection) {
         setTimeout(() => {

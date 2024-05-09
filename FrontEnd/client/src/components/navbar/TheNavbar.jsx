@@ -10,17 +10,14 @@ import "./navcs.css";
 
 const TheNavbar = () => {
   const navigate = useNavigate();
-  const [isNavOpen, setIsNavOpen] = useState(false); // State to control visibility of the navigation bar
+  const [isNavOpen, setIsNavOpen] = useState(false);
 
   const handleChatBtnClick = () => {
     navigate("/docsearch");
   };
 
-  const home = () => {
-    navigate("/");
-  };
   const handleNavItemClicked = () => {
-    setIsNavOpen(false); // Hide the navigation bar when a navigation item is clicked
+    setIsNavOpen(false);
   };
 
   return (
@@ -44,28 +41,15 @@ const TheNavbar = () => {
       <Navbar.Toggle
         aria-controls="basic-navbar-nav"
         className={classes.toggle}
-        onClick={() => setIsNavOpen(!isNavOpen)} // Toggle navigation bar visibility when toggle button is clicked
+        onClick={() => setIsNavOpen(!isNavOpen)}
       />
 
       <Navbar.Collapse id="basic-navbar-nav">
-        <Nav
-          className={`${classes.nav__linkgroup} ms-auto`}
-          // style={{ display: isNavOpen ? "block" : "none" }}
-          // nathiwenawa utto
-        >
+        <Nav className={`${classes.nav__linkgroup} ms-auto`}>
           <Nav.Item
             className={`${classes.nav__link} ${classes.firstnav__link} me-4`}
             onClick={handleNavItemClicked}
           >
-            {/* <ScrollLink
-              to="home"
-              spy={true}
-              smooth={true}
-              offset={-50}
-              duration={500}
-            >
-              Home
-            </ScrollLink> */}
             <li className="nav-item">
               <a href="/#home">Home</a>
             </li>

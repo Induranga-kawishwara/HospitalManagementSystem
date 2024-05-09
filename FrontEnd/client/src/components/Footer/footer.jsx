@@ -1,13 +1,7 @@
 import React from "react";
 import style from "./footer.module.css";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
 
 const Footer = () => {
-  const navigate = useNavigate();
-
-  const Aboutus = () => {
-    navigate("/");
-  };
   return (
     <footer className={style.hospital_footer}>
       <div className={style.footer_container}>
