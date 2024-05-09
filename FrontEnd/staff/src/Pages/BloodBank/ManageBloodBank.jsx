@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";

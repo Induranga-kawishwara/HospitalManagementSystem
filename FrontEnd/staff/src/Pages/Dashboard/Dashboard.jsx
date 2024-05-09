@@ -5,7 +5,6 @@ import StatBox from "../../Components/StatBox/StatBox";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
 
 import {
   LocalHospital,

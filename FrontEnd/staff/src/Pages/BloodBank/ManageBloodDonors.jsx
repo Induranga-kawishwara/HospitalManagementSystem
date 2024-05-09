@@ -1,5 +1,3 @@
-import { useTheme } from "@mui/material";
-import { tokens } from "../../theme";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Button from "@mui/material/Button";
@@ -9,8 +7,6 @@ import Table from "../../Components/Table/Table";
 const ManageBloodDonors = () => {
   const { BloodID } = useParams();
   console.log(BloodID);
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
   const [bloods, setBlood] = useState([]);
 
   useEffect(() => {
@@ -29,22 +25,6 @@ const ManageBloodDonors = () => {
 
     fetchData();
   }, [BloodID]);
-
-  const calculateAge = (dateOfBirth) => {
-    const today = new Date();
-    const birthDate = new Date(dateOfBirth);
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const monthDiff = today.getMonth() - birthDate.getMonth();
-
-    if (
-      monthDiff < 0 ||
-      (monthDiff === 0 && today.getDate() < birthDate.getDate())
-    ) {
-      age--;
-    }
-
-    return age;
-  };
 
   const handleDelete = async (id) => {
     try {

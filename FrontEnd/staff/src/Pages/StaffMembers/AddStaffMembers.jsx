@@ -17,7 +17,7 @@ import firebaseConfig from "../../config/firebase.config";
 import axios from "axios";
 
 // Initialize Firebase app
-initializeApp(firebaseConfig.firebaseConfig);
+initializeApp(firebaseConfig);
 
 const AddStaffMembers = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
