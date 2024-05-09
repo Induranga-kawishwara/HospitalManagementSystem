@@ -58,7 +58,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route
-          path="/appontmenthistory/:patientId"
+          path="/appointmenthistory/:patientId"
           exact
           element={
             isLoggedIn ? (
@@ -72,7 +72,7 @@ function App() {
           }
         />
         <Route
-          path="/doneappoinment/:patientId"
+          path="/doneappointment/:patientId"
           exact
           element={
             isLoggedIn ? (
