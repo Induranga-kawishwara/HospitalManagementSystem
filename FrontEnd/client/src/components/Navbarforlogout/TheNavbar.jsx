@@ -28,6 +28,7 @@ const TheNavbar = () => {
 
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    localStorage.removeItem("isLoggedIn");
     window.location.reload();
   };
 
