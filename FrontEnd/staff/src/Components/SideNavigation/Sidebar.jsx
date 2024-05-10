@@ -89,7 +89,12 @@ const Sidebar = () => {
 
           {!isCollapsed && (
             <Box mb="25px">
-              <Box display="flex" justifyContent="center" alignItems="center">
+              <Box
+                display="flex"
+                marginTop="6%"
+                justifyContent="center"
+                alignItems="center"
+              >
                 <img
                   alt="profile-user"
                   width="100px"
@@ -113,7 +118,7 @@ const Sidebar = () => {
 
           <Box
             paddingLeft={isCollapsed ? undefined : "10%"}
-            marginTop={isCollapsed ? "100px" : "60px"}
+            marginTop={isCollapsed ? "105%" : "25%"}
           >
             <Item
               title="Dashboard"
