@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useTheme } from "@mui/material";
+import { useTheme, Box, Container } from "@mui/material";
 import { tokens } from "../../theme";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
@@ -130,12 +130,16 @@ const ManageStaffMemers = () => {
   }));
 
   return (
-    <Table
-      rows={rows}
-      columns={columns}
-      title={"STAFF"}
-      subtitle={"Managing the Staff Members"}
-    />
+    <Container maxWidth="100%">
+      <Box m="20px" minHeight="100vh">
+        <Table
+          rows={rows}
+          columns={columns}
+          title={"STAFF"}
+          subtitle={"Managing the Staff Members"}
+        />
+      </Box>
+    </Container>
   );
 };
 

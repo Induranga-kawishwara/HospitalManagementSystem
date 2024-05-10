@@ -1,4 +1,4 @@
-import { useTheme } from "@mui/material";
+import { useTheme, Box, Container } from "@mui/material";
 import { tokens } from "../../theme";
 import axios from "axios";
 import Table from "../../Components/Table/Table";
@@ -136,12 +136,16 @@ const ManagePatients = () => {
   }));
 
   return (
-    <Table
-      rows={rows}
-      columns={columns}
-      title={"PATIENTS"}
-      subtitle={"Managing the Patients"}
-    />
+    <Container maxWidth="100%">
+      <Box m="20px" minHeight="100vh">
+        <Table
+          rows={rows}
+          columns={columns}
+          title={"PATIENTS"}
+          subtitle={"Managing the Patients"}
+        />
+      </Box>
+    </Container>
   );
 };
 

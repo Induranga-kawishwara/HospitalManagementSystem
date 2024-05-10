@@ -1,4 +1,4 @@
-import { useTheme } from "@mui/material";
+import { Box, useTheme, Container } from "@mui/material";
 import { tokens } from "../../theme";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -91,12 +91,16 @@ const ManageBloodBank = () => {
   }));
 
   return (
-    <Table
-      rows={rows}
-      columns={columns}
-      title={"Blood Bank"}
-      subtitle={"Managing Blood Bank"}
-    />
+    <Container maxWidth="100%">
+      <Box m="20px" minHeight="100vh">
+        <Table
+          rows={rows}
+          columns={columns}
+          title={"Blood Bank"}
+          subtitle={"Managing Blood Bank"}
+        />
+      </Box>
+    </Container>
   );
 };
 

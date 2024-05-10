@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import { Box, Container } from "@mui/material";
 import axios from "axios";
 import Button from "@mui/material/Button";
 import { useEffect, useState } from "react";
@@ -88,12 +89,16 @@ const ManageBloodDonors = () => {
         }))
       : [];
   return (
-    <Table
-      rows={rows}
-      columns={columns}
-      title={`Blood Type: ${bloods[0]?.bloodType}`}
-      subtitle={"Donation List"}
-    />
+    <Container maxWidth="100%">
+      <Box m="20px" minHeight="100vh">
+        <Table
+          rows={rows}
+          columns={columns}
+          title={`Blood Type: ${bloods[0]?.bloodType}`}
+          subtitle={"Donation List"}
+        />
+      </Box>
+    </Container>
   );
 };
 

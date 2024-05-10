@@ -11,7 +11,7 @@ import ManageBloodBank from "./Pages/BloodBank/ManageBloodBank";
 import ManageStaffMemers from "./Pages/StaffMembers/ManageStaffMemers";
 import AddPatients from "./Pages/Patients/AddPatients";
 import EditPatients from "./Pages/Patients/EditPatients";
-import FAQ from "./Pages/faq";
+import FAQ from "./Pages/Faq/FaqPage";
 import AddBloodDonate from "./Pages/BloodBank/AddBloodDonate";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";

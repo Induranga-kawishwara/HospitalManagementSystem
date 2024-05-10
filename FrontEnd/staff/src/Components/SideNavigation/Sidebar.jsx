@@ -209,11 +209,11 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
 
-            <Typography
+            {/* <Typography
               variant="h6"
               color={colors.grey[300]}
               sx={{ m: "700%" }}
-            />
+            /> */}
           </Box>
         </Menu>
       </ProSidebar>

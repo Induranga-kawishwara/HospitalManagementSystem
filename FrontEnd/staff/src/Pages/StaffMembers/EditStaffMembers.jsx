@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, TextField, Input } from "@mui/material";
+import { Box, Button, TextField, Input, Container } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../Components/Header/Header";
 import { useNavigate, useParams } from "react-router-dom";
@@ -152,335 +152,338 @@ const AddStaffMembers = () => {
   };
 
   return (
-    <Box m="20px">
-      <Header
-        title="EDIT STAFF MEMBER"
-        subtitle="Edit the Staff Member Profile"
-      />
-      <form onSubmit={handleSubmit}>
-        <Box
-          display="grid"
-          gap="30px"
-          gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-          sx={{
-            "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
-          }}
-        >
-          <TextField
-            fullWidth
-            variant="filled"
-            type="text"
-            label="First Name"
-            value={initialValues.firstName}
-            name="firstName"
-            onChange={handleChange}
-            sx={{ gridColumn: "span 2" }}
-          />
-
-          <TextField
-            fullWidth
-            variant="filled"
-            type="text"
-            label="Last Name"
-            value={initialValues.lastName}
-            name="lastName"
-            onChange={handleChange}
-            sx={{ gridColumn: "span 2" }}
-          />
-
-          <div>
-            <Input
-              fullWidth
-              variant="filled"
-              type="file"
-              label="Upload Image Of Employee"
-              name="image"
-              accept=".jpeg, .png, .jpg"
-              onChange={handeleIMage}
-              sx={{ gridColumn: "span 4" }}
-            />
-            <img
-              src={img}
-              alt=""
-              style={{
-                maxWidth: "100%",
-                maxHeight: "100%",
-                width: "auto",
-                height: "auto",
-              }}
-            />
-          </div>
-
-          <TextField
-            fullWidth
-            variant="filled"
-            type="date"
-            label="Date Of Birth"
-            name="date"
-            value={initialValues.date}
-            onChange={handleChange}
-            sx={{ gridColumn: "span 4" }}
-          />
-
-          <TextField
-            select
-            fullWidth
-            variant="filled"
-            label="Gender"
-            value={initialValues.gender}
-            onChange={handleChange}
-            name="gender"
-            sx={{ gridColumn: "span 4" }}
+    <Container maxWidth="lg">
+      <Box m="20px" minHeight="100vh">
+        {" "}
+        <Header
+          title="EDIT STAFF MEMBER"
+          subtitle="Edit the Staff Member Profile"
+        />
+        <form onSubmit={handleSubmit}>
+          <Box
+            display="grid"
+            gap="30px"
+            gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+            sx={{
+              "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
+            }}
           >
-            <MenuItem value="male">Male</MenuItem>
-            <MenuItem value="female">Female</MenuItem>
-            <MenuItem value="other">Other</MenuItem>
-          </TextField>
-
-          <TextField
-            select
-            fullWidth
-            variant="filled"
-            label="Position"
-            value={initialValues.staffType}
-            onChange={handleChange}
-            name="staffType"
-            disabled
-            sx={{ gridColumn: "span 4" }}
-          >
-            <MenuItem value="Doctor">Doctor</MenuItem>
-            <MenuItem value="Nurse">Nurse</MenuItem>
-            <MenuItem value="Cleaner">Cleaner</MenuItem>
-            <MenuItem value="Administrative">Admin</MenuItem>
-            <MenuItem value="other">Other</MenuItem>
-          </TextField>
-
-          <TextField
-            fullWidth
-            variant="filled"
-            type="text"
-            label="Email"
-            onChange={handleChange}
-            value={initialValues.email}
-            name="email"
-            sx={{ gridColumn: "span 4" }}
-          />
-          <TextField
-            fullWidth
-            variant="filled"
-            type="text"
-            label="Contact Number"
-            onChange={handleChange}
-            value={initialValues.contact}
-            name="contact"
-            sx={{ gridColumn: "span 4" }}
-          />
-          <TextField
-            fullWidth
-            variant="filled"
-            type="text"
-            label="Address"
-            onChange={handleChange}
-            value={initialValues.address}
-            name="address"
-            sx={{ gridColumn: "span 4" }}
-          />
-          {initialValues.staffType === "Doctor" ? (
             <TextField
               fullWidth
               variant="filled"
               type="text"
-              label="Specialization"
+              label="First Name"
+              value={initialValues.firstName}
+              name="firstName"
               onChange={handleChange}
-              value={initialValues.specialization}
-              name="specialization"
+              sx={{ gridColumn: "span 2" }}
+            />
+
+            <TextField
+              fullWidth
+              variant="filled"
+              type="text"
+              label="Last Name"
+              value={initialValues.lastName}
+              name="lastName"
+              onChange={handleChange}
+              sx={{ gridColumn: "span 2" }}
+            />
+
+            <div>
+              <Input
+                fullWidth
+                variant="filled"
+                type="file"
+                label="Upload Image Of Employee"
+                name="image"
+                accept=".jpeg, .png, .jpg"
+                onChange={handeleIMage}
+                sx={{ gridColumn: "span 4" }}
+              />
+              <img
+                src={img}
+                alt=""
+                style={{
+                  maxWidth: "100%",
+                  maxHeight: "100%",
+                  width: "auto",
+                  height: "auto",
+                }}
+              />
+            </div>
+
+            <TextField
+              fullWidth
+              variant="filled"
+              type="date"
+              label="Date Of Birth"
+              name="date"
+              value={initialValues.date}
+              onChange={handleChange}
               sx={{ gridColumn: "span 4" }}
             />
-          ) : (
+
             <TextField
               select
               fullWidth
               variant="filled"
-              label="Shift"
+              label="Gender"
+              value={initialValues.gender}
               onChange={handleChange}
-              value={initialValues.shift}
-              name="shift"
+              name="gender"
               sx={{ gridColumn: "span 4" }}
             >
-              <MenuItem value="day">day</MenuItem>
-              <MenuItem value="night">Night</MenuItem>
+              <MenuItem value="male">Male</MenuItem>
+              <MenuItem value="female">Female</MenuItem>
+              <MenuItem value="other">Other</MenuItem>
             </TextField>
-          )}
 
-          <TextField
-            select
-            fullWidth
-            variant="filled"
-            label="Hospital Branch"
-            value={initialValues.hospitalBranch}
-            onChange={handleChange}
-            name="hospitalBranch"
-            sx={{ gridColumn: "span 4" }}
-          >
-            <MenuItem value="Malabe">Malabe</MenuItem>
-            <MenuItem value="Kottawa">Kottawa</MenuItem>
-            <MenuItem value="other">Other</MenuItem>
-          </TextField>
+            <TextField
+              select
+              fullWidth
+              variant="filled"
+              label="Position"
+              value={initialValues.staffType}
+              onChange={handleChange}
+              name="staffType"
+              disabled
+              sx={{ gridColumn: "span 4" }}
+            >
+              <MenuItem value="Doctor">Doctor</MenuItem>
+              <MenuItem value="Nurse">Nurse</MenuItem>
+              <MenuItem value="Cleaner">Cleaner</MenuItem>
+              <MenuItem value="Administrative">Admin</MenuItem>
+              <MenuItem value="other">Other</MenuItem>
+            </TextField>
 
-          <TextField
-            select
-            fullWidth
-            variant="filled"
-            label="Department"
-            value={initialValues.department}
-            onChange={handleChange}
-            name="department"
-            sx={{ gridColumn: "span 4" }}
-          >
-            <MenuItem value="dental">Dental</MenuItem>
-            <MenuItem value="OPD">OPD</MenuItem>
-            <MenuItem value="other">Other</MenuItem>
-          </TextField>
+            <TextField
+              fullWidth
+              variant="filled"
+              type="text"
+              label="Email"
+              onChange={handleChange}
+              value={initialValues.email}
+              name="email"
+              sx={{ gridColumn: "span 4" }}
+            />
+            <TextField
+              fullWidth
+              variant="filled"
+              type="text"
+              label="Contact Number"
+              onChange={handleChange}
+              value={initialValues.contact}
+              name="contact"
+              sx={{ gridColumn: "span 4" }}
+            />
+            <TextField
+              fullWidth
+              variant="filled"
+              type="text"
+              label="Address"
+              onChange={handleChange}
+              value={initialValues.address}
+              name="address"
+              sx={{ gridColumn: "span 4" }}
+            />
+            {initialValues.staffType === "Doctor" ? (
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="Specialization"
+                onChange={handleChange}
+                value={initialValues.specialization}
+                name="specialization"
+                sx={{ gridColumn: "span 4" }}
+              />
+            ) : (
+              <TextField
+                select
+                fullWidth
+                variant="filled"
+                label="Shift"
+                onChange={handleChange}
+                value={initialValues.shift}
+                name="shift"
+                sx={{ gridColumn: "span 4" }}
+              >
+                <MenuItem value="day">day</MenuItem>
+                <MenuItem value="night">Night</MenuItem>
+              </TextField>
+            )}
 
-          <TextField
-            select
-            fullWidth
-            variant="filled"
-            label="Starting Hour"
-            value={initialValues.workingTimeStart}
-            onChange={handleChange}
-            name="workingTimeStart"
-            sx={{ gridColumn: "span 2" }}
-          >
-            {Array.from(Array(24).keys()).map((hour) => (
-              <MenuItem key={hour} value={hour + 1}>
-                {hour + 1}
-              </MenuItem>
-            ))}
-          </TextField>
+            <TextField
+              select
+              fullWidth
+              variant="filled"
+              label="Hospital Branch"
+              value={initialValues.hospitalBranch}
+              onChange={handleChange}
+              name="hospitalBranch"
+              sx={{ gridColumn: "span 4" }}
+            >
+              <MenuItem value="Malabe">Malabe</MenuItem>
+              <MenuItem value="Kottawa">Kottawa</MenuItem>
+              <MenuItem value="other">Other</MenuItem>
+            </TextField>
 
-          <TextField
-            select
-            fullWidth
-            variant="filled"
-            label="Ending Hour"
-            value={initialValues.workingTimeEnd}
-            onChange={handleChange}
-            name="workingTimeEnd"
-            sx={{ gridColumn: "span 2" }}
-          >
-            {Array.from(Array(24).keys()).map((hour) => (
-              <MenuItem key={hour} value={hour + 1}>
-                {hour + 1}
-              </MenuItem>
-            ))}
-          </TextField>
+            <TextField
+              select
+              fullWidth
+              variant="filled"
+              label="Department"
+              value={initialValues.department}
+              onChange={handleChange}
+              name="department"
+              sx={{ gridColumn: "span 4" }}
+            >
+              <MenuItem value="dental">Dental</MenuItem>
+              <MenuItem value="OPD">OPD</MenuItem>
+              <MenuItem value="other">Other</MenuItem>
+            </TextField>
 
-          <TextField
-            select
-            fullWidth
-            variant="filled"
-            label="Starting Minute"
-            value={initialValues.workingTimeStartMin}
-            onChange={handleChange}
-            name="workingTimeStartMin"
-            sx={{ gridColumn: "span 2" }}
-          >
-            {Array.from(Array(60).keys()).map((hour) => (
-              <MenuItem key={hour} value={hour < 10 ? `0${hour}` : `${hour}`}>
-                {hour < 10 ? `0${hour}` : `${hour}`}
-              </MenuItem>
-            ))}
-          </TextField>
+            <TextField
+              select
+              fullWidth
+              variant="filled"
+              label="Starting Hour"
+              value={initialValues.workingTimeStart}
+              onChange={handleChange}
+              name="workingTimeStart"
+              sx={{ gridColumn: "span 2" }}
+            >
+              {Array.from(Array(24).keys()).map((hour) => (
+                <MenuItem key={hour} value={hour + 1}>
+                  {hour + 1}
+                </MenuItem>
+              ))}
+            </TextField>
 
-          <TextField
-            select
-            fullWidth
-            variant="filled"
-            label="Ending Minute"
-            value={initialValues.workingTimeEndMin}
-            onChange={handleChange}
-            name="workingTimeEndMin"
-            sx={{ gridColumn: "span 2" }}
-          >
-            {Array.from(Array(60).keys()).map((hour) => (
-              <MenuItem key={hour} value={hour < 10 ? `0${hour}` : `${hour}`}>
-                {hour < 10 ? `0${hour}` : `${hour}`}
-              </MenuItem>
-            ))}
-          </TextField>
+            <TextField
+              select
+              fullWidth
+              variant="filled"
+              label="Ending Hour"
+              value={initialValues.workingTimeEnd}
+              onChange={handleChange}
+              name="workingTimeEnd"
+              sx={{ gridColumn: "span 2" }}
+            >
+              {Array.from(Array(24).keys()).map((hour) => (
+                <MenuItem key={hour} value={hour + 1}>
+                  {hour + 1}
+                </MenuItem>
+              ))}
+            </TextField>
 
-          <FormControl
-            fullWidth
-            variant="filled"
-            sx={{
-              gridColumn: "span 4",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <Box
+            <TextField
+              select
+              fullWidth
+              variant="filled"
+              label="Starting Minute"
+              value={initialValues.workingTimeStartMin}
+              onChange={handleChange}
+              name="workingTimeStartMin"
+              sx={{ gridColumn: "span 2" }}
+            >
+              {Array.from(Array(60).keys()).map((hour) => (
+                <MenuItem key={hour} value={hour < 10 ? `0${hour}` : `${hour}`}>
+                  {hour < 10 ? `0${hour}` : `${hour}`}
+                </MenuItem>
+              ))}
+            </TextField>
+
+            <TextField
+              select
+              fullWidth
+              variant="filled"
+              label="Ending Minute"
+              value={initialValues.workingTimeEndMin}
+              onChange={handleChange}
+              name="workingTimeEndMin"
+              sx={{ gridColumn: "span 2" }}
+            >
+              {Array.from(Array(60).keys()).map((hour) => (
+                <MenuItem key={hour} value={hour < 10 ? `0${hour}` : `${hour}`}>
+                  {hour < 10 ? `0${hour}` : `${hour}`}
+                </MenuItem>
+              ))}
+            </TextField>
+
+            <FormControl
+              fullWidth
+              variant="filled"
               sx={{
+                gridColumn: "span 4",
                 display: "flex",
-                flexDirection: "row",
-                flexWrap: "wrap",
+                alignItems: "center",
               }}
             >
-              {[
-                "Monday",
-                "Tuesday",
-                "Wednesday",
-                "Thursday",
-                "Friday",
-                "Saturday",
-                "Sunday",
-              ].map((day) => (
-                <FormControlLabel
-                  key={day}
-                  control={
-                    <Checkbox
-                      checked={initialValues.selectedDays.includes(day)}
-                      onChange={(e) => {
-                        const isChecked = e.target.checked;
-                        if (isChecked) {
-                          handleChange({
-                            target: {
-                              name: "selectedDays",
-                              value: [...initialValues.selectedDays, day],
-                            },
-                          });
-                        } else {
-                          handleChange({
-                            target: {
-                              name: "selectedDays",
-                              value: initialValues.selectedDays.filter(
-                                (selectedDay) => selectedDay !== day
-                              ),
-                            },
-                          });
-                        }
-                      }}
-                      name={day.toLowerCase()}
-                    />
-                  }
-                  label={day}
-                />
-              ))}
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  flexWrap: "wrap",
+                }}
+              >
+                {[
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday",
+                  "Saturday",
+                  "Sunday",
+                ].map((day) => (
+                  <FormControlLabel
+                    key={day}
+                    control={
+                      <Checkbox
+                        checked={initialValues.selectedDays.includes(day)}
+                        onChange={(e) => {
+                          const isChecked = e.target.checked;
+                          if (isChecked) {
+                            handleChange({
+                              target: {
+                                name: "selectedDays",
+                                value: [...initialValues.selectedDays, day],
+                              },
+                            });
+                          } else {
+                            handleChange({
+                              target: {
+                                name: "selectedDays",
+                                value: initialValues.selectedDays.filter(
+                                  (selectedDay) => selectedDay !== day
+                                ),
+                              },
+                            });
+                          }
+                        }}
+                        name={day.toLowerCase()}
+                      />
+                    }
+                    label={day}
+                  />
+                ))}
+              </Box>
+            </FormControl>
+            <Box
+              display="flex"
+              justifyContent="end"
+              mt="20px"
+              gridColumn="span 4"
+            >
+              <Button type="submit" color="secondary" variant="contained">
+                Edit and Save User
+              </Button>
             </Box>
-          </FormControl>
-          <Box
-            display="flex"
-            justifyContent="end"
-            mt="20px"
-            gridColumn="span 4"
-          >
-            <Button type="submit" color="secondary" variant="contained">
-              Edit and Save User
-            </Button>
           </Box>
-        </Box>
-      </form>
-    </Box>
+        </form>
+      </Box>
+    </Container>
   );
 };
 

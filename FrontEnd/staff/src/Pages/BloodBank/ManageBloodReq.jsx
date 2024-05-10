@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Box, Container } from "@mui/material";
 import Table from "../../Components/Table/Table";
 import Button from "@mui/material/Button";
 import { useEffect, useState } from "react";
@@ -100,12 +101,16 @@ const ManageBloodReq = () => {
   // .filter((row) => row !== null);
 
   return (
-    <Table
-      rows={rows}
-      columns={columns}
-      title={"Blood Request Information"}
-      subtitle={"Managing Blood Requests"}
-    />
+    <Container maxWidth="100%">
+      <Box m="20px" minHeight="100vh">
+        <Table
+          rows={rows}
+          columns={columns}
+          title={"Blood Request Information"}
+          subtitle={"Managing Blood Requests"}
+        />
+      </Box>
+    </Container>
   );
 };
 

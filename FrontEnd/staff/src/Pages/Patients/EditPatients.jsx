@@ -1,4 +1,4 @@
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, TextField, Container } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../Components/Header/Header";
 import { MenuItem } from "@mui/material";
@@ -80,115 +80,118 @@ const AddPatients = () => {
   };
 
   return (
-    <Box m="20px">
-      <Header title="EDIT USER" subtitle="Edit User Profile" />
-      <form onSubmit={handleSubmit}>
-        <Box
-          display="grid"
-          gap="30px"
-          gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-          sx={{
-            "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
-          }}
-        >
-          <TextField
-            fullWidth
-            variant="filled"
-            type="text"
-            label="First Name"
-            onChange={handleChange}
-            value={initialValues.firstName}
-            name="firstName"
-            sx={{ gridColumn: "span 2" }}
-          />
-          <TextField
-            fullWidth
-            variant="filled"
-            type="text"
-            label="Last Name"
-            onChange={handleChange}
-            value={initialValues.lastName}
-            name="lastName"
-            sx={{ gridColumn: "span 2" }}
-          />
-
-          <TextField
-            fullWidth
-            variant="filled"
-            type="date"
-            label="Date Of Birth"
-            name="birthday"
-            value={initialValues.birthday}
-            sx={{ gridColumn: "span 4" }}
-            onChange={handleChange}
-          />
-
-          <TextField
-            select
-            fullWidth
-            variant="filled"
-            label="Gender"
-            value={initialValues.gender}
-            name="gender"
-            sx={{ gridColumn: "span 4" }}
-            onChange={handleChange}
+    <Container maxWidth="lg">
+      <Box m="20px" minHeight="100vh">
+        {" "}
+        <Header title="EDIT USER" subtitle="Edit User Profile" />
+        <form onSubmit={handleSubmit}>
+          <Box
+            display="grid"
+            gap="30px"
+            gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+            sx={{
+              "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
+            }}
           >
-            <MenuItem value="male">Male</MenuItem>
-            <MenuItem value="female">Female</MenuItem>
-            <MenuItem value="other">Other</MenuItem>
-          </TextField>
+            <TextField
+              fullWidth
+              variant="filled"
+              type="text"
+              label="First Name"
+              onChange={handleChange}
+              value={initialValues.firstName}
+              name="firstName"
+              sx={{ gridColumn: "span 2" }}
+            />
+            <TextField
+              fullWidth
+              variant="filled"
+              type="text"
+              label="Last Name"
+              onChange={handleChange}
+              value={initialValues.lastName}
+              name="lastName"
+              sx={{ gridColumn: "span 2" }}
+            />
 
-          <TextField
-            fullWidth
-            variant="filled"
-            type="text"
-            label="Email"
-            value={initialValues.email}
-            name="email"
-            sx={{ gridColumn: "span 4" }}
-            onChange={handleChange}
-          />
+            <TextField
+              fullWidth
+              variant="filled"
+              type="date"
+              label="Date Of Birth"
+              name="birthday"
+              value={initialValues.birthday}
+              sx={{ gridColumn: "span 4" }}
+              onChange={handleChange}
+            />
 
-          <TextField
-            fullWidth
-            variant="filled"
-            type="text"
-            label="Contact Number"
-            value={initialValues.phonenumber}
-            name="phonenumber"
-            sx={{ gridColumn: "span 4" }}
-            onChange={handleChange}
-          />
+            <TextField
+              select
+              fullWidth
+              variant="filled"
+              label="Gender"
+              value={initialValues.gender}
+              name="gender"
+              sx={{ gridColumn: "span 4" }}
+              onChange={handleChange}
+            >
+              <MenuItem value="male">Male</MenuItem>
+              <MenuItem value="female">Female</MenuItem>
+              <MenuItem value="other">Other</MenuItem>
+            </TextField>
 
-          <TextField
-            fullWidth
-            variant="filled"
-            type="text"
-            label="Address"
-            value={initialValues.address}
-            name="address"
-            sx={{ gridColumn: "span 4" }}
-            onChange={handleChange}
-          />
+            <TextField
+              fullWidth
+              variant="filled"
+              type="text"
+              label="Email"
+              value={initialValues.email}
+              name="email"
+              sx={{ gridColumn: "span 4" }}
+              onChange={handleChange}
+            />
 
-          <TextField
-            fullWidth
-            variant="filled"
-            type="text"
-            label="City"
-            value={initialValues.city}
-            name="city"
-            sx={{ gridColumn: "span 4" }}
-            onChange={handleChange}
-          />
-        </Box>
-        <Box display="flex" justifyContent="end" mt="20px">
-          <Button type="submit" color="secondary" variant="contained">
-            Edit and Save Patients
-          </Button>
-        </Box>
-      </form>
-    </Box>
+            <TextField
+              fullWidth
+              variant="filled"
+              type="text"
+              label="Contact Number"
+              value={initialValues.phonenumber}
+              name="phonenumber"
+              sx={{ gridColumn: "span 4" }}
+              onChange={handleChange}
+            />
+
+            <TextField
+              fullWidth
+              variant="filled"
+              type="text"
+              label="Address"
+              value={initialValues.address}
+              name="address"
+              sx={{ gridColumn: "span 4" }}
+              onChange={handleChange}
+            />
+
+            <TextField
+              fullWidth
+              variant="filled"
+              type="text"
+              label="City"
+              value={initialValues.city}
+              name="city"
+              sx={{ gridColumn: "span 4" }}
+              onChange={handleChange}
+            />
+          </Box>
+          <Box display="flex" justifyContent="end" mt="20px">
+            <Button type="submit" color="secondary" variant="contained">
+              Edit and Save Patients
+            </Button>
+          </Box>
+        </form>
+      </Box>
+    </Container>
   );
 };
 

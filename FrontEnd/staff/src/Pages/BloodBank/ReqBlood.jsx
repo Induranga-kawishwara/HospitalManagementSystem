@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button, TextField, MenuItem } from "@mui/material";
+import { Box, Button, TextField, MenuItem, Container } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -52,135 +52,137 @@ const ReqBlood = () => {
   const bloodTypes = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 
   return (
-    <Box m="20px">
-      <Header title="Request Blood" />
-
-      <Formik
-        onSubmit={handleFormSubmit}
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-      >
-        {({
-          values,
-          errors,
-          touched,
-          handleBlur,
-          handleChange,
-          handleSubmit,
-        }) => (
-          <form onSubmit={handleSubmit}>
-            <Box
-              display="grid"
-              gap="30px"
-              gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-              sx={{
-                "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
-              }}
-            >
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="First Name"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.firstName}
-                name="firstName"
-                error={!!touched.firstName && !!errors.firstName}
-                helperText={touched.firstName && errors.firstName}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Last Name"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.lastName}
-                name="lastName"
-                error={!!touched.lastName && !!errors.lastName}
-                helperText={touched.lastName && errors.lastName}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Contact Number"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.contact}
-                name="contact"
-                error={!!touched.contact && !!errors.contact}
-                helperText={touched.contact && errors.contact}
-                sx={{ gridColumn: "span 4" }}
-              />
-              <TextField
-                select
-                fullWidth
-                variant="filled"
-                label="Hospital Branch"
-                value={values.hospitalBranch}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                name="hospitalBranch"
-                error={!!touched.hospitalBranch && !!errors.hospitalBranch}
-                helperText={touched.hospitalBranch && errors.hospitalBranch}
-                sx={{ gridColumn: "span 4" }}
+    <Container maxWidth="lg">
+      <Box m="20px" minHeight="100vh">
+        <Header title="Request Blood" />
+        <Formik
+          onSubmit={handleFormSubmit}
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+        >
+          {({
+            values,
+            errors,
+            touched,
+            handleBlur,
+            handleChange,
+            handleSubmit,
+          }) => (
+            <form onSubmit={handleSubmit}>
+              <Box
+                display="grid"
+                gap="30px"
+                gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+                sx={{
+                  "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
+                }}
               >
-                <MenuItem value="Malabe">Malabe</MenuItem>
-                <MenuItem value="Kottawa">Kottawa</MenuItem>
-                <MenuItem value="other">Other</MenuItem>
-              </TextField>
+                <TextField
+                  fullWidth
+                  variant="filled"
+                  type="text"
+                  label="First Name"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.firstName}
+                  name="firstName"
+                  error={!!touched.firstName && !!errors.firstName}
+                  helperText={touched.firstName && errors.firstName}
+                  sx={{ gridColumn: "span 2" }}
+                />
+                <TextField
+                  fullWidth
+                  variant="filled"
+                  type="text"
+                  label="Last Name"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.lastName}
+                  name="lastName"
+                  error={!!touched.lastName && !!errors.lastName}
+                  helperText={touched.lastName && errors.lastName}
+                  sx={{ gridColumn: "span 2" }}
+                />
+                <TextField
+                  fullWidth
+                  variant="filled"
+                  type="text"
+                  label="Contact Number"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.contact}
+                  name="contact"
+                  error={!!touched.contact && !!errors.contact}
+                  helperText={touched.contact && errors.contact}
+                  sx={{ gridColumn: "span 4" }}
+                />
+                <TextField
+                  select
+                  fullWidth
+                  variant="filled"
+                  label="Hospital Branch"
+                  value={values.hospitalBranch}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  name="hospitalBranch"
+                  error={!!touched.hospitalBranch && !!errors.hospitalBranch}
+                  helperText={touched.hospitalBranch && errors.hospitalBranch}
+                  sx={{ gridColumn: "span 4" }}
+                >
+                  <MenuItem value="Malabe">Malabe</MenuItem>
+                  <MenuItem value="Kottawa">Kottawa</MenuItem>
+                  <MenuItem value="other">Other</MenuItem>
+                </TextField>
 
-              <TextField
-                select
-                fullWidth
-                variant="filled"
-                label="Blood Type"
-                value={values.bloodType}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                name="bloodType"
-                error={!!touched.bloodType && !!errors.bloodType}
-                helperText={touched.bloodType && errors.bloodType}
-                sx={{ gridColumn: "span 4" }}
-              >
-                {bloodTypes.map((option) => (
-                  <MenuItem key={option} value={option}>
-                    {option}
-                  </MenuItem>
-                ))}
-              </TextField>
+                <TextField
+                  select
+                  fullWidth
+                  variant="filled"
+                  label="Blood Type"
+                  value={values.bloodType}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  name="bloodType"
+                  error={!!touched.bloodType && !!errors.bloodType}
+                  helperText={touched.bloodType && errors.bloodType}
+                  sx={{ gridColumn: "span 4" }}
+                >
+                  {bloodTypes.map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </TextField>
 
-              <TextField
-                fullWidth
-                variant="filled"
-                name="requestedBloodCount"
-                type="text"
-                label="Count Of Blood"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.requestedBloodCount}
-                error={
-                  !!touched.requestedBloodCount && !!errors.requestedBloodCount
-                }
-                helperText={
-                  touched.requestedBloodCount && errors.requestedBloodCount
-                }
-                sx={{ gridColumn: "span 4" }}
-              />
-            </Box>
-            <Box display="flex" justifyContent="end" mt="20px">
-              <Button type="submit" color="secondary" variant="contained">
-                Book Blood
-              </Button>
-            </Box>
-          </form>
-        )}
-      </Formik>
-    </Box>
+                <TextField
+                  fullWidth
+                  variant="filled"
+                  name="requestedBloodCount"
+                  type="text"
+                  label="Count Of Blood"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.requestedBloodCount}
+                  error={
+                    !!touched.requestedBloodCount &&
+                    !!errors.requestedBloodCount
+                  }
+                  helperText={
+                    touched.requestedBloodCount && errors.requestedBloodCount
+                  }
+                  sx={{ gridColumn: "span 4" }}
+                />
+              </Box>
+              <Box display="flex" justifyContent="end" mt="20px">
+                <Button type="submit" color="secondary" variant="contained">
+                  Book Blood
+                </Button>
+              </Box>
+            </form>
+          )}
+        </Formik>
+      </Box>
+    </Container>
   );
 };
 export default ReqBlood;
