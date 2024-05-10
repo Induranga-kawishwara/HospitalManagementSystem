@@ -55,8 +55,8 @@ const AddStaffMembers = () => {
         );
 
         if (filteredStaff) {
-          const updatedInitialValues = {
-            ...initialValues,
+          setInitialValues((prevValues) => ({
+            ...prevValues,
             firstName: filteredStaff.firstName,
             lastName: filteredStaff.lastName,
             email: filteredStaff.email,
@@ -81,9 +81,8 @@ const AddStaffMembers = () => {
             ),
             workingTimeStartMin: filteredStaff.workingTimeStart.split(":")[1],
             workingTimeEndMin: filteredStaff.workingTimeEnd.split(":")[1],
-          };
+          }));
           setImg(filteredStaff.image);
-          setInitialValues(updatedInitialValues);
         } else {
           console.log("Staff member not found");
         }
