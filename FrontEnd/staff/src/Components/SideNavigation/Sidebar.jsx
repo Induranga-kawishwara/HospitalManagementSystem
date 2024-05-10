@@ -111,7 +111,10 @@ const Sidebar = () => {
             </Box>
           )}
 
-          <Box paddingLeft={isCollapsed ? undefined : "10%"}>
+          <Box
+            paddingLeft={isCollapsed ? undefined : "10%"}
+            marginTop={isCollapsed ? "100px" : "60px"}
+          >
             <Item
               title="Dashboard"
               to="/"
@@ -208,12 +211,6 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-
-            {/* <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "700%" }}
-            /> */}
           </Box>
         </Menu>
       </ProSidebar>
