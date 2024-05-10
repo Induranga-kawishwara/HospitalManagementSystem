@@ -32,8 +32,8 @@ const AddPatients = () => {
         );
 
         if (filteredStaff) {
-          const updatedInitialValues = {
-            ...initialValues,
+          setInitialValues((prevValues) => ({
+            ...prevValues,
             firstName: filteredStaff.firstName,
             lastName: filteredStaff.lastName,
             email: filteredStaff.email,
@@ -44,8 +44,7 @@ const AddPatients = () => {
               : "",
             gender: filteredStaff.gender,
             city: filteredStaff.city,
-          };
-          setInitialValues(updatedInitialValues);
+          }));
         } else {
           console.log("Staff member not found");
         }
