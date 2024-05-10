@@ -55,7 +55,7 @@ const ManageStaffMemers = () => {
   };
 
   const columns = [
-    { field: "no", headerName: "NO" },
+    { field: "no", headerName: "No" },
     {
       field: "name",
       headerName: "Name",

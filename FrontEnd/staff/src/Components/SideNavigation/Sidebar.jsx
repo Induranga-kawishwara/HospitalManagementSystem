@@ -118,7 +118,7 @@ const Sidebar = () => {
 
           <Box
             paddingLeft={isCollapsed ? undefined : "10%"}
-            marginTop={isCollapsed ? "105%" : "25%"}
+            marginTop={isCollapsed ? "110%" : "25%"}
           >
             <Item
               title="Dashboard"
