@@ -128,24 +128,11 @@ export const themeSettings = (mode) => {
       mode: mode,
       ...(mode === "dark"
         ? {
-            // palette values for dark mode
-            // primary: {
-            //   main: "#C0392B",
-            // },
-            // secondary: {
-            //   main: "#48C9B0",
-            // },
-            // neutral: {
-            //   dark: "#1A5276",
-            //   main: "#5F6A6A",
-            //   light: "#239B56",
-            // },
             background: {
               default: "#5F6A6A",
             },
           }
         : {
-            // palette values for light mode
             primary: {
               main: colors.primary[100],
             },
