@@ -22,30 +22,10 @@ A comprehensive, database-driven application designed to streamline and manage v
 
 Follow these steps to get the project running on your local machine.
 
-1.  **Clone the repository:**
-    ```sh
-    git clone https://github.com/your-username/HospitalManagementSystem.git
-    ```
-2.  **Navigate to the project directory:**
-    ```sh
-    cd HospitalManagementSystem
-    ```
-3.  **Install backend dependencies:**
-    _(Provide instructions specific to your backend, e.g., for Maven)_
-    ```sh
-    mvn clean install
-    ```
-4.  **Install frontend dependencies:**
-    _(Provide instructions specific to your frontend, e.g., for npm)_
-
-    ```sh
-    cd src/main/resources/static # Or your frontend directory
-    npm install
-    ```
-
-    ```
-
-    ```
+**Clone the repository:**
+`sh
+    git clone https://github.com/Induranga-kawishwara/Hospital_Management_System.git
+    `
 
 ## Usage
 
